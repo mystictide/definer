@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - definer</title>
+    <link rel="stylesheet" href="~/Content/css/style.min.css" asp-append-version="true" />
+    <link rel="icon" href="~/Content/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-header">
+                <div class="navbar-brand"><a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Content/img/logo.png"></a></div>
+                <div class="navbar-search">
+                    <div class="search-container">
+                        <input type="text" id="search" name="search" placeholder="search..">
+                        <button><img src="~/Content/img/search.svg"></button>
+                    </div>
+                </div>
+                <div class="navbar-user">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">me</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Index">messages</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Index">events</a>
+                </div>
+            </div>
+            <div class="nav-cats">
+                <ul>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">today</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">popular</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">liked</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">issues</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">followed</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">last</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">forgotten</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">rookies</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer>
+    </footer>
+</body>
+</html>

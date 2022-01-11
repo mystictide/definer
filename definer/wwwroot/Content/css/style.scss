@@ -1,0 +1,154 @@
+﻿@import 'normalize.css';
+@import '_colors.scss';
+@import '_mixins.scss';
+
+html {
+    height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: $accent-color;
+    text-decoration: none;
+}
+
+body {
+    min-height: 100%;
+    background-color: $body-colour;
+    color: $base-font-colour;
+}
+
+header {
+    height: 6.313rem;
+}
+
+.navbar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    background-color: $base-bg-colour;
+    height: inherit;
+    width: 100%;
+
+    .nav-header {
+        display: flex;
+        height: 60%;
+        align-items: stretch;
+        flex-wrap: nowrap;
+
+        .navbar-brand {
+            flex-grow: 1;
+            flex-shrink: 2;
+            display: flex;
+            width: 100%;
+            justify-content: flex-end;
+            align-items: center;
+
+            a {
+                height: 100%;
+
+                img {
+                    height: 85%;
+                }
+            }
+        }
+
+        .navbar-search {
+            flex-grow: 2;
+            flex-shrink: 1;
+            width: 80%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .search-container {
+                height: 100%;
+                flex-basis: 40rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                input {
+                    width: 65%;
+                    height: 75%;
+                    max-width: 40rem;
+                    background-color: #464649;
+                    border: 2px solid;
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                    padding: 15px;
+
+                    &:hover {
+                        outline: none;
+                        border-color: $base-bg-colour;
+                    }
+
+                    &:focus {
+                        outline: none;
+                        background-color: $body-colour;
+                        border-color: $accent-color;
+                        color: $base-font-colour;
+                    }
+                }
+
+                button {
+                    height: 75%;
+                    width: 6%;
+                    background-color: #464649;
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    border: 2px solid;
+
+                    img {
+                        width: 60%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+
+        .navbar-user {
+            flex-grow: 1;
+            flex-shrink: 2;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            column-gap: 1.2rem;
+            padding-right: 5px;
+
+            a {
+                position: relative;
+                padding: 5px;
+                text-decoration: none;
+                @include link-anim();
+            }
+        }
+    }
+
+    .nav-cats {
+        display: flex;
+        height: 40%;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 0 17% 0 17%;
+
+        ul {
+            display: flex;
+            list-style: none;
+            column-gap: 3.2rem;
+
+            a {
+                font-size: 1rem;
+                position: relative;
+                padding-bottom: 10px;
+                @include link-anim();
+            }
+        }
+    }
+}
