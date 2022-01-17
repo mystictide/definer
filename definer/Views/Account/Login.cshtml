@@ -1,0 +1,18 @@
+﻿@model definer.Models.UserViewModel
+@{
+    ViewData["Title"] = "login";
+}
+
+<div class="account-container">
+    <div class="register">
+        <h2>new user</h2>
+        <form action="/account/login" autocomplete="off" method="post" class="account-form">
+              @Html.AntiForgeryToken()
+            <label for="Mail">email</label>
+            @Html.TextBoxFor(m => m.Mail)
+            <label for="Password">password</label>
+               @Html.PasswordFor(m => m.Password)
+            <button type="submit">login</button>
+        </form>
+    </div>
+</div>

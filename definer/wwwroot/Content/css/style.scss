@@ -3,7 +3,7 @@
 @import '_mixins.scss';
 
 html {
-    height: 100%;
+    /*overflow-y: scroll;*/ height: 100%;
 }
 
 * {
@@ -17,10 +17,17 @@ a {
     text-decoration: none;
 }
 
+ul {
+    list-style: none;
+}
+
 body {
+    height: 100%;
     min-height: 100%;
-    background-color: $body-colour;
+    /*background-color: $body-colour;*/
+    background-color: $base-bg-colour;
     color: $base-font-colour;
+    /*@include scrollbars(.5em, slategray);*/
 }
 
 header {
@@ -34,6 +41,7 @@ header {
     background-color: $base-bg-colour;
     height: inherit;
     width: 100%;
+    border-bottom: 0.5px solid $accent-color;
 
     .nav-header {
         display: flex;
@@ -61,7 +69,7 @@ header {
         .navbar-search {
             flex-grow: 2;
             flex-shrink: 1;
-            width: 80%;
+            width: 70%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -75,7 +83,7 @@ header {
 
                 input {
                     width: 65%;
-                    height: 75%;
+                    height: 70%;
                     max-width: 40rem;
                     background-color: #464649;
                     border: 2px solid;
@@ -97,7 +105,7 @@ header {
                 }
 
                 button {
-                    height: 75%;
+                    height: 70%;
                     width: 6%;
                     background-color: #464649;
                     border-top-right-radius: 5px;
@@ -131,23 +139,204 @@ header {
         }
     }
 
-    .nav-cats {
+    .nav-cats-small {
+        @media (max-width: 991px) {
+            display: flex;
+        }
+
+        @media (min-width: 992px) {
+            display: none;
+        }
+
+        @media (min-width: 1200px) {
+            display: none;
+        }
+
         display: flex;
         height: 40%;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
-        margin: 0 17% 0 17%;
+        margin: 0 auto;
 
         ul {
             display: flex;
             list-style: none;
-            column-gap: 3.2rem;
+            column-gap: 3rem;
 
             a {
                 font-size: 1rem;
                 position: relative;
                 padding-bottom: 10px;
                 @include link-anim();
+            }
+        }
+    }
+
+    .nav-cats {
+        @include responsive-hide();
+        display: flex;
+        height: 40%;
+        justify-content: center;
+        align-items: center;
+        margin: 0 17% 0 17%;
+
+        ul {
+            display: flex;
+            list-style: none;
+            column-gap: 3rem;
+
+            a {
+                font-size: 1rem;
+                position: relative;
+                padding-bottom: 10px;
+                @include link-anim();
+            }
+        }
+    }
+}
+
+.page-container {
+    height: 100%;
+    width: 100%;
+
+    .sidebar {
+        position: fixed;
+        width: 30%;
+        top: 121px;
+        margin-bottom: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-end;
+        background-color: $base-bg-colour;
+        overflow-y: scroll;
+
+        @include scrollbars(.5em, slategray);
+
+        ul {
+            margin-right: 2rem;
+
+            li {
+                word-wrap: break-word;
+                max-width: 15rem;
+
+                &:hover {
+                    background-color: $body-colour;
+                }
+
+                a {
+                    display: block;
+                    font-size: 1.1rem;
+                    padding: 15px 0;
+                    position: relative;
+                    padding-right: 30px;
+
+                    small {
+                        font-size: 1em;
+                        position: absolute;
+                        right: 0;
+                        top: 10px;
+                        color: #666;
+                    }
+                }
+            }
+        }
+    }
+
+    .main {
+        height: 100%;
+        width: 70%;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        margin-top: 2rem;
+        column-gap: 2rem;
+        margin-left: 30%;
+
+        .title {
+            margin: 2rem;
+            flex-grow: 2;
+            flex-shrink: 1;
+            width: 45%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .res {
+            margin: 2rem;
+            flex-grow: 1;
+            flex-shrink: 2;
+            width: 30%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+    }
+
+    .account-container {
+        height: 90%;
+        width: 90%;
+
+        .register {
+            height: 100%;
+            width: 100%;
+
+            h2 {
+                padding: 1rem;
+            }
+
+            .account-form {
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+                row-gap: 1rem;
+
+                label {
+                    font-size: 1rem;
+                }
+
+                input {
+                    width: 70%;
+                    background-color: #464649;
+                    border: 2px solid;
+                    border-radius: 5px;
+                    padding: 10px;
+
+                    &:hover {
+                        outline: none;
+                        border-color: $base-bg-colour;
+                    }
+
+                    &:focus {
+                        outline: none;
+                        background-color: $body-colour;
+                        border-color: $accent-color;
+                        color: $base-font-colour;
+                    }
+                }
+
+                .field-validation-error {
+                    color: $accent-color;
+                }
+
+                button {
+                    width: 70%;
+                    background-color: $body-colour;
+                    border-color: $base-bg-colour;
+                    color: $accent-color;
+                    border-radius: 5px;
+                    padding: 10px;
+                    cursor: pointer;
+
+                    &:hover {
+                        outline: none;
+                        border: 2px solid;
+                        border-color: $accent-color;
+                    }
+                }
             }
         }
     }

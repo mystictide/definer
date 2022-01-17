@@ -1,9 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@{
+
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - definer</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/Content/css/style.min.css" asp-append-version="true" />
     <link rel="icon" href="~/Content/favicon.ico" type="image/x-icon" />
 </head>
@@ -19,10 +26,30 @@
                     </div>
                 </div>
                 <div class="navbar-user">
-                    <a asp-area="" asp-controller="Home" asp-action="Index">me</a>
-                    <a asp-area="" asp-controller="Home" asp-action="Index">messages</a>
-                    <a asp-area="" asp-controller="Home" asp-action="Index">events</a>
+                    @if (User.FindFirst("user")?.Value != null)
+                    {
+                        <a href="/">me</a>
+                        <a href="/">messages</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">events</a>
+                       <a href="/account/logout">logout</a>
+                    }
+                    else
+                    {
+                        <a href="/account/register">register</a>
+                        <a href="/account/login">login</a>
+                    }
+
                 </div>
+            </div>
+            <div class="nav-cats-small">
+                <ul>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">today</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">popular</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">liked</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">issues</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">followed</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">...</a></li>
+                </ul>
             </div>
             <div class="nav-cats">
                 <ul>
@@ -34,17 +61,39 @@
                     <li> <a asp-area="" asp-controller="Home" asp-action="Index">last</a></li>
                     <li> <a asp-area="" asp-controller="Home" asp-action="Index">forgotten</a></li>
                     <li> <a asp-area="" asp-controller="Home" asp-action="Index">rookies</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">#sports</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">#gaming</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">#relationships</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">#politics</a></li>
+                    <li> <a asp-area="" asp-controller="Home" asp-action="Index">...</a></li>
                 </ul>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="">
-            @RenderBody()
-        </main>
+    <div class="page-container">
+        <div class="sidebar">
+            <ul>
+                @for (int i = 0; i < 10; i++)
+                {
+                    <li><a href="/">lorem ipsum dolor <small>23</small></a> </li>
+                }
+                @for (int i = 0; i < 10; i++)
+                {
+                    <li><a href="/">lorem ipsum lorem ipsum lorem lorem dolor dolor <small>45</small></a></li>
+                }
+            </ul>
+        </div>
+        <div class="main">
+            <div class="title">
+                @RenderBody()
+            </div>
+            <div class="res">
+                a
+            </div>
+        </div>
     </div>
-
     <footer>
     </footer>
+    @RenderSection("JS", required: false)
 </body>
 </html>

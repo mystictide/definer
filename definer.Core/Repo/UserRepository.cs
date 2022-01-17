@@ -1,4 +1,5 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using definer.Core.Interface;
 using definer.Entity.Helpers;
 using definer.Entity.Users;
@@ -7,6 +8,27 @@ namespace definer.Core.Repo
 {
     public class UserRepository : Connection.dbConnection, IUsers
     {
+        public bool CheckMail(string Mail)
+        {
+            string Query = @"Select * from Users where Mail=@Mail";
+            DynamicParameters p = new DynamicParameters();
+            p.Add("@Mail", Mail);
+            using (var con = GetConnection)
+            {
+                return !(con.Query<Users>(Query, p).Count() > 0);
+            }
+        }
+        public bool CheckUsername(string Name)
+        {
+            string Query = @"Select * from Users where Username=@Username";
+            DynamicParameters p = new DynamicParameters();
+            p.Add("@Username", Name);
+            using (var con = GetConnection)
+            {
+                return !(con.Query<Users>(Query, p).Count() > 0);
+            }
+        }
+
         public ProcessResult Add(Users entity)
         {
             ProcessResult result = new ProcessResult();
@@ -86,6 +108,33 @@ namespace definer.Core.Repo
                 result.State = ProcessState.Error;
             }
             return result;
+        }
+
+        public Users Login(string Mail, string Password)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@Mail", Mail);
+                param.Add("@Password", Password);
+
+                string WhereClause = @" WHERE (t.Mail like '%' + @Mail + '%') AND Password = @Password";
+
+                string query = $@"
+                SELECT *
+                FROM Users t 
+                {WhereClause}";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.QueryFirstOrDefault<Users>(query, param);
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
         }
     }
 }

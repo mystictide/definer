@@ -5,6 +5,9 @@ namespace definer.Core.Interface
 {
     public interface IUsers
     {
+        bool CheckMail(string Mail);
+        bool CheckUsername(string Name);
+        Users Login(string Mail, string Password);
         ProcessResult Add(Users entity);
         ProcessResult Update(Users entity);
         ProcessResult Delete(int ID);
