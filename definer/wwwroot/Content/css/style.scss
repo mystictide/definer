@@ -1,6 +1,9 @@
 ﻿@import 'normalize.css';
 @import '_colors.scss';
 @import '_mixins.scss';
+@import url('../fonts/OpenSans-Light.ttf');
+
+$OpenSans: 'Open Sans', sans-serif;
 
 html {
     /*overflow-y: scroll;*/ height: 100%;
@@ -27,6 +30,7 @@ body {
     /*background-color: $body-colour;*/
     background-color: $base-bg-colour;
     color: $base-font-colour;
+    font-family: $OpenSans;
     /*@include scrollbars(.5em, slategray);*/
 }
 
@@ -136,6 +140,36 @@ header {
                 text-decoration: none;
                 @include link-anim();
             }
+
+            .settings-toggle {
+                cursor: pointer;
+
+                &:before {
+                    font-family: 'FontAwesome';
+                    content: "\f013";
+                }
+            }
+
+            .dropdown-content {
+                display: none;
+                position: relative;
+                top: 4.8rem;
+                right: 4rem;
+                background-color: $base-bg-colour;
+                min-width: 100px;
+                z-index: 1;
+
+                a {
+                    padding: 10px;
+                    display: block;
+                    border: 1px solid $accent-color;
+                    text-align: center;
+                }
+            }
+
+            .show {
+                display: block;
+            }
         }
     }
 
@@ -164,7 +198,7 @@ header {
             column-gap: 3rem;
 
             a {
-                font-size: 1rem;
+                font-size: 13px;
                 position: relative;
                 padding-bottom: 10px;
                 @include link-anim();
@@ -186,7 +220,7 @@ header {
             column-gap: 3rem;
 
             a {
-                font-size: 1rem;
+                font-size: 14px;
                 position: relative;
                 padding-bottom: 10px;
                 @include link-anim();
@@ -215,28 +249,30 @@ header {
         @include scrollbars(.5em, slategray);
 
         ul {
-            margin-right: 2rem;
+            margin-right: 1.5rem;
 
             li {
                 word-wrap: break-word;
                 max-width: 15rem;
+                padding: 0 10px 0 10px;
 
                 &:hover {
                     background-color: $body-colour;
+                    border-radius: 5px;
                 }
 
                 a {
                     display: block;
-                    font-size: 1.1rem;
+                    font-size: 14px;
                     padding: 15px 0;
                     position: relative;
                     padding-right: 30px;
 
                     small {
-                        font-size: 1em;
+                        font-size: 12px;
                         position: absolute;
                         right: 0;
-                        top: 10px;
+                        top: 20px;
                         color: #666;
                     }
                 }
@@ -283,6 +319,13 @@ header {
         .register {
             height: 100%;
             width: 100%;
+
+            .success {
+                display: block;
+                padding: 5px;
+                background-color: #136e50;
+                text-align: center;
+            }
 
             h2 {
                 padding: 1rem;

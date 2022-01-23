@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
+@*@model definer.Entity.Helpers.FilteredList<definer.Entity.Threads.Threads>*@
 
 @{
 
@@ -13,6 +14,7 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/Content/css/style.min.css" asp-append-version="true" />
     <link rel="icon" href="~/Content/favicon.ico" type="image/x-icon" />
+    <script src="https://kit.fontawesome.com/fcdf4bf1ab.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -28,10 +30,15 @@
                 <div class="navbar-user">
                     @if (User.FindFirst("user")?.Value != null)
                     {
-                        <a href="/">me</a>
-                        <a href="/">messages</a>
-                        <a asp-area="" asp-controller="Home" asp-action="Index">events</a>
-                       <a href="/account/logout">logout</a>
+                        <a href="/"><i class="fas fa-user"></i></a>
+                        <a href="/"><i class="fas fa-envelope"></i></a>
+                        @*<a asp-area="" asp-controller="Home" asp-action="Index">events</a>*@
+                        <a href="#" onclick="toggle()" class="settings-toggle"></a>
+                        <div id="settings-dropdown" class="dropdown-content">
+                            <a href="/account/logout">logout</a>
+                            <a href="/account/logout">logout</a>
+                            <a href="/account/logout">logout</a>
+                        </div>
                     }
                     else
                     {
@@ -72,15 +79,11 @@
     </header>
     <div class="page-container">
         <div class="sidebar">
-            <ul>
-                @for (int i = 0; i < 10; i++)
+            <ul id="s-content">
+          @*      @foreach (var item in Model.data)
                 {
-                    <li><a href="/">lorem ipsum dolor <small>23</small></a> </li>
-                }
-                @for (int i = 0; i < 10; i++)
-                {
-                    <li><a href="/">lorem ipsum lorem ipsum lorem lorem dolor dolor <small>45</small></a></li>
-                }
+                    <li><a href="/t/@CustomTagHelpers.FriendlyURLTitle(item.Title)-@item.ID">@item.Title<small>23</small></a> </li>
+                }*@
             </ul>
         </div>
         <div class="main">
@@ -95,5 +98,10 @@
     <footer>
     </footer>
     @RenderSection("JS", required: false)
+    <script src="~/Content/lib/jquery/jquery-3.6.0.min.js"></script>
+    <script src="~/Content/js/app.js"></script>
+    <script>
+        $(document).ready(function() {sidebar.fill();});
+    </script>
 </body>
 </html>

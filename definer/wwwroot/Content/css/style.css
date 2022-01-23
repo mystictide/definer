@@ -1,4 +1,5 @@
 ﻿@import 'normalize.css';
+@import url("../fonts/OpenSans-Light.ttf");
 html {
   /*overflow-y: scroll;*/
   height: 100%;
@@ -25,6 +26,7 @@ body {
   /*background-color: $body-colour;*/
   background-color: #18181b;
   color: #efeff1;
+  font-family: "Open Sans", sans-serif;
   /*@include scrollbars(.5em, slategray);*/
 }
 
@@ -138,6 +140,31 @@ header {
 .navbar .nav-header .navbar-user a:hover:after {
   transform: scaleX(1);
 }
+.navbar .nav-header .navbar-user .settings-toggle {
+  cursor: pointer;
+}
+.navbar .nav-header .navbar-user .settings-toggle:before {
+  font-family: "FontAwesome";
+  content: "\f013";
+}
+.navbar .nav-header .navbar-user .dropdown-content {
+  display: none;
+  position: relative;
+  top: 4.8rem;
+  right: 4rem;
+  background-color: #18181b;
+  min-width: 100px;
+  z-index: 1;
+}
+.navbar .nav-header .navbar-user .dropdown-content a {
+  padding: 10px;
+  display: block;
+  border: 1px solid #aa00aa;
+  text-align: center;
+}
+.navbar .nav-header .navbar-user .show {
+  display: block;
+}
 .navbar .nav-cats-small {
   display: flex;
   height: 40%;
@@ -166,7 +193,7 @@ header {
   column-gap: 3rem;
 }
 .navbar .nav-cats-small ul a {
-  font-size: 1rem;
+  font-size: 13px;
   position: relative;
   padding-bottom: 10px;
 }
@@ -213,7 +240,7 @@ header {
   column-gap: 3rem;
 }
 .navbar .nav-cats ul a {
-  font-size: 1rem;
+  font-size: 14px;
   position: relative;
   padding-bottom: 10px;
 }
@@ -265,27 +292,29 @@ header {
   scrollbar-track-color: #b8c0c8;
 }
 .page-container .sidebar ul {
-  margin-right: 2rem;
+  margin-right: 1.5rem;
 }
 .page-container .sidebar ul li {
   word-wrap: break-word;
   max-width: 15rem;
+  padding: 0 10px 0 10px;
 }
 .page-container .sidebar ul li:hover {
   background-color: #0e0e10;
+  border-radius: 5px;
 }
 .page-container .sidebar ul li a {
   display: block;
-  font-size: 1.1rem;
+  font-size: 14px;
   padding: 15px 0;
   position: relative;
   padding-right: 30px;
 }
 .page-container .sidebar ul li a small {
-  font-size: 1em;
+  font-size: 12px;
   position: absolute;
   right: 0;
-  top: 10px;
+  top: 20px;
   color: #666;
 }
 .page-container .main {
@@ -324,6 +353,12 @@ header {
 .page-container .account-container .register {
   height: 100%;
   width: 100%;
+}
+.page-container .account-container .register .success {
+  display: block;
+  padding: 5px;
+  background-color: #136e50;
+  text-align: center;
 }
 .page-container .account-container .register h2 {
   padding: 1rem;

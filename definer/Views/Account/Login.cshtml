@@ -1,17 +1,22 @@
 ﻿@model definer.Models.UserViewModel
 @{
     ViewData["Title"] = "login";
+    bool success  = Convert.ToBoolean(Context.Request.Query["val"]);
 }
 
 <div class="account-container">
     <div class="register">
-        <h2>new user</h2>
+        @if (success)
+        {
+            <span class="success">you have registered successfully, try logging in</span>
+        }
+        <h2>come aboard then</h2>
         <form action="/account/login" autocomplete="off" method="post" class="account-form">
-              @Html.AntiForgeryToken()
+            @Html.AntiForgeryToken()
             <label for="Mail">email</label>
             @Html.TextBoxFor(m => m.Mail)
             <label for="Password">password</label>
-               @Html.PasswordFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password)
             <button type="submit">login</button>
         </form>
     </div>

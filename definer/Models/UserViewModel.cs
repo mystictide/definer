@@ -15,7 +15,7 @@ namespace definer.Models
         [Required(ErrorMessage = "trust me, you need this.")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", ErrorMessage = "your argument is invalid.")]
         public string Password { get; set; }
-
+        [Required(ErrorMessage = "confirm your password.")]
         [Compare("Password", ErrorMessage = "passwords do not match.")]
         public string ConfirmPassword { get; set; }
         public bool RememberMe { get; set; }

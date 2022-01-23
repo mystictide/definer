@@ -11,9 +11,9 @@ namespace definer.Business.Users
         {
             _repo = new UserRepository();
         }
-        public Entity.Users.Users Login(string Mail, string Password)
+        public Entity.Users.Users Login(string Mail)
         {
-            return _repo.Login(Mail, Password);
+            return _repo.Login(Mail);
         }
         public bool CheckMail(string Mail)
         {

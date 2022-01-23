@@ -7,7 +7,7 @@ namespace definer.Core.Interface
     {
         bool CheckMail(string Mail);
         bool CheckUsername(string Name);
-        Users Login(string Mail, string Password);
+        Users Login(string Mail);
         ProcessResult Add(Users entity);
         ProcessResult Update(Users entity);
         ProcessResult Delete(int ID);

@@ -1,6 +1,7 @@
 ﻿using definer.Business.Users;
 using definer.Entity.Users;
 using definer.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -22,16 +23,25 @@ namespace definer.Controllers
         [Route("register"), HttpPost]
         public ActionResult Register(UserViewModel model)
         {
+            PasswordHasher _passwordHasher = new PasswordHasher();
             if (ModelState.IsValid)
             {
                 Users user = new Users();
                 user.Username = model.Username;
                 user.Mail = model.Mail;
-                user.Password = model.Password;
+                user.Password = _passwordHasher.HashPassword(model.Password);
                 user.IsActive = true;
 
-                new UserManager().Add(user);
-                return RedirectToAction("login");
+                var result = new UserManager().Add(user);
+                if (result.State == Entity.Helpers.ProcessState.Success)
+                {
+                    return RedirectToAction("login", new { val = "true" });
+                }
+                else
+                {
+                    return RedirectToAction("login", new { val = "false" });
+                }
+
             }
             return View("register");
         }
@@ -45,8 +55,11 @@ namespace definer.Controllers
         [Route("login"), HttpPost]
         public async Task<ActionResult> LoginAsync(UserViewModel model)
         {
-            Users user = new UserManager().Login(model.Mail, model.Password);
-            if (user != null)
+            PasswordHasher _passwordHasher = new PasswordHasher();
+            Users user = new UserManager().Login(model.Mail);
+            //var hashedPassword = _passwordHasher.HashPassword(model.Password);
+            var successResult = _passwordHasher.VerifyHashedPassword(user.Password, model.Password);
+            if (successResult == PasswordVerificationResult.Success)
             {
                 if (user.IsActive)
                 {
@@ -90,15 +103,15 @@ namespace definer.Controllers
 
         [Route("CheckExistingEmail")]
         [HttpPost]
-        public JsonResult CheckExistingEmail(string Email)
+        public JsonResult CheckExistingEmail(string Mail)
         {
-            return Json(new UserManager().CheckMail(Email));
+            return Json(new UserManager().CheckMail(Mail));
         }
         [Route("CheckExistingUsername")]
         [HttpPost]
-        public JsonResult CheckExistingUsername(string Name)
+        public JsonResult CheckExistingUsername(string Username)
         {
-            return Json(new UserManager().CheckUsername(Name));
+            return Json(new UserManager().CheckUsername(Username));
         }
     }
 }

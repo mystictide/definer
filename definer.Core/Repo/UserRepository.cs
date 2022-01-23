@@ -110,15 +110,14 @@ namespace definer.Core.Repo
             return result;
         }
 
-        public Users Login(string Mail, string Password)
+        public Users Login(string Mail)
         {
             try
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@Mail", Mail);
-                param.Add("@Password", Password);
 
-                string WhereClause = @" WHERE (t.Mail like '%' + @Mail + '%') AND Password = @Password";
+                string WhereClause = @" WHERE (t.Mail like '%' + @Mail + '%')";
 
                 string query = $@"
                 SELECT *
