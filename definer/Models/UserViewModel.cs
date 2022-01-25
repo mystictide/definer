@@ -6,6 +6,7 @@ namespace definer.Models
     public class UserViewModel
     {
         [Required(ErrorMessage = "you'll need a username.")]
+        [StringLength(35, ErrorMessage = "35 characters max.", MinimumLength = 3)]
         [Remote("CheckExistingUsername", "Account", HttpMethod = "POST", ErrorMessage = "that sounds familiar, uh... try again?")]
         public string Username { get; set; }
         [Required(ErrorMessage = "please, enter an e-mail address.")]

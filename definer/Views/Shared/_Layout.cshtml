@@ -80,16 +80,10 @@
     <div class="page-container">
         <div class="sidebar">
             <ul id="s-content">
-          @*      @foreach (var item in Model.data)
-                {
-                    <li><a href="/t/@CustomTagHelpers.FriendlyURLTitle(item.Title)-@item.ID">@item.Title<small>23</small></a> </li>
-                }*@
             </ul>
         </div>
         <div class="main">
-            <div class="title">
-                @RenderBody()
-            </div>
+            @RenderBody()
             <div class="res">
                 a
             </div>

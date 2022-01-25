@@ -21,8 +21,7 @@ namespace definer.Models
                 string url = t + FriendlyURLTitle(item.Title) + "-" + @item.ID;
 
                 anchor.MergeAttribute("href", url);
-                int count = new Random().Next(1, 999);
-                small.SetInnerText(count.ToString());
+                small.SetInnerText(item.Entries.ToString());
 
                 anchor.InnerHtml = item.Title + small.ToString();
                 list.InnerHtml = anchor.ToString();

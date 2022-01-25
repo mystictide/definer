@@ -9,5 +9,8 @@ namespace definer.Entity.Threads
         public int ID { get; set; }
         public string Title { get; set; }
         public bool IsActive { get; set; }
+
+        [Write(false)]
+        public int Entries { get; set; }
     }
 }

@@ -35,6 +35,7 @@ header {
 }
 
 .navbar {
+  z-index: 9998;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -282,14 +283,14 @@ header {
   height: 0.5em;
 }
 .page-container .sidebar::-webkit-scrollbar-thumb {
-  background: slategray;
+  background: #858587;
 }
 .page-container .sidebar::-webkit-scrollbar-track {
-  background: #b8c0c8;
+  background: #c2c2c3;
 }
 .page-container .sidebar {
-  scrollbar-face-color: slategray;
-  scrollbar-track-color: #b8c0c8;
+  scrollbar-face-color: #858587;
+  scrollbar-track-color: #c2c2c3;
 }
 .page-container .sidebar ul {
   margin-right: 1.5rem;
@@ -328,20 +329,89 @@ header {
   column-gap: 2rem;
   margin-left: 30%;
 }
-.page-container .main .title {
-  margin: 2rem;
+.page-container .main .thread {
+  margin: 0.5rem 2rem;
   flex-grow: 2;
   flex-shrink: 1;
-  width: 45%;
+  width: 40%;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  flex-direction: column;
+  z-index: 20;
+}
+.page-container .main .thread h1 {
+  width: 100%;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  word-break: break-word;
+  line-height: 1.4;
+}
+.page-container .main .thread h1:hover {
+  text-decoration: underline;
+}
+.page-container .main .thread .entries {
+  word-wrap: break-word;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  line-height: 24px;
+}
+.page-container .main .thread .entries li {
+  list-style: none;
+}
+.page-container .main .thread .entries li .body {
+  margin-bottom: 5px;
+  overflow: hidden;
+  max-height: 250px;
+  position: relative;
+  font-size: 1rem;
+}
+.page-container .main .thread .entries li footer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  height: 120px;
+}
+.page-container .main .thread .entries li footer .feedback {
+  float: left;
+  position: relative;
+  width: 45%;
+}
+.page-container .main .thread .entries li footer .feedback a {
+  color: #858587;
+  padding: 5px;
+}
+.page-container .main .thread .entries li footer .feedback a:hover {
+  color: #aa00aa;
+}
+.page-container .main .thread .entries li footer .info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  float: right;
+  width: 55%;
+}
+.page-container .main .thread .entries li footer .info .author a {
+  font-size: 0.9rem;
+}
+.page-container .main .thread .entries li footer .info .author a:hover {
+  text-decoration: underline;
+}
+.page-container .main .thread .entries li footer .info .link a {
+  font-size: 0.9rem;
+}
+.page-container .main .thread .entries li footer .info .link a:hover {
+  text-decoration: underline;
+}
+.page-container .main .thread .entries li footer .info .link small {
+  color: #858587;
+  font-size: 0.7rem;
 }
 .page-container .main .res {
-  margin: 2rem;
+  margin: 1rem 2rem;
   flex-grow: 1;
   flex-shrink: 2;
-  width: 30%;
+  width: 35%;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;

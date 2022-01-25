@@ -31,10 +31,6 @@
 
         public bool isDetailSearch { get; set; }
 
-        public int PartnerID { get; set; }
-
-        public int BranchID { get; set; }
-
     }
     public class Page
     {

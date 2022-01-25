@@ -1,6 +1,33 @@
-﻿@model definer.Entity.Threads.Threads
+﻿@model definer.Entity.Helpers.FilteredList<definer.Entity.Threads.Entry>
 
 @{
-    ViewData["Title"] = @Model.Title + " - definer";
+    ViewData["Title"] = Model.data.FirstOrDefault().Title + " - definer";
 }
-
+<div class="thread">
+    <h1><a href="/t/@CustomTagHelpers.FriendlyURLTitle(@Model.data.FirstOrDefault().Title)-@Model.data.FirstOrDefault().ThreadID">@Model.data.FirstOrDefault().Title</a></h1>
+    <div class="entries">
+        <ul>
+            @foreach (var item in Model.data)
+            {
+                <li>
+                    <div class="body">@item.Body</div>
+                    <footer>
+                        <div class="feedback">
+                            <a href="/"><i class="fas fa-chevron-up"></i></a>
+                            <a href="/"><i class="fas fa-chevron-down"></i></a>
+                            <a href="/"><i class="fas fa-heart"></i></a>
+                        </div>
+                        <div class="info">
+                            <div class="author">
+                                <a href="/">@item.Author</a>
+                            </div>
+                            <div class="link">
+                                <a href="/"><small>@item.Date.ToString("dd.mm.yyyy hh:mm")</small></a>
+                            </div>
+                        </div>
+                    </footer>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

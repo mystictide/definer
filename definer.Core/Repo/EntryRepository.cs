@@ -6,9 +6,9 @@ using definer.Entity.Threads;
 
 namespace definer.Core.Repo
 {
-    public class ThreadsRepository : Connection.dbConnection, IThread
+    public class EntryRepository : Connection.dbConnection, IEntry
     {
-        public ProcessResult Add(Threads entity)
+        public ProcessResult Add(Entry entity)
         {
             ProcessResult result = new ProcessResult();
             try
@@ -16,7 +16,7 @@ namespace definer.Core.Repo
                 using (var con = GetConnection)
                 {
                     result.ReturnID = (int)con.Insert(entity);
-                    result.Message = "Thread saved successfully";
+                    result.Message = "Entry saved successfully";
                     result.State = ProcessState.Success;
                 }
             }
@@ -35,7 +35,7 @@ namespace definer.Core.Repo
                 ProcessResult pr = new ProcessResult();
                 try
                 {
-                    con.Delete(new Threads() { ID = ID });
+                    con.Delete(new Entry() { ID = ID });
                     pr.ReturnID = 0;
                     pr.Message = "Success";
                     pr.State = ProcessState.Success;
@@ -50,23 +50,25 @@ namespace definer.Core.Repo
             }
         }
 
-        public FilteredList<Threads> FilteredList(FilteredList<Threads> request)
+        public FilteredList<Entry> FilteredList(FilteredList<Entry> request)
         {
             try
             {
-                FilteredList<Threads> result = new FilteredList<Threads>();
+                FilteredList<Entry> result = new FilteredList<Entry>();
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@Keyword", request.filter.Keyword);
                 param.Add("@PageSize", request.filter.pageSize);
+                param.Add("@ID", request.filterModel.ThreadID);
 
-                string WhereClause = @" WHERE (t.Title like '%' + @Keyword + '%')";
+                string WhereClause = @" WHERE t.ThreadID = @ID AND  (t.Body like '%' + @Keyword + '%')";
 
-                string query_count = $@"  Select Count(t.ID) from Thread t {WhereClause}";
+                string query_count = $@"  Select Count(t.ID) from Entry t {WhereClause}";
 
                 string query = $@"
                 SELECT *
-                ,(select count(ID) from Entry where ThreadID = t.ID) Entries
-                FROM Thread t 
+                ,(select Title from Thread where ID=t.ID) Title
+                ,(select Username from Users where ID=t.UserID) Author
+                FROM Entry t 
                 {WhereClause} 
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS
@@ -77,7 +79,7 @@ namespace definer.Core.Repo
                     result.totalItems = connection.QueryFirstOrDefault<int>(query_count, param);
                     request.filter.pager = new Page(result.totalItems, request.filter.pageSize, request.filter.page);
                     param.Add("@StartIndex", request.filter.pager.StartIndex);
-                    result.data = connection.Query<Threads>(query, param);
+                    result.data = connection.Query<Entry>(query, param);
                     result.filter = request.filter;
                     result.filterModel = request.filterModel;
                     return result;
@@ -90,13 +92,13 @@ namespace definer.Core.Repo
             }
         }
 
-        public Threads Get(int ID)
+        public Entry Get(int ID)
         {
             try
             {
                 using (var con = GetConnection)
                 {
-                    return con.Get<Threads>(ID);
+                    return con.Get<Entry>(ID);
                 }
             }
             catch (Exception)
@@ -105,13 +107,13 @@ namespace definer.Core.Repo
             }
         }
 
-        public IEnumerable<Threads> GetAll()
+        public IEnumerable<Entry> GetAll()
         {
             try
             {
                 using (var con = GetConnection)
                 {
-                    return con.GetAll<Threads>();
+                    return con.GetAll<Entry>();
                 }
             }
             catch (Exception ex)
@@ -121,7 +123,7 @@ namespace definer.Core.Repo
             }
         }
 
-        public ProcessResult Update(Threads entity)
+        public ProcessResult Update(Entry entity)
         {
             ProcessResult result = new ProcessResult();
             try
@@ -132,7 +134,7 @@ namespace definer.Core.Repo
                     if (res == true)
                     {
                         result.ReturnID = entity.ID;
-                        result.Message = "Thread updated successfully.";
+                        result.Message = "Entry updated successfully.";
                         result.State = ProcessState.Success;
                     }
                 }

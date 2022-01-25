@@ -39,6 +39,7 @@ header {
 }
 
 .navbar {
+    z-index: 9998;
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -246,7 +247,7 @@ header {
         background-color: $base-bg-colour;
         overflow-y: scroll;
 
-        @include scrollbars(.5em, slategray);
+        @include scrollbars(.5em, #858587);
 
         ul {
             margin-right: 1.5rem;
@@ -291,21 +292,109 @@ header {
         column-gap: 2rem;
         margin-left: 30%;
 
-        .title {
-            margin: 2rem;
+        .thread {
+            margin: 0.5rem 2rem;
             flex-grow: 2;
             flex-shrink: 1;
-            width: 45%;
+            width: 40%;
             display: flex;
             align-items: flex-start;
             justify-content: flex-start;
+            flex-direction: column;
+            z-index: 20;
+
+            h1 {
+                width: 100%;
+                font-size: 1.1rem;
+                margin: 1rem 0;
+                word-break: break-word;
+                line-height: 1.4;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            .entries {
+                word-wrap: break-word;
+                margin-bottom: 1rem;
+                margin-top: 1rem;
+                line-height: 24px;
+
+                li {
+                    list-style: none;
+
+                    .body {
+                        margin-bottom: 5px;
+                        overflow: hidden;
+                        max-height: 250px;
+                        position: relative;
+                        font-size: 1rem;
+                    }
+
+                    footer {
+                        margin-top: 10px;
+                        display: flex;
+                        flex-direction: row;
+                        height: 120px;
+
+                        .feedback {
+                            float: left;
+                            position: relative;
+                            width: 45%;
+
+                            a {
+                                color: #858587;
+                                padding: 5px;
+
+                                &:hover {
+                                    color: $accent-color;
+                                }
+                            }
+                        }
+
+                        .info {
+                            display: flex;
+                            flex-direction: column;
+                            text-align: right;
+                            float: right;
+                            width: 55%;
+
+                            .author {
+                                a {
+                                    font-size: 0.9rem;
+
+                                    &:hover {
+                                        text-decoration: underline;
+                                    }
+                                }
+                            }
+
+                            .link {
+                                a {
+                                    font-size: 0.9rem;
+
+                                    &:hover {
+                                        text-decoration: underline;
+                                    }
+                                }
+
+                                small {
+                                    color: #858587;
+                                    font-size: 0.7rem;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         .res {
-            margin: 2rem;
+            margin: 1rem 2rem;
             flex-grow: 1;
             flex-shrink: 2;
-            width: 30%;
+            width: 35%;
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
