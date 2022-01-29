@@ -11,7 +11,7 @@ namespace definer.Entity.Threads
         public int UserID { get; set; }
         public string Body { get; set; }
         public DateTime Date { get; set; }
-        public DateTime EditDate { get; set; }
+        public DateTime? EditDate { get; set; }
         public bool IsActive { get; set; }
 
         [Write(false)]

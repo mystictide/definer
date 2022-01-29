@@ -121,6 +121,34 @@ namespace definer.Core.Repo
             }
         }
 
+        public Threads GetbyTitle(string Title)
+        {
+            try
+            {
+                Threads model = new Threads();
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@Title", Title);
+
+                string WhereClause = @" WHERE (t.Title like '%' + @Title + '%')";
+
+                string query = $@"
+                SELECT *
+                FROM Thread t 
+                {WhereClause}";
+
+                using (var connection = GetConnection)
+                {
+                    model = connection.QueryFirstOrDefault<Threads>(query, param);
+                    return model;
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
         public ProcessResult Update(Threads entity)
         {
             ProcessResult result = new ProcessResult();

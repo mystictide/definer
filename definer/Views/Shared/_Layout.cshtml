@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
-@*@model definer.Entity.Helpers.FilteredList<definer.Entity.Threads.Threads>*@
 
 @{
 
@@ -23,8 +22,10 @@
                 <div class="navbar-brand"><a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Content/img/logo.png"></a></div>
                 <div class="navbar-search">
                     <div class="search-container">
-                        <input type="text" id="search" name="search" placeholder="search..">
-                        <button><img src="~/Content/img/search.svg"></button>
+                        <form action="/s" autocomplete="off" method="post">
+                            <input type="text" id="search" name="search" placeholder="search..">
+                            <button type="submit"><img src="~/Content/img/search.svg"></button>
+                        </form>
                     </div>
                 </div>
                 <div class="navbar-user">
@@ -32,7 +33,6 @@
                     {
                         <a href="/"><i class="fas fa-user"></i></a>
                         <a href="/"><i class="fas fa-envelope"></i></a>
-                        @*<a asp-area="" asp-controller="Home" asp-action="Index">events</a>*@
                         <a href="#" onclick="toggle()" class="settings-toggle"></a>
                         <div id="settings-dropdown" class="dropdown-content">
                             <a href="/account/logout">logout</a>
@@ -45,7 +45,6 @@
                         <a href="/account/register">register</a>
                         <a href="/account/login">login</a>
                     }
-
                 </div>
             </div>
             <div class="nav-cats-small">
@@ -88,9 +87,9 @@
                 a
             </div>
         </div>
-    </div>
-    <footer>
-    </footer>
+        <footer>
+        </footer>
+
     @RenderSection("JS", required: false)
     <script src="~/Content/lib/jquery/jquery-3.6.0.min.js"></script>
     <script src="~/Content/js/app.js"></script>

@@ -37,6 +37,11 @@ namespace definer.Business.Threads
             return _repo.GetAll();
         }
 
+        public Entity.Threads.Threads GetbyTitle(string Title)
+        {
+            return _repo.GetbyTitle(Title);
+        }
+
         public ProcessResult Update(Entity.Threads.Threads entity)
         {
             return _repo.Update(entity);

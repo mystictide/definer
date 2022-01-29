@@ -81,16 +81,7 @@ namespace definer.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
                     return Redirect("/");
                 }
-                else
-                {
-                    //TempData["Message"] = new { title = "Giriş Başarısız!", type = "orange", content = "Üyeliğinizi henüz aktif etmemişsiniz. Lütfen mail adresinize gönderilen doğrulama linkine tıklayınız!", icon = "fa fa-times-circle fa-thin" };
-                }
             }
-            else
-            {
-                //TempData["Message"] = new { title = "Giriş Başarısız!", type = "orange", content = "Kullanıcı adı veya parola bilgilerini kontrol ediniz!", icon = "fa fa-times-circle fa-thin" };
-            }
-
             return Redirect(Request.Path);
         }
 

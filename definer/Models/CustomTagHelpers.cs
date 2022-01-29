@@ -7,7 +7,7 @@ namespace definer.Models
 {
     public static class CustomTagHelpers
     {
-        private const string t = "/t/";
+        private const string t = "/";
 
         public static List<string> SidebarContent(FilteredList<Threads> result)
         {
