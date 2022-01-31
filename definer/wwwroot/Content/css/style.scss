@@ -38,6 +38,10 @@ header {
     height: 6.313rem;
 }
 
+.field-validation-error {
+    color: $accent-color;
+}
+
 .navbar {
     z-index: 9998;
     position: fixed;
@@ -243,7 +247,6 @@ header {
 }
 
 .page-container {
-    height: 100%;
     width: 100%;
 
     .sidebar {
@@ -294,7 +297,6 @@ header {
     }
 
     .main {
-        height: 100%;
         width: 70%;
         display: flex;
         flex-direction: row;
@@ -328,7 +330,14 @@ header {
                 }
             }
 
+            h4 {
+                font-size: 0.8rem;
+                margin: 1rem 0;
+                word-break: break-word;
+            }
+
             .entries {
+                width:100%;
                 word-wrap: break-word;
                 margin-bottom: 1rem;
                 margin-top: 1rem;
@@ -401,55 +410,69 @@ header {
                     }
                 }
             }
-        }
 
-        .entry-editor {
-            height: 450px;
-            width: 100%;
-            display: block;
-
-            form {
-                display: block;
-                height: 100%;
+            .entry-editor {
+                height: 365px;
                 width: 100%;
-                background-color: $body-colour;
-                border-radius: 5px;
+                display: block;
 
-                .text-editor {
-                    border: none;
-                    outline: none;
-                    height: 100%;
+                .field-validation-error {
+                    display: block;
+                    padding-bottom: 5px;
+                }
+
+                form {
+                    display: block;
+                    height: inherit;
                     width: 100%;
-                    padding: 2rem;
+                    background-color: $body-colour;
+                    border-radius: 5px;
 
-                    textarea {
+                    .text-editor {
+                        border: none;
+                        outline: none;
                         height: 100%;
                         width: 100%;
-                        border: none;
-                        border-radius: 5px;
-                        outline: none;
-                        background-color: $base-bg-colour;
-                        cursor: text;
-                        color: inherit;
-                        padding: 10px;
-                    }
+                        padding: 2rem;
 
-                    .process {
-                        button {
-                            display: inline-block;
-                            float: right;
-                            border-radius: 6px;
-                            border: 1px solid #a511c0;
-                            cursor: pointer;
-                            padding: 6px 24px;
-                            margin-top: 5px;
-                            background-color: $accent-color;
+                        textarea {
+                            height: 85%;
+                            width: 100%;
+                            border: none;
+                            border-radius: 5px;
+                            outline: none;
+                            background-color: $base-bg-colour;
+                            cursor: text;
                             color: inherit;
+                            padding: 10px;
+                            resize: none;
+                        }
+
+                        .process {
+                            height: 20%;
+
+                            button {
+                                display: inline-block;
+                                float: right;
+                                border-radius: 6px;
+                                border: 1px solid #a511c0;
+                                cursor: pointer;
+                                padding: 6px 24px;
+                                margin-top: 5px;
+                                background-color: $accent-color;
+                                color: inherit;
+
+                                &:hover {
+                                    outline: 1px solid $base-font-colour;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+
+
 
         .res {
             margin: 1rem 2rem;
@@ -462,12 +485,7 @@ header {
         }
     }
 
-    footer {
-        content: "";
-        display: block;
-        width: 100%;
-        height: 50px;
-    }
+
 
     .account-container {
         height: 90%;
@@ -518,9 +536,7 @@ header {
                     }
                 }
 
-                .field-validation-error {
-                    color: $accent-color;
-                }
+
 
                 button {
                     width: 50%;
@@ -540,4 +556,11 @@ header {
             }
         }
     }
+}
+
+footer {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 80px;
 }

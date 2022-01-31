@@ -1,4 +1,6 @@
-﻿@{
+﻿@model definer.Models.EntryViewModel
+
+@{
     var User = (definer.Entity.Users.Users)ViewBag.User;
     var Entries = (definer.Entity.Helpers.FilteredList<definer.Entity.Threads.Entry>)ViewBag.Entries;
     var Thread = (definer.Entity.Threads.Threads)ViewBag.Threads;
@@ -42,9 +44,13 @@
                                                 <a href="/edit/entry/@item.ID"><small>edit</small></a>
                                             }
                                         }
-                                        <a href="/"><small>@item.Date.ToString("dd.mm.yyyy hh:mm") @if (@item.EditDate != null)
-                                        {<text>~ </text> @item.EditDate?.ToString("dd.mm.yyyy hh:mm")
-                                        }</small></a>
+                                        <a href="/entry/@item.ID">
+                                            <small>
+                                                @item.Date.ToString("dd.MM.yyyy HH:mm") @if (@item.EditDate != null)
+                                                {<text>~ </text> @item.EditDate?.ToString("dd.MM.yyyy HH:mm")
+                                            }
+                                            </small>
+                                        </a>
                                     </div>
                                 </div>
                             </footer>
@@ -52,17 +58,22 @@
                     }
                 </ul>
             </div>
-            <div class="entry-editor">
-                <form action="/entry" method="post" autocomplete="off">
-                    @Html.Hidden("ThreadID", @Entries.data.FirstOrDefault().ThreadID)
-                    <fieldset class="text-editor">
-                        <textarea id="Body" name="Body" placeholder="say something about &quot;@Entries.data.FirstOrDefault().Title&quot;"></textarea>
-                        <div class="process">
-                            <button type="submit">submit</button>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
+            @if (User != null)
+            {
+                <div class="entry-editor">
+                    <form action="/entry" method="post" autocomplete="off">
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("ThreadID", @Entries.data.FirstOrDefault().ThreadID)
+                        <fieldset class="text-editor">
+                            <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                            @Html.TextAreaFor(m => m.Body, new { @placeholder = "say something about \"" + @Entries.data.FirstOrDefault().Title + "\"" })
+                            <div class="process">
+                                <button type="submit">submit</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            }
         </div>
     }
 }
@@ -70,13 +81,29 @@ else if (Thread != null)
 {
     <div class="thread">
         <h1><a href="/@CustomTagHelpers.FriendlyURLTitle(Thread.Title)">@Thread.Title</a></h1>
-        <div class="entries">
-            <ul>
-            </ul>
+        <h4>no thread found by this title</h4>
+        <div class="entry-editor">
+            <form action="/entry" method="post" autocomplete="off">
+                @Html.AntiForgeryToken()
+                @Html.Hidden("ThreadID", Thread.ID)
+                @Html.Hidden("Title", Thread.Title)
+                <fieldset class="text-editor">
+                    <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                    @Html.TextAreaFor(m => m.Body, new { @placeholder = "say something about \"" + Thread.Title + "\"" })
+                    <div class="process">
+                        <button type="submit">submit</button>
+                    </div>
+                </fieldset>
+            </form>
         </div>
     </div>
 }
 else
 {
 
+}
+
+@section Js {
+    <script type="text/javascript" src=~/Content/lib/validate/jquery.validate.min.js></script>
+    <script type="text/javascript" src=~/Content/lib/validate/jquery.validate.unobtrusive.js></script>
 }

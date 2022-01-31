@@ -1,0 +1,43 @@
+﻿@model definer.Entity.Threads.Entry
+
+@{
+    var User = (definer.Entity.Users.Users)ViewBag.User;
+    ViewData["Title"] = Model.Title + " - definer";
+}
+<div class="thread">
+    <h1><a href="/@CustomTagHelpers.FriendlyURLTitle(Model.Title)-@Model.ThreadID">@Model.Title</a></h1>
+    <div class="entries">
+        <ul>
+            <li>
+                <div class="body">@Model.Body</div>
+                <footer>
+                    <div class="feedback">
+                        <a href="/"><i class="fas fa-chevron-up"></i></a>
+                        <a href="/"><i class="fas fa-chevron-down"></i></a>
+                        <a href="/"><i class="fas fa-heart"></i></a>
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <a href="/">@Model.Author</a>
+                        </div>
+                        <div class="link">
+                            @if (User != null)
+                            {
+                                @if (@Model.UserID == User.ID)
+                                {
+                                    <a href="/edit/entry/@Model.ID"><small>edit</small></a>
+                                }
+                            }
+                        <a href="/entry/@Model.ID">
+                            <small>
+                                @Model.Date.ToString("dd.MM.yyyy HH:mm") @if (@Model.EditDate != null)
+                                {<text>~ </text>@Model.EditDate?.ToString("dd.MM.yyyy HH:mm")}
+                            </small>
+                        </a>
+                        </div>
+                    </div>
+                </footer>
+            </li>
+        </ul>
+    </div>
+</div>

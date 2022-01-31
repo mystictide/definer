@@ -14,9 +14,16 @@ namespace definer.Controllers
     [AllowAnonymous, Route("account")]
     public class AccountController : Controller
     {
+        private Users _user;
+        public Users user { get { return _user ?? (_user = ValidateUser.ValidateCurrentUser(this)); } }
+
         [Route("register")]
         public ActionResult Register()
         {
+            if (user != null)
+            {
+                return Redirect("/");
+            }
             return View();
         }
 
@@ -49,6 +56,10 @@ namespace definer.Controllers
         [Route("login")]
         public ActionResult Login()
         {
+            if (user != null)
+            {
+                return Redirect("/");
+            }
             return View();
         }
 

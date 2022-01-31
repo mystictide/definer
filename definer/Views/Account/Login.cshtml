@@ -15,6 +15,7 @@
             @Html.AntiForgeryToken()
             <label for="Mail">email</label>
             @Html.TextBoxFor(m => m.Mail)
+            @Html.ValidationMessageFor(m => m.Mail)
             <label for="Password">password</label>
             @Html.PasswordFor(m => m.Password)
             <button type="submit">login</button>

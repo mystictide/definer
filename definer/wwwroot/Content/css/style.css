@@ -34,6 +34,10 @@ header {
   height: 6.313rem;
 }
 
+.field-validation-error {
+  color: #aa00aa;
+}
+
 .navbar {
   z-index: 9998;
   position: fixed;
@@ -273,7 +277,6 @@ header {
 }
 
 .page-container {
-  height: 100%;
   width: 100%;
 }
 .page-container .sidebar {
@@ -330,7 +333,6 @@ header {
   color: #666;
 }
 .page-container .main {
-  height: 100%;
   width: 70%;
   display: flex;
   flex-direction: row;
@@ -362,7 +364,13 @@ header {
 .page-container .main .thread h1:hover {
   text-decoration: underline;
 }
+.page-container .main .thread h4 {
+  font-size: 0.8rem;
+  margin: 1rem 0;
+  word-break: break-word;
+}
 .page-container .main .thread .entries {
+  width: 100%;
   word-wrap: break-word;
   margin-bottom: 1rem;
   margin-top: 1rem;
@@ -419,27 +427,31 @@ header {
   color: #858587;
   font-size: 0.7rem;
 }
-.page-container .main .entry-editor {
-  height: 450px;
+.page-container .main .thread .entry-editor {
+  height: 365px;
   width: 100%;
   display: block;
 }
-.page-container .main .entry-editor form {
+.page-container .main .thread .entry-editor .field-validation-error {
   display: block;
-  height: 100%;
+  padding-bottom: 5px;
+}
+.page-container .main .thread .entry-editor form {
+  display: block;
+  height: inherit;
   width: 100%;
   background-color: #0e0e10;
   border-radius: 5px;
 }
-.page-container .main .entry-editor form .text-editor {
+.page-container .main .thread .entry-editor form .text-editor {
   border: none;
   outline: none;
   height: 100%;
   width: 100%;
   padding: 2rem;
 }
-.page-container .main .entry-editor form .text-editor textarea {
-  height: 100%;
+.page-container .main .thread .entry-editor form .text-editor textarea {
+  height: 85%;
   width: 100%;
   border: none;
   border-radius: 5px;
@@ -448,8 +460,12 @@ header {
   cursor: text;
   color: inherit;
   padding: 10px;
+  resize: none;
 }
-.page-container .main .entry-editor form .text-editor .process button {
+.page-container .main .thread .entry-editor form .text-editor .process {
+  height: 20%;
+}
+.page-container .main .thread .entry-editor form .text-editor .process button {
   display: inline-block;
   float: right;
   border-radius: 6px;
@@ -460,6 +476,9 @@ header {
   background-color: #aa00aa;
   color: inherit;
 }
+.page-container .main .thread .entry-editor form .text-editor .process button:hover {
+  outline: 1px solid #efeff1;
+}
 .page-container .main .res {
   margin: 1rem 2rem;
   flex-grow: 1;
@@ -468,12 +487,6 @@ header {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-}
-.page-container footer {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 50px;
 }
 .page-container .account-container {
   height: 90%;
@@ -518,9 +531,6 @@ header {
   border-color: #aa00aa;
   color: #efeff1;
 }
-.page-container .account-container .register .account-form .field-validation-error {
-  color: #aa00aa;
-}
 .page-container .account-container .register .account-form button {
   width: 50%;
   background-color: #0e0e10;
@@ -534,4 +544,11 @@ header {
   outline: none;
   border: 2px solid;
   border-color: #aa00aa;
+}
+
+footer {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 80px;
 }

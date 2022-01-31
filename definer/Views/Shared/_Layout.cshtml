@@ -87,14 +87,15 @@
                 a
             </div>
         </div>
-        <footer>
-        </footer>
 
-    @RenderSection("JS", required: false)
-    <script src="~/Content/lib/jquery/jquery-3.6.0.min.js"></script>
-    <script src="~/Content/js/app.js"></script>
-    <script>
-        $(document).ready(function() {sidebar.fill();});
-    </script>
+        <script src="~/Content/lib/jquery/jquery-3.6.0.min.js"></script>
+        <script src="~/Content/js/app.js"></script>
+        @RenderSection("JS", required: false)
+        <script>
+            $(document).ready(function () { sidebar.fill(); });
+        </script>
+    </div>
+    <footer>
+    </footer>
 </body>
 </html>

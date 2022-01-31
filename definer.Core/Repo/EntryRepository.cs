@@ -66,7 +66,7 @@ namespace definer.Core.Repo
 
                 string query = $@"
                 SELECT *
-                ,(select Title from Thread where ID=t.ID) Title
+                ,(select Title from Thread where ID=@ID) Title
                 ,(select Username from Users where ID=t.UserID) Author
                 FROM Entry t 
                 {WhereClause} 
@@ -96,13 +96,26 @@ namespace definer.Core.Repo
         {
             try
             {
-                using (var con = GetConnection)
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@ID", ID);
+
+                string WhereClause = @" WHERE t.ID = @ID";
+
+                string query = $@"
+                SELECT *
+                ,(select Title from Thread where ID=t.ThreadID) Title
+                ,(select Username from Users where ID=t.UserID) Author
+                FROM Entry t 
+                {WhereClause} ";
+
+                using (var connection = GetConnection)
                 {
-                    return con.Get<Entry>(ID);
+                    return connection.Query<Entry>(query, param).FirstOrDefault();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                //LogsRepository.CreateLog(ex);
                 return null;
             }
         }

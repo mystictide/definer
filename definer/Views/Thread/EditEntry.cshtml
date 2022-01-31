@@ -1,7 +1,7 @@
 ﻿@model definer.Entity.Threads.Entry
 
 @{
-    ViewData["Title"] = "EditEntry";
+    ViewData["Title"] = Model.Title + " - definer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,6 +13,7 @@
             @Html.Hidden("ThreadID", @Model.ThreadID)
             @Html.Hidden("Date", @Model.Date)
             @Html.Hidden("EditDate", @Model.EditDate)
+            @Html.Hidden("Title", @Model.Title)
             <fieldset class="text-editor">
                 <textarea id="Body" name="Body">@Model.Body</textarea>
                 <div class="process">
