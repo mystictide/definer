@@ -337,7 +337,7 @@ header {
             }
 
             .entries {
-                width:100%;
+                width: 100%;
                 word-wrap: break-word;
                 margin-bottom: 1rem;
                 margin-top: 1rem;
@@ -347,11 +347,17 @@ header {
                     list-style: none;
 
                     .body {
+                        white-space: pre-line;
                         margin-bottom: 5px;
                         overflow: hidden;
                         max-height: 250px;
                         position: relative;
                         font-size: 1rem;
+
+                        .spoiler {
+                            display:block;
+                            padding: 12px 0 12px 0;
+                        }
                     }
 
                     footer {
@@ -412,13 +418,14 @@ header {
             }
 
             .entry-editor {
-                height: 365px;
+                height: 400px;
                 width: 100%;
                 display: block;
 
                 .field-validation-error {
                     display: block;
                     padding-bottom: 5px;
+                    font-size: .8rem;
                 }
 
                 form {
@@ -433,10 +440,39 @@ header {
                         outline: none;
                         height: 100%;
                         width: 100%;
-                        padding: 2rem;
+                        padding: 1rem 2rem 2rem 2rem;
+
+                        .functions {
+                            display: block;
+                            width: 100%;
+                            height: 35px;
+                            margin-bottom: 5px;
+
+                            button {
+                                background-color: $body-colour;
+                                border-radius: 5px;
+                                border: 1px solid $accent-color;
+                                display: inline-block;
+                                cursor: pointer;
+                                color: $base-font-colour;
+                                font-family: Arial;
+                                font-size: 0.75rem;
+                                padding: 8px 10px;
+                                text-decoration: none;
+
+                                &:hover {
+                                    background-color: $base-bg-colour;
+                                }
+
+                                &:active {
+                                    position: relative;
+                                    top: 1px;
+                                }
+                            }
+                        }
 
                         textarea {
-                            height: 85%;
+                            height: 77%;
                             width: 100%;
                             border: none;
                             border-radius: 5px;

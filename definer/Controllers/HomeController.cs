@@ -53,6 +53,7 @@ namespace definer.Controllers
             }
         }
 
+        [Route("s/{search}"), HttpGet]
         [Route("s"), HttpPost]
         public ActionResult Search(string search)
         {

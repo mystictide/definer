@@ -70,5 +70,101 @@ namespace definer.Models
                 return "";
             }
         }
+
+        public static string FormatEntry(string incomingText)
+        {
+            if (incomingText != null)
+            {
+                string encodedText = replaceThread(incomingText);
+                encodedText = replaceLink(encodedText);
+                encodedText = replaceSpoiler(encodedText);
+                return encodedText.Replace("]", "");
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        #region formatHelpers
+        public static string replaceThread(string incomingText)
+        {
+            if (incomingText != null)
+            {
+                while (incomingText.Contains("[thread "))
+                {
+                    string open = "[thread ";
+                    int start = incomingText.IndexOf(open);
+                    int end = incomingText.IndexOf("]", start);
+                    string result = incomingText.Substring(start + open.Length, end - (start + open.Length));
+
+                    incomingText = incomingText.Remove(start, open.Length);
+                    var anchor = new TagBuilder("a");
+                    anchor.InnerHtml = result;
+                    anchor.MergeAttribute("href", "/s/" + result);
+
+                    incomingText = incomingText.Replace(result, anchor.ToString());
+                }
+                return incomingText;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public static string replaceLink(string incomingText)
+        {
+            if (incomingText != null)
+            {
+                while (incomingText.Contains("[link "))
+                {
+                    string open = "[link ";
+                    int start = incomingText.IndexOf(open);
+                    int end = incomingText.IndexOf("]", start);
+                    string result = incomingText.Substring(start + open.Length, end - (start + open.Length));
+
+                    incomingText = incomingText.Remove(start, open.Length);
+                    var anchor = new TagBuilder("a");
+                    anchor.InnerHtml = "link";
+                    anchor.MergeAttribute("href", result);
+
+                    incomingText = incomingText.Replace(result, anchor.ToString());
+                }
+                return incomingText;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public static string replaceSpoiler(string incomingText)
+        {
+            if (incomingText != null)
+            {
+                while (incomingText.Contains("[spoiler "))
+                {
+                    string open = "[spoiler ";
+                    int start = incomingText.IndexOf(open);
+                    int end = incomingText.IndexOf("]", start);
+                    string result = incomingText.Substring(start + open.Length, end - (start + open.Length));
+
+                    incomingText = incomingText.Remove(start, open.Length);
+                    var span = new TagBuilder("span");
+                    span.AddCssClass("spoiler");
+                    string inner = "" + result + "";
+                    span.InnerHtml = inner;
+
+                    incomingText = incomingText.Replace(result, span.ToString());
+                }
+                return incomingText;
+            }
+            else
+            {
+                return "";
+            }
+        }
+        #endregion
     }
 }

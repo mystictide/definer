@@ -25,7 +25,7 @@
                     @foreach (var item in Entries.data)
                     {
                         <li>
-                            <div class="body">@item.Body</div>
+                            <div class="body">@Html.Raw(@CustomTagHelpers.FormatEntry(@item.Body))</div>
                             <footer>
                                 <div class="feedback">
                                     <a href="/"><i class="fas fa-chevron-up"></i></a>
@@ -47,8 +47,7 @@
                                         <a href="/entry/@item.ID">
                                             <small>
                                                 @item.Date.ToString("dd.MM.yyyy HH:mm") @if (@item.EditDate != null)
-                                                {<text>~ </text> @item.EditDate?.ToString("dd.MM.yyyy HH:mm")
-                                            }
+                                                {<text>~ </text> @item.EditDate?.ToString("dd.MM.yyyy HH:mm")}
                                             </small>
                                         </a>
                                     </div>
@@ -66,6 +65,11 @@
                         @Html.Hidden("ThreadID", @Entries.data.FirstOrDefault().ThreadID)
                         <fieldset class="text-editor">
                             <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                            <div class="functions">
+                                <button type="button" id="bthread">thread</button>
+                                <button type="button" id="bspoiler">spoiler</button>
+                                <button type="button" id="blink">link</button>
+                            </div>
                             @Html.TextAreaFor(m => m.Body, new { @placeholder = "say something about \"" + @Entries.data.FirstOrDefault().Title + "\"" })
                             <div class="process">
                                 <button type="submit">submit</button>

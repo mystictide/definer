@@ -380,11 +380,16 @@ header {
   list-style: none;
 }
 .page-container .main .thread .entries li .body {
+  white-space: pre-line;
   margin-bottom: 5px;
   overflow: hidden;
   max-height: 250px;
   position: relative;
   font-size: 1rem;
+}
+.page-container .main .thread .entries li .body .spoiler {
+  display: block;
+  padding: 12px 0 12px 0;
 }
 .page-container .main .thread .entries li footer {
   margin-top: 10px;
@@ -428,13 +433,14 @@ header {
   font-size: 0.7rem;
 }
 .page-container .main .thread .entry-editor {
-  height: 365px;
+  height: 400px;
   width: 100%;
   display: block;
 }
 .page-container .main .thread .entry-editor .field-validation-error {
   display: block;
   padding-bottom: 5px;
+  font-size: 0.8rem;
 }
 .page-container .main .thread .entry-editor form {
   display: block;
@@ -448,10 +454,35 @@ header {
   outline: none;
   height: 100%;
   width: 100%;
-  padding: 2rem;
+  padding: 1rem 2rem 2rem 2rem;
+}
+.page-container .main .thread .entry-editor form .text-editor .functions {
+  display: block;
+  width: 100%;
+  height: 35px;
+  margin-bottom: 5px;
+}
+.page-container .main .thread .entry-editor form .text-editor .functions button {
+  background-color: #0e0e10;
+  border-radius: 5px;
+  border: 1px solid #aa00aa;
+  display: inline-block;
+  cursor: pointer;
+  color: #efeff1;
+  font-family: Arial;
+  font-size: 0.75rem;
+  padding: 8px 10px;
+  text-decoration: none;
+}
+.page-container .main .thread .entry-editor form .text-editor .functions button:hover {
+  background-color: #18181b;
+}
+.page-container .main .thread .entry-editor form .text-editor .functions button:active {
+  position: relative;
+  top: 1px;
 }
 .page-container .main .thread .entry-editor form .text-editor textarea {
-  height: 85%;
+  height: 77%;
   width: 100%;
   border: none;
   border-radius: 5px;
