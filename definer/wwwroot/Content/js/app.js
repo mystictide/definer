@@ -28,6 +28,61 @@ var sidebar = {
     }
 }
 
+var entryAttribute = {
+    voteUP: function (EntryID) {
+        var model = { EntryID: EntryID, Vote: 1};
+        $.ajax({
+            url: "/vote",
+            data: model,
+            success: function (model) {
+                if (model == null || model.vote == 0) {
+                    $("#def" + EntryID).find(".downvoted").removeClass("active");
+                    $("#def" + EntryID).find(".upvoted").removeClass("active");
+                }
+                else if (model.vote == 1) {
+                    $("#def" + EntryID).find(".upvoted").toggleClass("active");
+                    $("#def" + EntryID).find(".downvoted").removeClass("active");
+                }
+            }
+        });
+    },
+    voteDOWN: function (EntryID) {
+        var model = { EntryID: EntryID, Vote: 2};
+        $.ajax({
+            url: "/vote",
+            data: model,
+            success: function (model) {
+                if (model == null || model.vote == 0) {
+                    $("#def" + EntryID).find(".downvoted").removeClass("active");
+                    $("#def" + EntryID).find(".upvoted").removeClass("active");
+                }
+                else if (model.vote == 2) {
+                    $("#def" + EntryID).find(".downvoted").toggleClass("active");
+                    $("#def" + EntryID).find(".upvoted").removeClass("active");
+                }
+            }
+        });
+    },
+    fav: function (EntryID) {
+        var model = { EntryID: EntryID };
+        $.ajax({
+            url: "/fav",
+            data: model,
+            success: function (model) {
+                if (model.favourite) {
+                    $("#def" + model.entryID).find(".fav").toggleClass("active");
+                }
+                else if (!model.favourite) {
+                    $("#def" + model.entryID).find(".fav").removeClass("active");
+                }
+                else if (model.favourite == null) {
+                    $("#def" + model.entryID).find(".fav").removeClass("active");
+                }
+            }
+        });
+    }
+}
+
 const bthread = document.getElementById("bthread");
 const bspoiler = document.getElementById("bspoiler");
 const blink = document.getElementById("blink");

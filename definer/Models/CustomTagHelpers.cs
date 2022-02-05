@@ -78,6 +78,7 @@ namespace definer.Models
                 string encodedText = replaceThread(incomingText);
                 encodedText = replaceLink(encodedText);
                 encodedText = replaceSpoiler(encodedText);
+                encodedText = Regex.Replace(encodedText, @"\t\n", "").Trim();
                 return encodedText.Replace("]", "");
             }
             else
@@ -151,12 +152,17 @@ namespace definer.Models
                     string result = incomingText.Substring(start + open.Length, end - (start + open.Length));
 
                     incomingText = incomingText.Remove(start, open.Length);
+                    //var div = new TagBuilder("div");
+                    //div.AddCssClass("spoiler-overlay");
+                    //div.InnerHtml = "spoilers";
                     var span = new TagBuilder("span");
                     span.AddCssClass("spoiler");
-                    string inner = "" + result + "";
+                    span.Attributes.Add("tabindex", "0");
+                    string inner = result;
                     span.InnerHtml = inner;
+                    string elements = span.ToString();
 
-                    incomingText = incomingText.Replace(result, span.ToString());
+                    incomingText = incomingText.Replace(result, elements);
                 }
                 return incomingText;
             }

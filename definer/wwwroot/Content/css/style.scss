@@ -348,17 +348,28 @@ header {
 
                     .body {
                         white-space: pre-line;
-                        margin-bottom: 5px;
                         overflow: hidden;
-                        max-height: 250px;
                         position: relative;
                         font-size: 1rem;
+                        line-height: 22px;
 
                         .spoiler {
-                            display:block;
-                            padding: 12px 0 12px 0;
+                            opacity: 0.9;
+                            background: $body-colour;
+                            border-radius: 5px;
+                            color: transparent;
+                            cursor: help;
+                            user-select: none;
+                            transition: background 0.3s ease 0.2s, color 0.2s ease 0.25s;
+
+                            &:focus {
+                                background: none;
+                                color: inherit;
+                            }
                         }
                     }
+
+
 
                     footer {
                         margin-top: 10px;
@@ -374,10 +385,28 @@ header {
                             a {
                                 color: #858587;
                                 padding: 5px;
+                                cursor: pointer;
 
                                 &:hover {
                                     color: $accent-color;
                                 }
+
+                                &:active {
+                                    position: relative;
+                                    top: 1px;
+                                }
+                            }
+
+                            .upvoted.active {
+                                color: $accent-color;
+                            }
+
+                            .downvoted.active {
+                                color: #c10000;
+                            }
+
+                            .fav.active {
+                                color: $accent-color;
                             }
                         }
 

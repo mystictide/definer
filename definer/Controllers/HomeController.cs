@@ -36,7 +36,14 @@ namespace definer.Controllers
                     filter = filter,
                     filterModel = filterModel
                 };
-                result = new EntryManager().FilteredList(request);
+                if (user != null)
+                {
+                    result = new EntryManager().FilteredList(request, user.ID);
+                }
+                else
+                {
+                    result = new EntryManager().FilteredList(request);
+                }
                 ViewBag.Entries = result;
                 return View();
             }
@@ -62,21 +69,10 @@ namespace definer.Controllers
             {
                 return Redirect("/" + search);
             }
-            //filter.Keyword = filter.Keyword ?? "";
-            //filter.pageSize = 10;
-            //filter.isDetailSearch = false;
-            //filterModel.ThreadID = model.ID;
-            //FilteredList<Entry> request = new FilteredList<Entry>()
-            //{
-            //    filter = filter,
-            //    filterModel = filterModel
-            //};
-            //FilteredList<Entry> result = new EntryManager().FilteredList(request);
             return Redirect("/" + CustomTagHelpers.FriendlyURLTitle(model.Title) + "-" + model.ID);
         }
 
-        [Route("sideBar")]
-        [HttpGet]
+        [Route("sideBar"), HttpGet]
         public JsonResult sideBar(Filter filter, Threads filterModel)
         {
             filter.Keyword = filter.Keyword ?? "";

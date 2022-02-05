@@ -19,5 +19,8 @@ namespace definer.Entity.Threads
 
         [Write(false)]
         public string Author { get; set; }
+
+        [Write(false)]
+        public EntryAttribute Attributes { get; set; }
     }
 }

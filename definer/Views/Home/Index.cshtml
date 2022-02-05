@@ -24,13 +24,50 @@
                 <ul>
                     @foreach (var item in Entries.data)
                     {
+                        string def = "def" + item.ID;
                         <li>
                             <div class="body">@Html.Raw(@CustomTagHelpers.FormatEntry(@item.Body))</div>
                             <footer>
-                                <div class="feedback">
-                                    <a href="/"><i class="fas fa-chevron-up"></i></a>
-                                    <a href="/"><i class="fas fa-chevron-down"></i></a>
-                                    <a href="/"><i class="fas fa-heart"></i></a>
+                                <div class="feedback" id="@def">
+                                    @if (User != null)
+                                    {
+                                        if (item.UserID == User.ID)
+                                        {
+                                            if (item.Attributes != null)
+                                            {
+                                                if (item.Attributes.Vote == 1)
+                                                {
+
+                                                    <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted active"><i class="fas fa-chevron-up"></i></a>
+                                                    <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                                }
+                                                else if (item.Attributes.Vote == 2)
+                                                {
+                                                    <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                                    <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted active"><i class="fas fa-chevron-down"></i></a>
+                                                }
+                                                else
+                                                {
+                                                    <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                                    <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                                }
+                                                if (item.Attributes.Favourite)
+                                                {
+                                                    <a onclick="entryAttribute.fav(@item.ID)" class="fav active"><i class="fas fa-heart"></i></a>
+                                                }
+                                                else
+                                                {
+                                                    <a onclick="entryAttribute.fav(@item.ID)" class="fav"><i class="fas fa-heart"></i></a>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                                <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                                <a onclick="entryAttribute.fav(@item.ID)" class="fav"><i class="fas fa-heart"></i></a>
+                                            }
+                                        }
+                                    }
                                 </div>
                                 <div class="info">
                                     <div class="author">

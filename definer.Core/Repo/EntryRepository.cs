@@ -50,6 +50,51 @@ namespace definer.Core.Repo
             }
         }
 
+        public FilteredList<Entry> FilteredList(FilteredList<Entry> request, int UserID)
+        {
+            try
+            {
+                FilteredList<Entry> result = new FilteredList<Entry>();
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@Keyword", request.filter.Keyword);
+                param.Add("@PageSize", request.filter.pageSize);
+                param.Add("@ID", request.filterModel.ThreadID);
+                param.Add("@UserID", UserID);
+
+                string WhereClause = @" WHERE t.ThreadID = @ID AND  (t.Body like '%' + @Keyword + '%')";
+
+                string query_count = $@"  Select Count(t.ID) from Entry t {WhereClause}";
+
+                string query = $@"
+                SELECT t.*
+                ,(select Title from Thread where ID=@ID) Title
+                ,(select Username from Users where ID=t.UserID) Author
+                ,j.*
+                FROM Entry t
+                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID AND j.UserID = @UserID
+                {WhereClause} 
+                ORDER BY t.ID ASC 
+                OFFSET @StartIndex ROWS
+                FETCH NEXT @PageSize ROWS ONLY";
+
+                using (var connection = GetConnection)
+                {
+                    result.totalItems = connection.QueryFirstOrDefault<int>(query_count, param);
+                    request.filter.pager = new Page(result.totalItems, request.filter.pageSize, request.filter.page);
+                    param.Add("@StartIndex", request.filter.pager.StartIndex);
+                    result.data = connection.Query<Entry, EntryAttribute, Entry>(query, (a, s) => { a.Attributes = s; return a;}, param, splitOn: "ID");
+                    result.filter = request.filter;
+                    result.filterModel = request.filterModel;
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
         public FilteredList<Entry> FilteredList(FilteredList<Entry> request)
         {
             try
@@ -68,7 +113,7 @@ namespace definer.Core.Repo
                 SELECT *
                 ,(select Title from Thread where ID=@ID) Title
                 ,(select Username from Users where ID=t.UserID) Author
-                FROM Entry t 
+                FROM Entry t
                 {WhereClause} 
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS

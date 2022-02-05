@@ -381,15 +381,23 @@ header {
 }
 .page-container .main .thread .entries li .body {
   white-space: pre-line;
-  margin-bottom: 5px;
   overflow: hidden;
-  max-height: 250px;
   position: relative;
   font-size: 1rem;
+  line-height: 22px;
 }
 .page-container .main .thread .entries li .body .spoiler {
-  display: block;
-  padding: 12px 0 12px 0;
+  opacity: 0.9;
+  background: #0e0e10;
+  border-radius: 5px;
+  color: transparent;
+  cursor: help;
+  user-select: none;
+  transition: background 0.3s ease 0.2s, color 0.2s ease 0.25s;
+}
+.page-container .main .thread .entries li .body .spoiler:focus {
+  background: none;
+  color: inherit;
 }
 .page-container .main .thread .entries li footer {
   margin-top: 10px;
@@ -405,8 +413,22 @@ header {
 .page-container .main .thread .entries li footer .feedback a {
   color: #858587;
   padding: 5px;
+  cursor: pointer;
 }
 .page-container .main .thread .entries li footer .feedback a:hover {
+  color: #aa00aa;
+}
+.page-container .main .thread .entries li footer .feedback a:active {
+  position: relative;
+  top: 1px;
+}
+.page-container .main .thread .entries li footer .feedback .upvoted.active {
+  color: #aa00aa;
+}
+.page-container .main .thread .entries li footer .feedback .downvoted.active {
+  color: #c10000;
+}
+.page-container .main .thread .entries li footer .feedback .fav.active {
   color: #aa00aa;
 }
 .page-container .main .thread .entries li footer .info {

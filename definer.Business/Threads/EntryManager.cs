@@ -23,6 +23,11 @@ namespace definer.Business.Threads
             return _repo.Delete(ID);
         }
 
+        public FilteredList<Entry> FilteredList(FilteredList<Entry> request, int UserID)
+        {
+            return _repo.FilteredList(request, UserID);
+        }
+
         public FilteredList<Entry> FilteredList(FilteredList<Entry> request)
         {
             return _repo.FilteredList(request);

@@ -8,12 +8,13 @@ using Newtonsoft.Json;
 
 namespace definer.Controllers
 {
-    [AllowAnonymous, Route("")]
+    [Authorize, Route("")]
     public class ThreadController : Controller
     {
         private Users _user;
         public Users user { get { return _user ?? (_user = ValidateUser.ValidateCurrentUser(this)); } }
 
+        [AllowAnonymous]
         [Route("entry/{ID}")]
         public ActionResult ViewEntry(int ID)
         {
