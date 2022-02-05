@@ -35,22 +35,27 @@
                                         {
                                             if (item.Attributes != null)
                                             {
-                                                if (item.Attributes.Vote == 1)
+                                                if (item.Attributes.Vote.HasValue)
                                                 {
+                                                    if (item.Attributes.Vote.Value)
+                                                    {
 
-                                                    <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted active"><i class="fas fa-chevron-up"></i></a>
-                                                    <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
-                                                }
-                                                else if (item.Attributes.Vote == 2)
-                                                {
-                                                    <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
-                                                    <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted active"><i class="fas fa-chevron-down"></i></a>
+                                                        <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted active"><i class="fas fa-chevron-up"></i></a>
+                                                        <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                                    }
+                                                    else if (!item.Attributes.Vote.Value)
+                                                    {
+                                                        <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                                        <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted active"><i class="fas fa-chevron-down"></i></a>
+                                                    }
                                                 }
                                                 else
                                                 {
                                                     <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
                                                     <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
                                                 }
+
+
                                                 if (item.Attributes.Favourite)
                                                 {
                                                     <a onclick="entryAttribute.fav(@item.ID)" class="fav active"><i class="fas fa-heart"></i></a>

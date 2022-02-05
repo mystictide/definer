@@ -30,12 +30,12 @@ var sidebar = {
 
 var entryAttribute = {
     voteUP: function (EntryID) {
-        var model = { EntryID: EntryID, Vote: 1};
+        var model = { EntryID: EntryID, Vote: 'True'};
         $.ajax({
             url: "/vote",
             data: model,
             success: function (model) {
-                if (model == null || model.vote == 0) {
+                if (model == null || model.vote == 0 || model.vote == null) {
                     $("#def" + EntryID).find(".downvoted").removeClass("active");
                     $("#def" + EntryID).find(".upvoted").removeClass("active");
                 }
@@ -47,16 +47,16 @@ var entryAttribute = {
         });
     },
     voteDOWN: function (EntryID) {
-        var model = { EntryID: EntryID, Vote: 2};
+        var model = { EntryID: EntryID, Vote: 'False'};
         $.ajax({
             url: "/vote",
             data: model,
             success: function (model) {
-                if (model == null || model.vote == 0) {
+                if (model == null || model.vote == 1 || model.vote == null) {
                     $("#def" + EntryID).find(".downvoted").removeClass("active");
                     $("#def" + EntryID).find(".upvoted").removeClass("active");
                 }
-                else if (model.vote == 2) {
+                else if (model.vote == 0) {
                     $("#def" + EntryID).find(".downvoted").toggleClass("active");
                     $("#def" + EntryID).find(".upvoted").removeClass("active");
                 }
@@ -70,13 +70,13 @@ var entryAttribute = {
             data: model,
             success: function (model) {
                 if (model.favourite) {
-                    $("#def" + model.entryID).find(".fav").toggleClass("active");
+                    $("#def" + EntryID).find(".fav").toggleClass("active");
                 }
                 else if (!model.favourite) {
-                    $("#def" + model.entryID).find(".fav").removeClass("active");
+                    $("#def" + EntryID).find(".fav").removeClass("active");
                 }
                 else if (model.favourite == null) {
-                    $("#def" + model.entryID).find(".fav").removeClass("active");
+                    $("#def" + EntryID).find(".fav").removeClass("active");
                 }
             }
         });

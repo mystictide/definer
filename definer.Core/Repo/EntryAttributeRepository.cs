@@ -190,11 +190,12 @@ namespace definer.Core.Repo
                 param.Add("@UserID", entity.UserID);
 
                 string query = $@"
-                if exists(SELECT * from EntryAttribute where EntryID = @EntryID AND UserID = @UserID)            
+                if exists(SELECT * from EntryAttribute where EntryID = @EntryID AND UserID = @UserID)        
                 BEGIN            
                 UPDATE EntryAttribute
                             SET Favourite = 
 							CASE
+                                WHEN Favourite IS NULL THEN 1
 								WHEN Favourite = 0 THEN 1
 								WHEN Favourite = 1 THEN NULL
 							END
@@ -203,9 +204,9 @@ namespace definer.Core.Repo
                 End                    
                 else            
                 begin  
-                INSERT INTO EntryAttribute (EntryID, UserID, Favourite)
+                INSERT INTO EntryAttribute (EntryID, UserID, Vote, Favourite)
                                 OUTPUT INSERTED.* 
-                                VALUES (@EntryID, @UserID, 1)
+                                VALUES (@EntryID, @UserID, null, 1)
                 end
                 Delete from EntryAttribute WHERE EntryID = @EntryID AND UserID = @UserID AND Vote IS NULL AND Favourite IS NULL";
 
@@ -241,7 +242,8 @@ namespace definer.Core.Repo
                     UPDATE EntryAttribute
                             SET Vote = 
 							CASE
-								WHEN Vote = 2 THEN 1
+                                WHEN Vote IS NULL THEN 1
+								WHEN Vote = 0 THEN 1
 								WHEN Vote = 1 THEN NULL
 							END
                             OUTPUT INSERTED.* 
@@ -249,9 +251,9 @@ namespace definer.Core.Repo
                     End                    
                     else            
                     begin  
-                    INSERT INTO EntryAttribute (EntryID, UserID, Vote)
+                    INSERT INTO EntryAttribute (EntryID, UserID, Vote, Favourite)
                                     OUTPUT INSERTED.* 
-                                    VALUES (@EntryID, @UserID, @Vote)
+                                    VALUES (@EntryID, @UserID, @Vote, null)
                     end
                     Delete from EntryAttribute WHERE EntryID = @EntryID AND UserID = @UserID AND Vote IS NULL AND Favourite IS NULL";
                 }
@@ -263,8 +265,9 @@ namespace definer.Core.Repo
                     UPDATE EntryAttribute
                             SET Vote = 
 							CASE
-								WHEN Vote = 1 THEN 2
-								WHEN Vote = 2 THEN NULL
+                                WHEN Vote IS NULL THEN 0
+								WHEN Vote = 1 THEN 0
+								WHEN Vote = 0 THEN NULL
 							END
                             OUTPUT INSERTED.* 
                             WHERE EntryID = @EntryID AND UserID = @UserID

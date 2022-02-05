@@ -11,6 +11,8 @@ namespace definer.Controllers
     [Authorize, Route("")]
     public class EntryController : Controller
     {
+        //beğeni sayılarını çek göster, update olduğunda sayıyı güncelle?
+
         private Users _user;
         public Users user { get { return _user ?? (_user = ValidateUser.ValidateCurrentUser(this)); } }
 
@@ -19,11 +21,11 @@ namespace definer.Controllers
         {
             EntryAttribute result;
             model.UserID = user.ID;
-            if (model.Vote == 1)
+            if (model.Vote.Value)
             { 
                 result = new EntryAttributeManager().Vote(model, true);
             }
-            else if (model.Vote == 2)
+            else if (!model.Vote.Value)
             {
                 result = new EntryAttributeManager().Vote(model, false);
             }
