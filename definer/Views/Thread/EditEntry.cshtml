@@ -15,7 +15,13 @@
             @Html.Hidden("EditDate", @Model.EditDate)
             @Html.Hidden("Title", @Model.Title)
             <fieldset class="text-editor">
-                <textarea id="Body" name="Body">@Model.Body</textarea>
+                <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                <div class="functions">
+                    <button type="button" id="bthread">thread</button>
+                    <button type="button" id="bspoiler">spoiler</button>
+                    <button type="button" id="blink">link</button>
+                </div>
+                @Html.TextAreaFor(m => m.Body, new { @placeholder = "say something about \"" + Model.Title + "\"" })
                 <div class="process">
                     <button type="submit">submit</button>
                 </div>

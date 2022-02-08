@@ -11,9 +11,7 @@ namespace definer.Controllers
     [Authorize, Route("")]
     public class EntryController : Controller
     {
-        //beğeni sayılarını çek göster, update olduğunda sayıyı güncelle?
-
-        private Users _user;
+         private Users _user;
         public Users user { get { return _user ?? (_user = ValidateUser.ValidateCurrentUser(this)); } }
 
         [Route("vote"), HttpGet]

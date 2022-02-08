@@ -38,6 +38,11 @@ namespace definer.Business.Threads
             return _repo.Get(ID);
         }
 
+        public Entry Get(int ID, int UserID)
+        {
+            return _repo.Get(ID, UserID);
+        }
+
         public IEnumerable<Entry> GetAll()
         {
             return _repo.GetAll();

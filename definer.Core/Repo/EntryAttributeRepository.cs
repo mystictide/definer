@@ -190,6 +190,7 @@ namespace definer.Core.Repo
                 param.Add("@UserID", entity.UserID);
 
                 string query = $@"
+                DECLARE  @result table(ID Int, EntryID Int, UserID Int, Vote bit, Favourite bit)
                 if exists(SELECT * from EntryAttribute where EntryID = @EntryID AND UserID = @UserID)        
                 BEGIN            
                 UPDATE EntryAttribute
@@ -199,16 +200,21 @@ namespace definer.Core.Repo
 								WHEN Favourite = 0 THEN 1
 								WHEN Favourite = 1 THEN NULL
 							END
-                                OUTPUT INSERTED.*
+                                OUTPUT INSERTED.* INTO @result
                                 WHERE EntryID = @EntryID AND UserID = @UserID;
                 End                    
                 else            
                 begin  
                 INSERT INTO EntryAttribute (EntryID, UserID, Vote, Favourite)
-                                OUTPUT INSERTED.* 
+                                OUTPUT INSERTED.* INTO @result
                                 VALUES (@EntryID, @UserID, null, 1)
                 end
-                Delete from EntryAttribute WHERE EntryID = @EntryID AND UserID = @UserID AND Vote IS NULL AND Favourite IS NULL";
+                Delete from EntryAttribute WHERE EntryID = @EntryID AND UserID = @UserID AND Vote IS NULL AND Favourite IS NULL
+                SELECT *
+				,(select count(ID) from EntryAttribute where EntryID=@EntryID AND Vote=1) Upvotes
+                ,(select count(ID) from EntryAttribute where EntryID=@EntryID AND Vote=0) Downvotes
+                ,(select count(ID) from EntryAttribute where EntryID=@EntryID AND Favourite=1) Favourites
+				FROM @result";
 
                 using (var connection = GetConnection)
                 {
@@ -237,6 +243,7 @@ namespace definer.Core.Repo
                 if (State)
                 {
                     query = $@"
+                    DECLARE  @result table(ID Int, EntryID Int, UserID Int, Vote bit, Favourite bit)
                     if exists(SELECT * from EntryAttribute where EntryID = @EntryID AND UserID = @UserID)            
                     BEGIN            
                     UPDATE EntryAttribute
@@ -246,20 +253,26 @@ namespace definer.Core.Repo
 								WHEN Vote = 0 THEN 1
 								WHEN Vote = 1 THEN NULL
 							END
-                            OUTPUT INSERTED.* 
+                            OUTPUT INSERTED.* INTO @result
                             WHERE EntryID = @EntryID AND UserID = @UserID
                     End                    
                     else            
                     begin  
                     INSERT INTO EntryAttribute (EntryID, UserID, Vote, Favourite)
-                                    OUTPUT INSERTED.* 
+                                    OUTPUT INSERTED.*  INTO @result
                                     VALUES (@EntryID, @UserID, @Vote, null)
                     end
-                    Delete from EntryAttribute WHERE EntryID = @EntryID AND UserID = @UserID AND Vote IS NULL AND Favourite IS NULL";
+                    Delete from EntryAttribute WHERE EntryID = @EntryID AND UserID = @UserID AND Vote IS NULL AND Favourite IS NULL
+                SELECT *
+				,(select count(ID) from EntryAttribute where EntryID=@EntryID AND Vote=1) Upvotes
+                ,(select count(ID) from EntryAttribute where EntryID=@EntryID AND Vote=0) Downvotes
+                ,(select count(ID) from EntryAttribute where EntryID=@EntryID AND Favourite=1) Favourites
+				FROM @result";
                 }
                 else
                 {
                     query = $@"
+                    DECLARE  @result table(ID Int, EntryID Int, UserID Int, Vote bit, Favourite bit)
                     if exists(SELECT * from EntryAttribute where EntryID = @EntryID AND UserID = @UserID)            
                     BEGIN            
                     UPDATE EntryAttribute
@@ -269,19 +282,22 @@ namespace definer.Core.Repo
 								WHEN Vote = 1 THEN 0
 								WHEN Vote = 0 THEN NULL
 							END
-                            OUTPUT INSERTED.* 
+                            OUTPUT INSERTED.*  INTO @result
                             WHERE EntryID = @EntryID AND UserID = @UserID
                     End                    
                     else            
                     begin  
                     INSERT INTO EntryAttribute (EntryID, UserID, Vote)
-                                    OUTPUT INSERTED.* 
+                                    OUTPUT INSERTED.* INTO @result
                                     VALUES (@EntryID, @UserID, @Vote)
                     end
-                    Delete from EntryAttribute WHERE EntryID = @EntryID AND UserID = @UserID AND Vote IS NULL AND Favourite IS NULL";
+                    Delete from EntryAttribute WHERE EntryID = @EntryID AND UserID = @UserID AND Vote IS NULL AND Favourite IS NULL
+                    SELECT *
+				    ,(select count(ID) from EntryAttribute where EntryID=@EntryID AND Vote=1) Upvotes
+                    ,(select count(ID) from EntryAttribute where EntryID=@EntryID AND Vote=0) Downvotes
+                    ,(select count(ID) from EntryAttribute where EntryID=@EntryID AND Favourite=1) Favourites
+				    FROM @result";
                 }
-
-                
 
                 using (var connection = GetConnection)
                 {

@@ -1,7 +1,8 @@
 ﻿@model definer.Models.UserViewModel
 @{
     ViewData["Title"] = "login";
-    bool success  = Convert.ToBoolean(Context.Request.Query["val"]);
+    bool success = Convert.ToBoolean(Context.Request.Query["val"]);
+    string error = Convert.ToString(Context.Request.Query["error"]);
 }
 
 <div class="account-container">
@@ -10,14 +11,21 @@
         {
             <span class="success">you have registered successfully, try logging in</span>
         }
+        @if (error != null || error?.Length > 0)
+        {
+            <span class="error">@error</span>
+        }
         <h2>come aboard then</h2>
         <form action="/account/login" autocomplete="off" method="post" class="account-form">
             @Html.AntiForgeryToken()
             <label for="Mail">email</label>
             @Html.TextBoxFor(m => m.Mail)
-            @Html.ValidationMessageFor(m => m.Mail)
             <label for="Password">password</label>
             @Html.PasswordFor(m => m.Password)
+            <div class="remember">
+                @Html.CheckBoxFor(m => m.RememberMe)
+                <label for="RememberMe">remember me!</label>
+            </div>
             <button type="submit">login</button>
         </form>
     </div>

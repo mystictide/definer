@@ -549,10 +549,23 @@ header {
   height: 100%;
   width: 100%;
 }
+.page-container .account-container .register .remember {
+  display: block;
+}
+.page-container .account-container .register .remember input[type=checkbox] {
+  width: 3%;
+  cursor: pointer;
+}
 .page-container .account-container .register .success {
   display: block;
   padding: 5px;
   background-color: #136e50;
+  text-align: center;
+}
+.page-container .account-container .register .error {
+  display: block;
+  padding: 5px;
+  background-color: #850000;
   text-align: center;
 }
 .page-container .account-container .register h2 {

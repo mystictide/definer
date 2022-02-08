@@ -22,5 +22,12 @@ namespace definer.Entity.Threads
 
         [Write(false)]
         public EntryAttribute Attributes { get; set; }
+
+        [Write(false)]
+        public int Upvotes { get; set; }
+        [Write(false)]
+        public int Downvotes { get; set; }
+        [Write(false)]
+        public int Favourites { get; set; }
     }
 }

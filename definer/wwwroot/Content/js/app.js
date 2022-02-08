@@ -30,7 +30,7 @@ var sidebar = {
 
 var entryAttribute = {
     voteUP: function (EntryID) {
-        var model = { EntryID: EntryID, Vote: 'True'};
+        var model = { EntryID: EntryID, Vote: 'True' };
         $.ajax({
             url: "/vote",
             data: model,
@@ -38,16 +38,40 @@ var entryAttribute = {
                 if (model == null || model.vote == 0 || model.vote == null) {
                     $("#def" + EntryID).find(".downvoted").removeClass("active");
                     $("#def" + EntryID).find(".upvoted").removeClass("active");
+                    if (model.upvotes < 1) {
+                        $("#def" + EntryID).find(".upCount").text('');
+                    }
+                    else {
+                        $("#def" + EntryID).find(".upCount").text(model.upvotes);
+                    }
+                    if (model.downvotes < 1) {
+                        $("#def" + EntryID).find(".downCount").text('');
+                    }
+                    else {
+                        $("#def" + EntryID).find(".downCount").text(model.downvotes);
+                    }
                 }
                 else if (model.vote == 1) {
                     $("#def" + EntryID).find(".upvoted").toggleClass("active");
                     $("#def" + EntryID).find(".downvoted").removeClass("active");
+                    if (model.upvotes < 1) {
+                        $("#def" + EntryID).find(".upCount").text('');
+                    }
+                    else {
+                        $("#def" + EntryID).find(".upCount").text(model.upvotes);
+                    }
+                    if (model.downvotes < 1) {
+                        $("#def" + EntryID).find(".downCount").text('');
+                    }
+                    else {
+                        $("#def" + EntryID).find(".downCount").text(model.downvotes);
+                    }
                 }
             }
         });
     },
     voteDOWN: function (EntryID) {
-        var model = { EntryID: EntryID, Vote: 'False'};
+        var model = { EntryID: EntryID, Vote: 'False' };
         $.ajax({
             url: "/vote",
             data: model,
@@ -55,10 +79,34 @@ var entryAttribute = {
                 if (model == null || model.vote == 1 || model.vote == null) {
                     $("#def" + EntryID).find(".downvoted").removeClass("active");
                     $("#def" + EntryID).find(".upvoted").removeClass("active");
+                    if (model.upvotes < 1) {
+                        $("#def" + EntryID).find(".upCount").text('');
+                    }
+                    else {
+                        $("#def" + EntryID).find(".upCount").text(model.upvotes);
+                    }
+                    if (model.downvotes < 1) {
+                        $("#def" + EntryID).find(".downCount").text('');
+                    }
+                    else {
+                        $("#def" + EntryID).find(".downCount").text(model.downvotes);
+                    }
                 }
                 else if (model.vote == 0) {
                     $("#def" + EntryID).find(".downvoted").toggleClass("active");
                     $("#def" + EntryID).find(".upvoted").removeClass("active");
+                    if (model.upvotes < 1) {
+                        $("#def" + EntryID).find(".upCount").text('');
+                    }
+                    else {
+                        $("#def" + EntryID).find(".upCount").text(model.upvotes);
+                    }
+                    if (model.downvotes < 1) {
+                        $("#def" + EntryID).find(".downCount").text('');
+                    }
+                    else {
+                        $("#def" + EntryID).find(".downCount").text(model.downvotes);
+                    }
                 }
             }
         });
@@ -71,12 +119,30 @@ var entryAttribute = {
             success: function (model) {
                 if (model.favourite) {
                     $("#def" + EntryID).find(".fav").toggleClass("active");
+                    if (model.favourites < 1) {
+                        $("#def" + EntryID).find(".favCount").text('');
+                    }
+                    else {
+                        $("#def" + EntryID).find(".favCount").text(model.favourites);
+                    }           
                 }
                 else if (!model.favourite) {
                     $("#def" + EntryID).find(".fav").removeClass("active");
+                    if (model.favourites < 1) {
+                        $("#def" + EntryID).find(".favCount").text('');
+                    }
+                    else {
+                        $("#def" + EntryID).find(".favCount").text(model.favourites);
+                    }
                 }
                 else if (model.favourite == null) {
                     $("#def" + EntryID).find(".fav").removeClass("active");
+                    if (model.favourites < 1) {
+                        $("#def" + EntryID).find(".favCount").text('');
+                    }
+                    else {
+                        $("#def" + EntryID).find(".favCount").text(model.favourites);
+                    }
                 }
             }
         });

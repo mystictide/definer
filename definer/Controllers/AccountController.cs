@@ -69,29 +69,42 @@ namespace definer.Controllers
             PasswordHasher _passwordHasher = new PasswordHasher();
             Users user = new UserManager().Login(model.Mail);
             //var hashedPassword = _passwordHasher.HashPassword(model.Password);
-            var successResult = _passwordHasher.VerifyHashedPassword(user.Password, model.Password);
-            if (successResult == PasswordVerificationResult.Success)
+            if (user != null)
             {
-                if (user.IsActive)
+                var successResult = _passwordHasher.VerifyHashedPassword(user.Password, model.Password);
+                if (successResult == PasswordVerificationResult.Success)
                 {
-                    var claims = new List<Claim>
+                    if (user.IsActive)
+                    {
+                        var claims = new List<Claim>
                         {
                             new Claim("user", JsonSerializer.Serialize(user))
                         };
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    AuthenticationProperties authProperties;
-                    if (model.RememberMe)
-                    {
-                        authProperties = new AuthenticationProperties { ExpiresUtc = DateTimeOffset.UtcNow.AddMonths(3), IsPersistent = true };
-                    }
-                    else
-                    {
-                        authProperties = new AuthenticationProperties { ExpiresUtc = DateTimeOffset.UtcNow.AddHours(12), IsPersistent = true };
-                    }
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        AuthenticationProperties authProperties;
+                        if (model.RememberMe)
+                        {
+                            authProperties = new AuthenticationProperties { ExpiresUtc = DateTimeOffset.UtcNow.AddMonths(3), IsPersistent = true };
+                        }
+                        else
+                        {
+                            authProperties = new AuthenticationProperties { ExpiresUtc = DateTimeOffset.UtcNow.AddHours(12), IsPersistent = true };
+                        }
 
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-                    return Redirect("/");
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                        return Redirect("/");
+                    }
                 }
+                else
+                {
+                    return RedirectToAction("login", new { error = "the password might be wrong." });
+                    //wrong password
+                }
+            }
+            else
+            {
+                return RedirectToAction("login", new { error = "don't think I know this user." });
+                //no user found
             }
             return Redirect(Request.Path);
         }

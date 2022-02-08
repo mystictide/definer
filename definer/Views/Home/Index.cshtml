@@ -41,38 +41,104 @@
                                                     {
 
                                                         <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted active"><i class="fas fa-chevron-up"></i></a>
-                                                        <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
-                                                    }
-                                                    else if (!item.Attributes.Vote.Value)
+                                                        if (@item.Upvotes > 0)
+                                                        {<small class="upCount">@item.Upvotes</small>}
+                                                    else
                                                     {
-                                                        <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
-                                                        <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted active"><i class="fas fa-chevron-down"></i></a>
+                                                        <small class="upCount"></small>
                                                     }
-                                                }
-                                                else
-                                                {
-                                                    <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
                                                     <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
-                                                }
-
-
-                                                if (item.Attributes.Favourite)
-                                                {
-                                                    <a onclick="entryAttribute.fav(@item.ID)" class="fav active"><i class="fas fa-heart"></i></a>
-                                                }
+                                                    if (@item.Downvotes > 0)
+                                                    {<small class="downCount">@item.Downvotes</small>}
                                                 else
                                                 {
-                                                    <a onclick="entryAttribute.fav(@item.ID)" class="fav"><i class="fas fa-heart"></i></a>
+                                                    <small class="downCount"></small>
                                                 }
                                             }
-                                            else
+                                            else if (!item.Attributes.Vote.Value)
                                             {
                                                 <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
-                                                <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
-                                                <a onclick="entryAttribute.fav(@item.ID)" class="fav"><i class="fas fa-heart"></i></a>
+                                                if (@item.Upvotes > 0)
+                                                {<small class="upCount">@item.Upvotes</small>}
+                                            else
+                                            {
+                                                <small class="upCount"></small>
                                             }
+                                            <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted active"><i class="fas fa-chevron-down"></i></a>
+                                            if (@item.Downvotes > 0)
+                                            {<small class="downCount">@item.Downvotes</small>}
+                                        else
+                                        {
+                                            <small class="downCount"></small>
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                    if (@item.Upvotes > 0)
+                                    {<small class="upCount">@item.Upvotes</small>}
+                                else
+                                {
+                                    <small class="upCount"></small>
+                                }
+                                <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                if (@item.Downvotes > 0)
+                                {<small class="downCount">@item.Downvotes</small>}
+                            else
+                            {
+                                <small class="downCount"></small>
+                            }
+                        }
+
+
+                        if (item.Attributes.Favourite)
+                        {
+                            <a onclick="entryAttribute.fav(@item.ID)" class="fav active"><i class="fas fa-heart"></i></a>
+                            if (@item.Favourites > 0)
+                            {<small class="favCount">@item.Favourites</small>}
+                        else
+                        {
+                            <small class="favCount"></small>
+                        }
+                    }
+                    else
+                    {
+                        <a onclick="entryAttribute.fav(@item.ID)" class="fav"><i class="fas fa-heart"></i></a>
+                        if (@item.Favourites > 0)
+                        {<small class="favCount">@item.Favourites</small>}
+                    else
+                    {
+                        <small class="favCount"></small>
+                    }
+                }
+            }
+            else
+            {
+                <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                if (@item.Upvotes > 0)
+                {<small class="upCount">@item.Upvotes</small>}
+            else
+            {
+                <small class="upCount"></small>
+            }
+            <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+            if (@item.Downvotes > 0)
+            {<small class="downCount">@item.Downvotes</small>}
+        else
+        {
+            <small class="downCount"></small>
+        }
+        <a onclick="entryAttribute.fav(@item.ID)" class="fav"><i class="fas fa-heart"></i></a>
+        if (@item.Favourites > 0)
+        {<small class="favCount">@item.Favourites</small>}
+    else
+    {
+        <small class="favCount"></small>
+    }
+}
+}
+}
                                 </div>
                                 <div class="info">
                                     <div class="author">
@@ -135,6 +201,11 @@ else if (Thread != null)
                 @Html.Hidden("Title", Thread.Title)
                 <fieldset class="text-editor">
                     <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                    <div class="functions">
+                        <button type="button" id="bthread">thread</button>
+                        <button type="button" id="bspoiler">spoiler</button>
+                        <button type="button" id="blink">link</button>
+                    </div>
                     @Html.TextAreaFor(m => m.Body, new { @placeholder = "say something about \"" + Thread.Title + "\"" })
                     <div class="process">
                         <button type="submit">submit</button>

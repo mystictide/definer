@@ -550,8 +550,6 @@ header {
         }
     }
 
-
-
     .account-container {
         height: 90%;
         width: 90%;
@@ -560,10 +558,26 @@ header {
             height: 100%;
             width: 100%;
 
+            .remember {
+                display: block;
+
+                input[type="checkbox"] {
+                    width: 3%;
+                    cursor: pointer;
+                }
+            }
+
             .success {
                 display: block;
                 padding: 5px;
                 background-color: #136e50;
+                text-align: center;
+            }
+
+            .error {
+                display: block;
+                padding: 5px;
+                background-color: #850000;
                 text-align: center;
             }
 

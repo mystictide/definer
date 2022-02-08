@@ -18,11 +18,13 @@ namespace definer.Controllers
         [Route("entry/{ID}")]
         public ActionResult ViewEntry(int ID)
         {
+            Entry result;
             if (user != null)
             {
                 ViewBag.User = user;
+                result = new EntryManager().Get(ID, user.ID);
             }
-            var result = new EntryManager().Get(ID);
+            result = new EntryManager().Get(ID);
             return View(result);
         }
 
