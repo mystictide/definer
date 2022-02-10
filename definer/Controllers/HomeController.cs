@@ -28,7 +28,7 @@ namespace definer.Controllers
             {
                 FilteredList<Entry> result = new FilteredList<Entry>();
                 filter.Keyword = filter.Keyword ?? "";
-                filter.pageSize = 10;
+                filter.pageSize = 2;
                 filter.isDetailSearch = false;
                 filterModel.ThreadID = ID.Value;
                 FilteredList<Entry> request = new FilteredList<Entry>()
@@ -76,7 +76,7 @@ namespace definer.Controllers
         public JsonResult sideBar(Filter filter, Threads filterModel)
         {
             filter.Keyword = filter.Keyword ?? "";
-            filter.pageSize = 25;
+            filter.pageSize = 5;
             filter.isDetailSearch = false;
             FilteredList<Threads> request = new FilteredList<Threads>()
             {

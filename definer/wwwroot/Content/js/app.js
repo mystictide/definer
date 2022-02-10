@@ -1,4 +1,34 @@
-﻿function toggle() {
+﻿$(document).ready(
+    function () {
+        sidebar.fill();
+    },
+);
+
+$('#sbutton').attr('disabled', true);
+$('#search').on('input change', function () {
+    if ($(this).val().length != 0)
+        $('#sbutton').attr('disabled', false);
+    else
+        $('#sbutton').attr('disabled', true);
+});
+
+$('.pages').on('change', function () {
+    var value = $(this).val();
+    Filter.Page(value);
+});
+
+$(document).bind('change', '.spages', function () {
+    var value = $('.spages').val();
+    sidebar.filter(value);
+});
+
+//$('.spages').on('change', function () {
+//    var value = $(this).val();
+//    console.log(value);
+//    sidebar.filter(value);
+//});
+
+function toggle() {
     document.getElementById('settings-dropdown').classList.toggle("show");
 }
 
@@ -21,8 +51,20 @@ var sidebar = {
             url: "/sideBar",
             success: function (data) {
                 localStorage.content = data;
-                $('#s-content').prepend(data);
-                return data;
+                $('#s-content').empty().prepend(data);
+                //return data;
+            }
+        });
+    },
+    filter: function (page) {
+        var filter = {page: page};
+        $.ajax({
+            url: "/sideBar",
+            data: filter,
+            success: function (data) {
+                localStorage.content = data;
+                $('#s-content').empty().prepend(data);
+                //return data;
             }
         });
     }
@@ -124,7 +166,7 @@ var entryAttribute = {
                     }
                     else {
                         $("#def" + EntryID).find(".favCount").text(model.favourites);
-                    }           
+                    }
                 }
                 else if (!model.favourite) {
                     $("#def" + EntryID).find(".fav").removeClass("active");
@@ -235,4 +277,88 @@ var textEditor = {
         var replace = '[spoiler ' + sel + ']';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     }
+}
+
+var Filter = {
+
+    Page: function (page) {
+        var params = Filter.querystring.add("page", page, true);
+        Filter.querystring.redirect(params);
+    },
+
+    Clear: function () {
+        let querystring = Filter.querystring.read();
+        KodLoading.refresh(window.location.pathname + "?keyword=" + querystring.get('keyword'));
+    },
+
+    querystring: {
+        read: function () {
+            return new URLSearchParams(window.location.search);
+        },
+        add: function (key, value, isChange) {
+            var urlParams = Filter.querystring.read();
+            if (isChange) {
+                urlParams.delete(key);
+                urlParams.append(key, value);
+            } else {
+                var newParams = new URLSearchParams();
+
+                var control = false;
+                for (pair of urlParams.entries()) {
+                    if (pair[0] == key & pair[1] == value) {
+                        control = true;
+                    } else {
+                        newParams.append(pair[0], pair[1]);
+                    }
+                }
+                if (!control) {
+                    newParams.append(key, value);
+                }
+                urlParams = newParams;
+            }
+            return urlParams;
+        },
+        redirect: function (newParams) {
+            Filter.refresh(window.location.pathname + "?" + decodeURIComponent(newParams.toString()));
+        }
+    },
+
+    Search: function (button) {
+        var form = $(button).parents('form');
+        var url = window.location.pathname;
+        var first = true;
+
+        $('input', form).each(function (index, item) {
+
+            var key = $(item).attr('name');
+            var value = $(item).val();
+            if (!(!value)) {
+                var _icon = first ? "?" : "&";
+                url += _icon + key + "=" + value;
+                first = false;
+            }
+        });
+
+        $('.param.active', form).each(function (index, item) {
+            var key = $(item).attr('name');
+            var value = $(item).data('id');
+            if (!(!value) || value == 0) {
+                var _icon = first ? "?" : "&";
+                url += _icon + key + "=" + value;
+                first = false;
+            }
+
+        });
+
+        Filter.refresh(url);
+    },
+
+    refresh: function (url) {
+
+        if (url == undefined || url == null) {
+            location.reload();
+        } else {
+            window.location.href = url;
+        }
+    },
 }

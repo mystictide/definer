@@ -9,9 +9,89 @@ namespace definer.Models
     {
         private const string t = "/";
 
-        public static List<string> SidebarContent(FilteredList<Threads> result)
+        public static string SidebarContent(FilteredList<Threads> result)
         {
-            List<string> tags = new List<string>();
+            #region paging
+            string Pager = "";
+            var page = result.filter.pager.CurrentPage == 0 ? 1 : result.filter.pager.CurrentPage;
+            var sidebarDiv = new TagBuilder("div");
+            sidebarDiv.AddCssClass("sidebar");
+            var div = new TagBuilder("div");
+            div.AddCssClass("pagination-sidebar");
+            var ul = new TagBuilder("ul");
+            ul.AddCssClass("paging-list");
+
+            var itemPre = "";
+            if (result.filter.pager.CurrentPage != 1)
+            {
+                var itemPrev = new TagBuilder("li");
+                itemPrev.AddCssClass("page-item direction");
+                var prevAnchor = new TagBuilder("a");
+                prevAnchor.MergeAttribute("href", "javascript:void(0)");
+                int pagetoGo = page == 1 ? 1 : (page - 1);
+                prevAnchor.MergeAttribute("onClick", "sidebar.filter(" + pagetoGo + ")");
+                prevAnchor.InnerHtml = "&laquo;";
+                itemPrev.InnerHtml = prevAnchor.ToString();
+                itemPre = itemPrev.ToString();
+            }
+
+            var pageItem = new TagBuilder("li");
+            pageItem.AddCssClass("page-item active");
+            var dropdown = new TagBuilder("select");
+            dropdown.GenerateId("spages");
+            dropdown.AddCssClass("spages");
+            List<string> options = new List<string>();
+            foreach (var item in result.filter.pager.Pages)
+            {
+                var option = new TagBuilder("option");
+                option.AddCssClass("page-link");
+                option.MergeAttribute("value", item.ToString());
+                option.InnerHtml = item.ToString();
+                if (item == result.filter.pager.CurrentPage)
+                {
+                    option.MergeAttribute("selected", "selected");
+                }
+                dropdown.InnerHtml += option.ToString();
+            }
+            pageItem.InnerHtml = dropdown.ToString();
+
+            var divider = new TagBuilder("li");
+            divider.AddCssClass("page-item divider");
+            divider.InnerHtml = " / ";
+
+            var endPage = new TagBuilder("li");
+            endPage.AddCssClass("page-item last");
+            var endAnchor = new TagBuilder("a");
+            endAnchor.AddCssClass("page-link");
+            endAnchor.MergeAttribute("href", "javascript:void(0)");
+            endAnchor.MergeAttribute("onClick", "sidebar.filter(" + result.filter.pager.EndPage + ")");
+            endAnchor.InnerHtml = result.filter.pager.EndPage.ToString();
+            endPage.InnerHtml = endAnchor.ToString();
+
+            var itemLast = "";
+
+            if (page != result.filter.pager.EndPage)
+            {
+                var lastPage = new TagBuilder("li");
+                lastPage.AddCssClass("page-item direction");
+                var lastAnchor = new TagBuilder("a");
+                lastAnchor.AddCssClass("page-link");
+                lastAnchor.MergeAttribute("href", "javascript:void(0)");
+                int totalPages = result.filter.pager.TotalPages == page ? result.filter.pager.TotalPages : (page + 1);
+                lastAnchor.MergeAttribute("onClick", "sidebar.filter(" + totalPages + ")");
+                lastAnchor.InnerHtml = "&raquo;";
+                lastPage.InnerHtml = lastAnchor.ToString();
+                itemLast = lastPage.ToString();
+            }
+            ul.InnerHtml = itemPre + pageItem.ToString() + divider.ToString() + endPage.ToString() + itemLast;
+            div.InnerHtml = ul.ToString();
+            sidebarDiv.InnerHtml = div.ToString();
+            Pager = sidebarDiv.ToString();
+            #endregion
+            #region threads
+            var threadUL = new TagBuilder("ul");
+            threadUL.AddCssClass("sidebar-list");
+            List<string> threads = new List<string>();
             foreach (var item in result.data)
             {
                 var list = new TagBuilder("li");
@@ -25,9 +105,13 @@ namespace definer.Models
 
                 anchor.InnerHtml = item.Title + small.ToString();
                 list.InnerHtml = anchor.ToString();
-                tags.Add(list.ToString());
+                threads.Add(list.ToString());
             }
-            return tags;
+            threadUL.InnerHtml = string.Join("", threads);
+            sidebarDiv.InnerHtml += threadUL.ToString();
+            Pager = sidebarDiv.ToString();
+            #endregion
+            return Pager;
         }
 
         public static string FriendlyURLTitle(string incomingText)

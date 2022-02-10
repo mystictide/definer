@@ -121,6 +121,7 @@ header {
   border-bottom-right-radius: 5px;
   border: 2px solid;
   display: inline-block;
+  cursor: pointer;
 }
 .navbar .nav-header .navbar-search .search-container form button img {
   width: 60%;
@@ -306,26 +307,26 @@ header {
   scrollbar-face-color: #858587;
   scrollbar-track-color: #c2c2c3;
 }
-.page-container .sidebar ul {
+.page-container .sidebar ul.sidebar-list {
   margin-right: 1.5rem;
 }
-.page-container .sidebar ul li {
+.page-container .sidebar ul.sidebar-list li {
   word-wrap: break-word;
   max-width: 15rem;
   padding: 0 10px 0 10px;
 }
-.page-container .sidebar ul li:hover {
+.page-container .sidebar ul.sidebar-list li:hover {
   background-color: #0e0e10;
   border-radius: 5px;
 }
-.page-container .sidebar ul li a {
+.page-container .sidebar ul.sidebar-list li a {
   display: block;
   font-size: 14px;
   padding: 15px 0;
   position: relative;
   padding-right: 30px;
 }
-.page-container .sidebar ul li a small {
+.page-container .sidebar ul.sidebar-list li a small {
   font-size: 12px;
   position: absolute;
   right: 0;
@@ -458,6 +459,7 @@ header {
   height: 400px;
   width: 100%;
   display: block;
+  margin-top: 20px;
 }
 .page-container .main .thread .entry-editor .field-validation-error {
   display: block;
@@ -610,6 +612,155 @@ header {
   outline: none;
   border: 2px solid;
   border-color: #aa00aa;
+}
+
+.pagination {
+  display: block;
+  width: 100%;
+  height: 30px;
+}
+.pagination .paging-list {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  column-gap: 10px;
+  float: right;
+  font-size: 0.8rem;
+}
+.pagination .paging-list .page-item {
+  cursor: pointer;
+}
+.pagination .paging-list .page-item.active {
+  cursor: pointer;
+}
+.pagination .paging-list .page-item.active select {
+  width: 45px;
+  height: 30px;
+  text-align: center;
+  color: #efeff1;
+  background-color: #18181b;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: #0e0e10;
+}
+.pagination .paging-list .page-item.divider {
+  color: #aa00aa;
+  cursor: default;
+}
+.pagination .paging-list .page-item.direction {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 25px;
+  height: 30px;
+  color: #efeff1;
+  background-color: #18181b;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: #0e0e10;
+}
+.pagination .paging-list .page-item.direction a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.pagination .paging-list .page-item.last {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 30px;
+  text-align: center;
+  color: #efeff1;
+  background-color: #18181b;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: #0e0e10;
+}
+.pagination .paging-list .page-item.last a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.pagination-sidebar {
+  display: block;
+  width: 100%;
+  height: 30px;
+  margin: 5px 2rem 1rem 0;
+}
+.pagination-sidebar .paging-list {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  column-gap: 10px;
+  float: right;
+  font-size: 0.8rem;
+}
+.pagination-sidebar .paging-list .page-item {
+  cursor: pointer;
+}
+.pagination-sidebar .paging-list .page-item.active {
+  cursor: pointer;
+}
+.pagination-sidebar .paging-list .page-item.active select {
+  width: 45px;
+  height: 30px;
+  text-align: center;
+  color: #efeff1;
+  background-color: #18181b;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: #0e0e10;
+}
+.pagination-sidebar .paging-list .page-item.divider {
+  color: #aa00aa;
+  cursor: default;
+}
+.pagination-sidebar .paging-list .page-item.direction {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 25px;
+  height: 30px;
+  color: #efeff1;
+  background-color: #18181b;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: #0e0e10;
+}
+.pagination-sidebar .paging-list .page-item.direction a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.pagination-sidebar .paging-list .page-item.last {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 30px;
+  text-align: center;
+  color: #efeff1;
+  background-color: #18181b;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: #0e0e10;
+}
+.pagination-sidebar .paging-list .page-item.last a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 footer {

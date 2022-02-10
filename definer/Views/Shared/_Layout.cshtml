@@ -24,7 +24,7 @@
                     <div class="search-container">
                         <form action="/s" autocomplete="off" method="post">
                             <input type="text" id="search" name="search" placeholder="search..">
-                            <button type="submit"><img src="~/Content/img/search.svg"></button>
+                            <button type="submit" id="sbutton" disabled="disabled"><img src="~/Content/img/search.svg"></button>
                         </form>
                     </div>
                 </div>
@@ -77,10 +77,7 @@
         </nav>
     </header>
     <div class="page-container">
-        <div class="sidebar">
-            <ul id="s-content">
-            </ul>
-        </div>
+        <div id="s-content"></div>
         <div class="main">
             @RenderBody()
             <div class="res">
@@ -92,7 +89,8 @@
         <script src="~/Content/js/app.js"></script>
         @RenderSection("JS", required: false)
         <script>
-            $(document).ready(function () { sidebar.fill(); });
+   
+          
         </script>
     </div>
     <footer>
