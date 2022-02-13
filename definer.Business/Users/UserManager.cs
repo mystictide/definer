@@ -43,5 +43,10 @@ namespace definer.Business.Users
         {
             return _repo.Update(entity);
         }
+
+        public Entity.Users.Users GetbyUsername(string Username)
+        {
+            return _repo.GetbyUsername(Username);
+        }
     }
 }

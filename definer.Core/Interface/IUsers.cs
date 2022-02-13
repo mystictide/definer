@@ -12,5 +12,6 @@ namespace definer.Core.Interface
         ProcessResult Update(Users entity);
         ProcessResult Delete(int ID);
         Users Get(int ID);
+        Users GetbyUsername(string Username);
     }
 }

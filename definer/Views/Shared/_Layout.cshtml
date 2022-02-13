@@ -31,8 +31,8 @@
                 <div class="navbar-user">
                     @if (User.FindFirst("user")?.Value != null)
                     {
-                        <a href="/"><i class="fas fa-user"></i></a>
-                        <a href="/"><i class="fas fa-envelope"></i></a>
+                        <a href="/u/"><i class="fas fa-user"></i></a>
+                        <a href="/m/"><i class="fas fa-envelope"></i></a>
                         <a href="#" onclick="toggle()" class="settings-toggle"></a>
                         <div id="settings-dropdown" class="dropdown-content">
                             <a href="/account/logout">logout</a>

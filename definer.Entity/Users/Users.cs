@@ -1,4 +1,5 @@
 ﻿using Dapper.Contrib.Extensions;
+using definer.Entity.Threads;
 
 namespace definer.Entity.Users
 {
@@ -11,5 +12,8 @@ namespace definer.Entity.Users
         public string Mail { get; set; }
         public string Password { get; set; }
         public bool IsActive { get; set; }
+
+        [Write(false)]
+        public List<Entry> Entries { get; set; }
     }
 }

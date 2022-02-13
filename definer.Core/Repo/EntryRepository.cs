@@ -3,6 +3,7 @@ using Dapper.Contrib.Extensions;
 using definer.Core.Interface;
 using definer.Entity.Helpers;
 using definer.Entity.Threads;
+using definer.Entity.Users;
 
 namespace definer.Core.Repo
 {
@@ -74,7 +75,7 @@ namespace definer.Core.Repo
                 ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Favourite=1) Favourites
                 ,j.*
                 FROM Entry t
-                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID AND j.UserID = @UserID
+                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID
                 {WhereClause} 
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS
@@ -153,18 +154,20 @@ namespace definer.Core.Repo
                 string WhereClause = @" WHERE t.ID = @ID";
 
                 string query = $@"
-                SELECT *
+                SELECT t.*
                 ,(select Title from Thread where ID=t.ThreadID) Title
                 ,(select Username from Users where ID=t.UserID) Author
                 ,(select count(ID) from EntryAttribute where EntryID=@ID AND Vote=1) Upvotes
                 ,(select count(ID) from EntryAttribute where EntryID=@ID AND Vote=0) Downvotes
                 ,(select count(ID) from EntryAttribute where EntryID=@ID AND Favourite=1) Favourites
-                FROM Entry t 
-                {WhereClause} ";
+                ,j.*
+                FROM Entry t
+                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID
+                {WhereClause}  ";
 
                 using (var connection = GetConnection)
                 {
-                    return connection.Query<Entry>(query, param).FirstOrDefault();
+                    return connection.Query<Entry, EntryAttribute, Entry>(query, (a, s) => { a.Attributes = s; return a; }, param, splitOn: "ID").FirstOrDefault();
                 }
             }
             catch (Exception ex)
@@ -186,14 +189,14 @@ namespace definer.Core.Repo
 
                 string query = $@"
                 SELECT t.*
-                ,(select Title from Thread where ID=@ID) Title
+                ,(select Title from Thread where ID=t.ThreadID) Title
                 ,(select Username from Users where ID=t.UserID) Author
                 ,(select count(ID) from EntryAttribute where EntryID=@ID AND Vote=1) Upvotes
                 ,(select count(ID) from EntryAttribute where EntryID=@ID AND Vote=0) Downvotes
                 ,(select count(ID) from EntryAttribute where EntryID=@ID AND Favourite=1) Favourites
                 ,j.*
                 FROM Entry t
-                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID AND j.UserID = @UserID
+                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID
                 {WhereClause}  ";
 
                 using (var connection = GetConnection)

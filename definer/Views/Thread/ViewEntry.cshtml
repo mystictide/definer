@@ -23,107 +23,204 @@
                                     {
                                         if (Model.Attributes.Vote.Value)
                                         {
-
                                             <a onclick="entryAttribute.voteUP(@Model.ID)" class="upvoted active"><i class="fas fa-chevron-up"></i></a>
                                             if (Model.Upvotes > 0)
-                                            {<small class="upCount">@Model.Upvotes</small>}
+                                            {
+                                                <small class="upCount">@Model.Upvotes</small>
+                                            }
+                                            else
+                                            {
+                                                <small class="upCount"></small>
+                                            }
+                                            <a onclick="entryAttribute.voteDOWN(@Model.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                            if (Model.Downvotes > 0)
+                                            {
+                                                <small class="downCount">@Model.Downvotes</small>
+                                            }
+                                            else
+                                            {
+                                                <small class="downCount"></small>
+                                            }
+                                        }
+                                        else if (!Model.Attributes.Vote.Value)
+                                        {
+                                            <a onclick="entryAttribute.voteUP(@Model.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                            if (Model.Upvotes > 0)
+                                            {
+                                                <small class="upCount">@Model.Upvotes</small>
+                                            }
+                                            else
+                                            {
+                                                <small class="upCount"></small>
+                                            }
+                                            <a onclick="entryAttribute.voteDOWN(@Model.ID)" class="downvoted active"><i class="fas fa-chevron-down"></i></a>
+                                            if (Model.Downvotes > 0)
+                                            {
+                                                <small class="downCount">@Model.Downvotes</small>
+                                            }
+                                            else
+                                            {
+                                                <small class="downCount"></small>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <a onclick="entryAttribute.voteUP(@Model.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                        if (Model.Upvotes > 0)
+                                        {
+                                            <small class="upCount">@Model.Upvotes</small>
+                                        }
                                         else
                                         {
                                             <small class="upCount"></small>
                                         }
                                         <a onclick="entryAttribute.voteDOWN(@Model.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
                                         if (Model.Downvotes > 0)
-                                        {<small class="downCount">@Model.Downvotes</small>}
+                                        {
+                                            <small class="downCount">@Model.Downvotes</small>
+                                        }
+                                        else
+                                        {
+                                            <small class="downCount"></small>
+                                        }
+                                    }
+                                    if (Model.Attributes.Favourite)
+                                    {
+                                        <a onclick="entryAttribute.fav(@Model.ID)" class="fav active"><i class="fas fa-heart"></i></a>
+                                        if (Model.Favourites > 0)
+                                        {
+                                            <small class="favCount">@Model.Favourites</small>
+                                        }
+                                        else
+                                        {
+                                            <small class="favCount"></small>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <a onclick="entryAttribute.fav(@Model.ID)" class="fav"><i class="fas fa-heart"></i></a>
+                                        if (Model.Favourites > 0)
+                                        {
+                                            <small class="favCount">@Model.Favourites</small>
+                                        }
+                                        else
+                                        {
+                                            <small class="favCount"></small>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <a onclick="entryAttribute.voteUP(@Model.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                    if (Model.Upvotes > 0)
+                                    {
+                                        <small class="upCount">@Model.Upvotes</small>
+                                    }
+                                    else
+                                    {
+                                        <small class="upCount"></small>
+                                    }
+                                    <a onclick="entryAttribute.voteDOWN(@Model.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                    if (Model.Downvotes > 0)
+                                    {
+                                        <small class="downCount">@Model.Downvotes</small>
+                                    }
                                     else
                                     {
                                         <small class="downCount"></small>
                                     }
+                                    <a onclick="entryAttribute.fav(@Model.ID)" class="fav"><i class="fas fa-heart"></i></a>
+                                    if (Model.Favourites > 0)
+                                    {
+                                        <small class="favCount">@Model.Favourites</small>
+                                    }
+                                    else
+                                    {
+                                        <small class="favCount"></small>
+                                    }
                                 }
-                                else if (!Model.Attributes.Vote.Value)
-                                {
-                                    <a onclick="entryAttribute.voteUP(@Model.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
-                                    if (Model.Upvotes > 0)
-                                    {<small class="upCount">@Model.Upvotes</small>}
-                                else
-                                {
-                                    <small class="upCount"></small>
-                                }
-                                <a onclick="entryAttribute.voteDOWN(@Model.ID)" class="downvoted active"><i class="fas fa-chevron-down"></i></a>
-                                if (Model.Downvotes > 0)
-                                {<small class="downCount">@Model.Downvotes</small>}
+                            }
                             else
                             {
-                                <small class="downCount"></small>
+                                if (Model.Attributes != null)
+                                {
+                                    if (Model.Attributes.Vote.HasValue)
+                                    {
+                                        if (Model.Attributes.Vote.Value)
+                                        {
+                                            <a class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                            if (Model.Upvotes > 0)
+                                            {
+                                                <small class="upCount">@Model.Upvotes</small>
+                                            }
+                                            else
+                                            {
+                                                <small class="upCount"></small>
+                                            }
+                                            <a class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                            if (Model.Downvotes > 0)
+                                            {
+                                                <small class="downCount">@Model.Downvotes</small>
+                                            }
+                                            else
+                                            {
+                                                <small class="downCount"></small>
+                                            }
+                                        }
+                                        else if (!Model.Attributes.Vote.Value)
+                                        {
+                                            <a class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                            if (Model.Upvotes > 0)
+                                            {
+                                                <small class="upCount">@Model.Upvotes</small>
+                                            }
+                                            else
+                                            {
+                                                <small class="upCount"></small>
+                                            }
+                                            <a class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                            if (Model.Downvotes > 0)
+                                            {
+                                                <small class="downCount">@Model.Downvotes</small>
+                                            }
+                                            else
+                                            {
+                                                <small class="downCount"></small>
+                                            }
+                                        }
+                                        if (Model.Attributes.Favourite)
+                                        {
+                                            <a class="fav"><i class="fas fa-heart"></i></a>
+                                            if (Model.Favourites > 0)
+                                            {
+                                                <small class="favCount">@Model.Favourites</small>
+                                            }
+                                            else
+                                            {
+                                                <small class="favCount"></small>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <a class="fav"><i class="fas fa-heart"></i></a>
+                                            if (Model.Favourites > 0)
+                                            {
+                                                <small class="favCount">@Model.Favourites</small>
+                                            }
+                                            else
+                                            {
+                                                <small class="favCount"></small>
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        <a onclick="entryAttribute.voteUP(@Model.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
-                        if (Model.Upvotes > 0)
-                        {<small class="upCount">@Model.Upvotes</small>}
-                    else
-                    {
-                        <small class="upCount"></small>
-                    }
-                    <a onclick="entryAttribute.voteDOWN(@Model.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
-                    if (Model.Downvotes > 0)
-                    {<small class="downCount">@Model.Downvotes</small>}
-                else
-                {
-                    <small class="downCount"></small>
-                }
-            }
-
-
-            if (Model.Attributes.Favourite)
-            {
-                <a onclick="entryAttribute.fav(@Model.ID)" class="fav active"><i class="fas fa-heart"></i></a>
-                if (Model.Favourites > 0)
-                {<small class="favCount">@Model.Favourites</small>}
-            else
-            {
-                <small class="favCount"></small>
-            }
-        }
-        else
-        {
-            <a onclick="entryAttribute.fav(@Model.ID)" class="fav"><i class="fas fa-heart"></i></a>
-            if (Model.Favourites > 0)
-            {<small class="favCount">@Model.Favourites</small>}
-        else
-        {
-            <small class="favCount"></small>
-        }
-    }
-}
-else
-{
-    <a onclick="entryAttribute.voteUP(@Model.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
-    if (Model.Upvotes > 0)
-    {<small class="upCount">@Model.Upvotes</small>}
-else
-{
-    <small class="upCount"></small>
-}
-<a onclick="entryAttribute.voteDOWN(@Model.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
-if (Model.Downvotes > 0)
-{<small class="downCount">@Model.Downvotes</small>}
-else
-{<small class="downCount"></small>
-<a onclick="entryAttribute.fav(@Model.ID)" class="fav"><i class="fas fa-heart"></i></a>
-if (Model.Favourites > 0)
-{<small class="favCount">@Model.Favourites</small>}
-else
-{<small class="favCount"></small>}
-}
-}
-}
-}
                     </div>
                     <div class="info">
                         <div class="author">
-                            <a href="/">@Model.Author</a>
+                            <a href="/u/@CustomTagHelpers.FriendlyURLTitle(Model.Author)">@Model.Author</a>
                         </div>
                         <div class="link">
                             @if (User != null)

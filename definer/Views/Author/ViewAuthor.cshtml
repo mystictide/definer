@@ -1,0 +1,188 @@
+﻿@model definer.Entity.Users.Users
+
+@{
+    var User = (definer.Entity.Users.Users)ViewBag.User;
+    ViewData["Title"] = Model.Username + " - definer";
+}
+
+<div class="thread">
+    <h1><a href="/u/@CustomTagHelpers.FriendlyURLTitle(Model.Username)">@Model.Username</a></h1>
+    <div class="user-info">
+        <div class="stats">
+            <ul>
+                <li>15 entries</li>
+                <li>5 followers</li>
+                <li>2 following</li>
+                <li class="social"><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
+                <li class="social"><a class="instagram" href="#"><i class="fab fa-instagram"></i></a></li>
+                <li class="social"><a class="facebook" href="#"><i class="fab fa-facebook"></i></a></li>
+                <li class="social"><a class="spotify" href="#"><i class="fab fa-spotify"></i></a></li>
+            </ul>
+        </div>
+        <div class="bio">
+            <p>this is my bio oh i'm so random lulz</p>
+        </div>
+        <div class="manage">
+            <ul>
+                <li><a class="message" href="#">message</a></li>
+                <li><a class="follow" href="#">follow</a></li>
+                <li><a class="ignore" href="#">ignore</a></li>
+                <li><a class="report" href="#">report</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="user-entries">
+        <div class="user-tabs">
+            <ul>
+                <li>entries</li>
+                <li>favourites</li>
+                <li>media</li>
+            </ul>
+        </div>
+        <div class="user-rss">
+            <ul>
+                <li>entries</li>
+                <li>favourites</li>
+                <li>media</li>
+            </ul>
+        </div>
+    </div>
+    @*<div class="entries">
+                <ul>
+                    <li>
+                        <div class="body">@Model.Body</div>
+                        <footer>
+                            <div class="feedback" id="@def">
+                                @if (User != null)
+                                {
+                                    if (Model.UserID != User.ID)
+                                    {
+                                        if (Model.Attributes != null)
+                                        {
+                                            if (Model.Attributes.Vote.HasValue)
+                                            {
+                                                if (Model.Attributes.Vote.Value)
+                                                {
+
+                                                    <a onclick="entryAttribute.voteUP(@Model.ID)" class="upvoted active"><i class="fas fa-chevron-up"></i></a>
+                                                    if (Model.Upvotes > 0)
+                                                    {<small class="upCount">@Model.Upvotes</small>}
+                                                else
+                                                {
+                                                    <small class="upCount"></small>
+                                                }
+                                                <a onclick="entryAttribute.voteDOWN(@Model.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                                if (Model.Downvotes > 0)
+                                                {<small class="downCount">@Model.Downvotes</small>}
+                                            else
+                                            {
+                                                <small class="downCount"></small>
+                                            }
+                                        }
+                                        else if (!Model.Attributes.Vote.Value)
+                                        {
+                                            <a onclick="entryAttribute.voteUP(@Model.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                            if (Model.Upvotes > 0)
+                                            {<small class="upCount">@Model.Upvotes</small>}
+                                        else
+                                        {
+                                            <small class="upCount"></small>
+                                        }
+                                        <a onclick="entryAttribute.voteDOWN(@Model.ID)" class="downvoted active"><i class="fas fa-chevron-down"></i></a>
+                                        if (Model.Downvotes > 0)
+                                        {<small class="downCount">@Model.Downvotes</small>}
+                                    else
+                                    {
+                                        <small class="downCount"></small>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <a onclick="entryAttribute.voteUP(@Model.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                if (Model.Upvotes > 0)
+                                {<small class="upCount">@Model.Upvotes</small>}
+                            else
+                            {
+                                <small class="upCount"></small>
+                            }
+                            <a onclick="entryAttribute.voteDOWN(@Model.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                            if (Model.Downvotes > 0)
+                            {<small class="downCount">@Model.Downvotes</small>}
+                        else
+                        {
+                            <small class="downCount"></small>
+                        }
+                    }
+
+
+                    if (Model.Attributes.Favourite)
+                    {
+                        <a onclick="entryAttribute.fav(@Model.ID)" class="fav active"><i class="fas fa-heart"></i></a>
+                        if (Model.Favourites > 0)
+                        {<small class="favCount">@Model.Favourites</small>}
+                    else
+                    {
+                        <small class="favCount"></small>
+                    }
+                }
+                else
+                {
+                    <a onclick="entryAttribute.fav(@Model.ID)" class="fav"><i class="fas fa-heart"></i></a>
+                    if (Model.Favourites > 0)
+                    {<small class="favCount">@Model.Favourites</small>}
+                else
+                {
+                    <small class="favCount"></small>
+                }
+            }
+        }
+        else
+        {
+            <a onclick="entryAttribute.voteUP(@Model.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+            if (Model.Upvotes > 0)
+            {<small class="upCount">@Model.Upvotes</small>}
+        else
+        {
+            <small class="upCount"></small>
+        }
+        <a onclick="entryAttribute.voteDOWN(@Model.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+        if (Model.Downvotes > 0)
+        {<small class="downCount">@Model.Downvotes</small>}
+        else
+        {<small class="downCount"></small>
+        <a onclick="entryAttribute.fav(@Model.ID)" class="fav"><i class="fas fa-heart"></i></a>
+        if (Model.Favourites > 0)
+        {<small class="favCount">@Model.Favourites</small>}
+        else
+        {<small class="favCount"></small>}
+        }
+        }
+        }
+        }
+                            </div>
+                            <div class="info">
+                                <div class="author">
+                                    <a href="/u/@CustomTagHelpers.FriendlyURLTitle(Model.Author)">@Model.Author</a>
+                                </div>
+                                <div class="link">
+                                    @if (User != null)
+                                    {
+                                        @if (@Model.UserID == User.ID)
+                                        {
+                                            <a href="/edit/entry/@Model.ID"><small>edit</small></a>
+                                        }
+                                    }
+                                    <a href="/entry/@Model.ID">
+                                        <small>
+                                            @Model.Date.ToString("dd.MM.yyyy HH:mm") @if (@Model.EditDate != null)
+                                            {<text>~ </text>@Model.EditDate?.ToString("dd.MM.yyyy HH:mm")}
+                                        </small>
+                                    </a>
+                                </div>
+                            </div>
+                        </footer>
+                    </li>
+                </ul>
+            </div>*@
+</div>

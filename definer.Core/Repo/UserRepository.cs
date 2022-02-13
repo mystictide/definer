@@ -2,6 +2,7 @@
 using Dapper.Contrib.Extensions;
 using definer.Core.Interface;
 using definer.Entity.Helpers;
+using definer.Entity.Threads;
 using definer.Entity.Users;
 
 namespace definer.Core.Repo
@@ -127,6 +128,48 @@ namespace definer.Core.Repo
                 using (var connection = GetConnection)
                 {
                     return connection.QueryFirstOrDefault<Users>(query, param);
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
+        public Users GetbyUsername(string Username)
+        {
+            try
+            {
+                var model = new Users();
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@Username", Username);
+
+                string WhereClause = @" WHERE (t.Username like '%' + @Username + '%')";
+
+                string userQuery = $@"
+                SELECT t.*
+                FROM Users t
+                {WhereClause}";
+
+                string userEntries = $@"
+                SELECT t.*
+                ,(select Title from Thread where ID=t.ThreadID) Title
+                ,(select Username from Users where ID=t.UserID) Author
+                ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Vote=1) Upvotes
+                ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Vote=0) Downvotes
+                ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Favourite=1) Favourites
+                ,j.*
+                FROM Entry t
+                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID AND j.UserID = t.UserID
+                WHERE t.UserID = @UserID";
+
+                using (var connection = GetConnection)
+                {
+                    model = connection.Query<Users>(userQuery, param).FirstOrDefault();
+                    param.Add("@UserID", model.ID);
+                    model.Entries = connection.Query<Entry, EntryAttribute, Entry>(userEntries, (a, s) => { a.Attributes = s; return a; }, param, splitOn: "ID").ToList();
+                    return model;
                 }
             }
             catch (Exception ex)
