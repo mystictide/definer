@@ -137,15 +137,17 @@ namespace definer.Core.Repo
             }
         }
 
-        public Users GetbyUsername(string Username)
+        public Users GetbyUsername(FilteredList<Entry> request, string Username)
         {
             try
             {
                 var model = new Users();
+                FilteredList<Entry> entries = new FilteredList<Entry>();
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@Username", Username);
 
                 string WhereClause = @" WHERE (t.Username like '%' + @Username + '%')";
+                string query_count = $@"  Select Count(t.ID) from Entry t WHERE t.UserID = @UserID";
 
                 string userQuery = $@"
                 SELECT t.*
@@ -162,13 +164,52 @@ namespace definer.Core.Repo
                 ,j.*
                 FROM Entry t
                 LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID AND j.UserID = t.UserID
-                WHERE t.UserID = @UserID";
+                WHERE t.UserID = @UserID
+                ORDER BY t.ID ASC 
+                OFFSET @StartIndex ROWS
+                FETCH NEXT @PageSize ROWS ONLY";
 
                 using (var connection = GetConnection)
                 {
                     model = connection.Query<Users>(userQuery, param).FirstOrDefault();
                     param.Add("@UserID", model.ID);
-                    model.Entries = connection.Query<Entry, EntryAttribute, Entry>(userEntries, (a, s) => { a.Attributes = s; return a; }, param, splitOn: "ID").ToList();
+                    param.Add("@Keyword", request.filter.Keyword);
+                    param.Add("@PageSize", request.filter.pageSize);
+                    entries.totalItems = connection.QueryFirstOrDefault<int>(query_count, param);
+                    request.filter.pager = new Page(entries.totalItems, request.filter.pageSize, request.filter.page);
+                    param.Add("@StartIndex", request.filter.pager.StartIndex);
+                    entries.data = connection.Query<Entry, EntryAttribute, Entry>(userEntries, (a, s) => { a.Attributes = s; return a; }, param, splitOn: "ID");
+                    entries.filter = request.filter;
+                    entries.filterModel = request.filterModel;
+                    model.Entries = entries;
+                    return model;
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
+        public Users Get(string Username)
+        {
+            try
+            {
+                var model = new Users();
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@Username", Username);
+
+                string WhereClause = @" WHERE (t.Username like '%' + @Username + '%')";
+
+                string userQuery = $@"
+                SELECT t.*
+                FROM Users t
+                {WhereClause}";
+
+                using (var connection = GetConnection)
+                {
+                    model = connection.Query<Users>(userQuery, param).FirstOrDefault();
                     return model;
                 }
             }

@@ -12,11 +12,6 @@ $('#search').on('input change', function () {
         $('#sbutton').attr('disabled', true);
 });
 
-$('.pages').on('change', function () {
-    var value = $(this).val();
-    Filter.Page(value);
-});
-
 $(document).bind('change', '.spages', function () {
     var value = $('.spages').val();
     sidebar.filter(value);
@@ -42,6 +37,31 @@ window.onclick = function (event) {
                 openDropdown.classList.remove('show');
             }
         }
+    }
+}
+
+var authorpage = {
+    fill: function () {
+        var username = $("#author").val();
+        var data = { username: username };
+        $.ajax({
+            url: "/u/authorEntries",
+            data: data,
+            success: function (data) {
+                $('#rss-entries').empty().prepend(data);
+            }
+        });
+    },
+    filter: function (page) {
+        var username = $("#author").val();
+        var filter = { page: page };
+        $.ajax({
+            url: "/u/authorEntries",
+            data: { filter: filter, username: username },
+            success: function (data) {
+                $('#rss-entries').empty().prepend(data);
+            }
+        });
     }
 }
 
@@ -191,58 +211,51 @@ var entryAttribute = {
     }
 }
 
-const bthread = document.getElementById("bthread");
-const bspoiler = document.getElementById("bspoiler");
-const blink = document.getElementById("blink");
-bthread.addEventListener("click", this.checkSelection);
-bspoiler.addEventListener("click", this.checkSelection);
-blink.addEventListener("click", this.checkSelection);
-
-function checkSelection(e) {
-    var textarea = document.getElementById("Body");
-    var len = textarea.value.length;
-    var start = textarea.selectionStart;
-    var end = textarea.selectionEnd;
-    var sel = textarea.value.substring(start, end);
-
-    if (e.target.id == "bthread") {
-        if (sel < 1) {
-            var val = textEditor.promt("which thread did you mean?");
-            if (val.length > 0) {
-                textEditor.appendThread(textarea, len, start, end, val);
-            }
-        }
-        else {
-            textEditor.wrapThread(textarea, len, start, end, sel);
-        }
-    }
-
-    if (e.target.id == "bspoiler") {
-        if (sel < 1) {
-            var val = textEditor.promt("what do we not spoil?");
-            if (val.length > 0) {
-                textEditor.appendSpoiler(textarea, len, start, end, val);
-            }
-        }
-        else {
-            textEditor.wrapSpoiler(textarea, len, start, end, sel);
-        }
-    }
-
-    if (e.target.id == "blink") {
-        if (sel < 1) {
-            var val = textEditor.promt("enter some link");
-            if (val.length > 0) {
-                textEditor.appendLink(textarea, len, start, end, val);
-            }
-        }
-        else {
-            textEditor.wrapLink(textarea, len, start, end, sel);
-        }
-    }
-}
-
 var textEditor = {
+    checkSelection: function (e) {
+        var textarea = document.getElementById("Body");
+        var len = textarea.value.length;
+        var start = textarea.selectionStart;
+        var end = textarea.selectionEnd;
+        var sel = textarea.value.substring(start, end);
+
+        if (e.target.id == "bthread") {
+            if (sel < 1) {
+                var val = textEditor.promt("which thread did you mean?");
+                if (val.length > 0) {
+                    textEditor.appendThread(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapThread(textarea, len, start, end, sel);
+            }
+        }
+
+        if (e.target.id == "bspoiler") {
+            if (sel < 1) {
+                var val = textEditor.promt("what do we not spoil?");
+                if (val.length > 0) {
+                    textEditor.appendSpoiler(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapSpoiler(textarea, len, start, end, sel);
+            }
+        }
+
+        if (e.target.id == "blink") {
+            if (sel < 1) {
+                var val = textEditor.promt("enter some link");
+                if (val.length > 0) {
+                    textEditor.appendLink(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapLink(textarea, len, start, end, sel);
+            }
+        }
+    },
+
     promt: function (q) {
         return prompt(q);
     },

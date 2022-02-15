@@ -15,7 +15,7 @@ namespace definer.Entity.Threads
         public int EntryID { get; set; }
         public int UserID { get; set; }
         public bool? Vote { get; set; }
-        public bool Favourite { get; set; }
+        public bool? Favourite { get; set; }
 
         [Write(false)]
         public int Upvotes { get; set; }

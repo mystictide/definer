@@ -1,4 +1,5 @@
 ﻿using definer.Entity.Helpers;
+using definer.Entity.Threads;
 using definer.Entity.Users;
 
 namespace definer.Core.Interface
@@ -12,6 +13,7 @@ namespace definer.Core.Interface
         ProcessResult Update(Users entity);
         ProcessResult Delete(int ID);
         Users Get(int ID);
-        Users GetbyUsername(string Username);
+        Users Get(string Username);
+        Users GetbyUsername(FilteredList<Entry> request, string Username);
     }
 }

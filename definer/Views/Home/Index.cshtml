@@ -38,47 +38,23 @@
                                             {
                                                 if (item.Attributes.Vote.HasValue)
                                                 {
-                                                    if (item.Attributes.Vote.Value)
+                                                    <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted @(@item.Attributes.Vote.Value ? "active" : "")"><i class="fas fa-chevron-up"></i></a>
+                                                    if (@item.Upvotes > 0)
                                                     {
-                                                        <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted active"><i class="fas fa-chevron-up"></i></a>
-                                                        if (@item.Upvotes > 0)
-                                                        {
-                                                            <small class="upCount">@item.Upvotes</small>
-                                                        }
-                                                        else
-                                                        {
-                                                            <small class="upCount"></small>
-                                                        }
-                                                        <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
-                                                        if (@item.Downvotes > 0)
-                                                        {
-                                                            <small class="downCount">@item.Downvotes</small>
-                                                        }
-                                                        else
-                                                        {
-                                                            <small class="downCount"></small>
-                                                        }
+                                                        <small class="upCount">@item.Upvotes</small>
                                                     }
-                                                    else if (!item.Attributes.Vote.Value)
+                                                    else
                                                     {
-                                                        <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
-                                                        if (@item.Upvotes > 0)
-                                                        {
-                                                            <small class="upCount">@item.Upvotes</small>
-                                                        }
-                                                        else
-                                                        {
-                                                            <small class="upCount"></small>
-                                                        }
-                                                        <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted active"><i class="fas fa-chevron-down"></i></a>
-                                                        if (@item.Downvotes > 0)
-                                                        {
-                                                            <small class="downCount">@item.Downvotes</small>
-                                                        }
-                                                        else
-                                                        {
-                                                            <small class="downCount"></small>
-                                                        }
+                                                        <small class="upCount"></small>
+                                                    }
+                                                    <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted @(@item.Attributes.Vote.Value ? "" : "active")"><i class="fas fa-chevron-down"></i></a>
+                                                    if (@item.Downvotes > 0)
+                                                    {
+                                                        <small class="downCount">@item.Downvotes</small>
+                                                    }
+                                                    else
+                                                    {
+                                                        <small class="downCount"></small>
                                                     }
                                                 }
                                                 else
@@ -102,9 +78,9 @@
                                                         <small class="downCount"></small>
                                                     }
                                                 }
-                                                if (item.Attributes.Favourite)
+                                                if (item.Attributes.Favourite.HasValue)
                                                 {
-                                                    <a onclick="entryAttribute.fav(@item.ID)" class="fav active"><i class="fas fa-heart"></i></a>
+                                                    <a onclick="entryAttribute.fav(@item.ID)" class="fav @(@item.Attributes.Favourite.Value ? "active" : "")"><i class="fas fa-heart"></i></a>
                                                     if (@item.Favourites > 0)
                                                     {
                                                         <small class="favCount">@item.Favourites</small>
@@ -164,71 +140,35 @@
                                             {
                                                 if (item.Attributes.Vote.HasValue)
                                                 {
-                                                    if (item.Attributes.Vote.Value)
+                                                    <a class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                                    if (@item.Upvotes > 0)
                                                     {
-                                                        <a class="upvoted"><i class="fas fa-chevron-up"></i></a>
-                                                        if (@item.Upvotes > 0)
-                                                        {
-                                                            <small class="upCount">@item.Upvotes</small>
-                                                        }
-                                                        else
-                                                        {
-                                                            <small class="upCount"></small>
-                                                        }
-                                                        <a class="downvoted"><i class="fas fa-chevron-down"></i></a>
-                                                        if (@item.Downvotes > 0)
-                                                        {
-                                                            <small class="downCount">@item.Downvotes</small>
-                                                        }
-                                                        else
-                                                        {
-                                                            <small class="downCount"></small>
-                                                        }
-                                                    }
-                                                    else if (!item.Attributes.Vote.Value)
-                                                    {
-                                                        <a class="upvoted"><i class="fas fa-chevron-up"></i></a>
-                                                        if (@item.Upvotes > 0)
-                                                        {
-                                                            <small class="upCount">@item.Upvotes</small>
-                                                        }
-                                                        else
-                                                        {
-                                                            <small class="upCount"></small>
-                                                        }
-                                                        <a class="downvoted"><i class="fas fa-chevron-down"></i></a>
-                                                        if (@item.Downvotes > 0)
-                                                        {
-                                                            <small class="downCount">@item.Downvotes</small>
-                                                        }
-                                                        else
-                                                        {
-                                                            <small class="downCount"></small>
-                                                        }
-                                                    }
-                                                    if (item.Attributes.Favourite)
-                                                    {
-                                                        <a class="fav"><i class="fas fa-heart"></i></a>
-                                                        if (@item.Favourites > 0)
-                                                        {
-                                                            <small class="favCount">@item.Favourites</small>
-                                                        }
-                                                        else
-                                                        {
-                                                            <small class="favCount"></small>
-                                                        }
+                                                        <small class="upCount">@item.Upvotes</small>
                                                     }
                                                     else
                                                     {
-                                                        <a class="fav"><i class="fas fa-heart"></i></a>
-                                                        if (@item.Favourites > 0)
-                                                        {
-                                                            <small class="favCount">@item.Favourites</small>
-                                                        }
-                                                        else
-                                                        {
-                                                            <small class="favCount"></small>
-                                                        }
+                                                        <small class="upCount"></small>
+                                                    }
+                                                    <a class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                                    if (@item.Downvotes > 0)
+                                                    {
+                                                        <small class="downCount">@item.Downvotes</small>
+                                                    }
+                                                    else
+                                                    {
+                                                        <small class="downCount"></small>
+                                                    }
+                                                }
+                                                if (item.Attributes.Favourite.HasValue)
+                                                {
+                                                    <a class="fav"><i class="fas fa-heart"></i></a>
+                                                    if (@item.Favourites > 0)
+                                                    {
+                                                        <small class="favCount">@item.Favourites</small>
+                                                    }
+                                                    else
+                                                    {
+                                                        <small class="favCount"></small>
                                                     }
                                                 }
                                             }
@@ -281,6 +221,19 @@
                         </fieldset>
                     </form>
                 </div>
+                <script>
+                    const bthread = document.getElementById("bthread");
+                    const bspoiler = document.getElementById("bspoiler");
+                    const blink = document.getElementById("blink");
+                    bthread.addEventListener("click", textEditor.checkSelection);
+                    bspoiler.addEventListener("click", textEditor.checkSelection);
+                    blink.addEventListener("click", textEditor.checkSelection);
+
+                    $('.pages').on('change', function () {
+                        var value = $(this).val();
+                        Filter.Page(value);
+                    });
+                </script>
             }
         </div>
     }
@@ -310,6 +263,14 @@ else if (Thread != null)
             </form>
         </div>
     </div>
+    <script>
+        const bthread = document.getElementById("bthread");
+        const bspoiler = document.getElementById("bspoiler");
+        const blink = document.getElementById("blink");
+        bthread.addEventListener("click", textEditor.checkSelection);
+        bspoiler.addEventListener("click", textEditor.checkSelection);
+        blink.addEventListener("click", textEditor.checkSelection);
+    </script>
 }
 else
 {

@@ -1,5 +1,6 @@
 using definer.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using static definer.Models.RenderView;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<IViewRenderService, ViewRenderService>();
 
 var app = builder.Build();
 

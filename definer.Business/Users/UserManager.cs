@@ -1,6 +1,7 @@
 ﻿using definer.Core.Interface;
 using definer.Core.Repo;
 using definer.Entity.Helpers;
+using definer.Entity.Threads;
 
 namespace definer.Business.Users
 {
@@ -44,9 +45,14 @@ namespace definer.Business.Users
             return _repo.Update(entity);
         }
 
-        public Entity.Users.Users GetbyUsername(string Username)
+        public Entity.Users.Users GetbyUsername(FilteredList<Entry> request, string Username)
         {
-            return _repo.GetbyUsername(Username);
+            return _repo.GetbyUsername(request, Username);
+        }
+
+        public Entity.Users.Users Get(string Username)
+        {
+            return _repo.Get(Username);
         }
     }
 }

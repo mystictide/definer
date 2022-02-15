@@ -466,6 +466,9 @@ header {
   border-width: 1px 0;
   margin: 0.9rem 0 0.9rem 0;
 }
+.page-container .main .thread .user-entries .user-tabs a {
+  color: #efeff1;
+}
 .page-container .main .thread .user-entries .user-tabs ul {
   display: flex;
   flex-direction: row;
@@ -476,6 +479,101 @@ header {
 }
 .page-container .main .thread .user-entries .user-tabs ul li:hover {
   background: #aa00aa;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads {
+  width: 100%;
+  word-wrap: break-word;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  line-height: 24px;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li {
+  list-style: none;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li .body {
+  white-space: pre-line;
+  overflow: hidden;
+  position: relative;
+  font-size: 1rem;
+  line-height: 22px;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li .body .spoiler {
+  opacity: 0.9;
+  background: #0e0e10;
+  border-radius: 5px;
+  color: transparent;
+  cursor: help;
+  user-select: none;
+  transition: background 0.3s ease 0.2s, color 0.2s ease 0.25s;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li .body .spoiler:focus {
+  background: none;
+  color: inherit;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  height: 120px;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback {
+  float: left;
+  position: relative;
+  width: 45%;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback a {
+  color: #858587;
+  padding: 5px;
+  cursor: pointer;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback a:hover {
+  color: #aa00aa;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback a:active {
+  position: relative;
+  top: 1px;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback .upvoted.active {
+  color: #aa00aa;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback .downvoted.active {
+  color: #c10000;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback .fav.active {
+  color: #aa00aa;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  float: right;
+  width: 55%;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info .author a {
+  font-size: 0.9rem;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info .author a:hover {
+  text-decoration: underline;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info .link a {
+  font-size: 0.9rem;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info .link a:hover {
+  text-decoration: underline;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info .link small {
+  color: #858587;
+  font-size: 0.7rem;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads h1 {
+  width: 100%;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  word-break: break-word;
+  line-height: 1.4;
+}
+.page-container .main .thread .user-entries .user-rss .rss-threads h1:hover {
+  text-decoration: underline;
 }
 .page-container .main .thread .entries {
   width: 100%;

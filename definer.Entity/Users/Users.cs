@@ -1,4 +1,5 @@
 ﻿using Dapper.Contrib.Extensions;
+using definer.Entity.Helpers;
 using definer.Entity.Threads;
 
 namespace definer.Entity.Users
@@ -14,6 +15,9 @@ namespace definer.Entity.Users
         public bool IsActive { get; set; }
 
         [Write(false)]
-        public List<Entry> Entries { get; set; }
+        public FilteredList<Entry> Entries { get; set; }
+
+        [Write(false)]
+        public Users CurrentUser { get; set; }
     }
 }

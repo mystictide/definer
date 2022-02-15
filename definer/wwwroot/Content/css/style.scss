@@ -455,6 +455,10 @@ header {
                     border-width: 1px 0;
                     margin: 0.9rem 0 0.9rem 0;
 
+                    a {
+                        color: $base-font-colour;
+                    }
+
                     ul {
                         display: flex;
                         flex-direction: row;
@@ -471,6 +475,132 @@ header {
                 }
 
                 .user-rss {
+                    .rss-threads {
+                        width: 100%;
+                        word-wrap: break-word;
+                        margin-bottom: 1rem;
+                        margin-top: 1rem;
+                        line-height: 24px;
+
+                        li {
+                            list-style: none;
+
+                            .body {
+                                white-space: pre-line;
+                                overflow: hidden;
+                                position: relative;
+                                font-size: 1rem;
+                                line-height: 22px;
+
+                                .spoiler {
+                                    opacity: 0.9;
+                                    background: $body-colour;
+                                    border-radius: 5px;
+                                    color: transparent;
+                                    cursor: help;
+                                    user-select: none;
+                                    transition: background 0.3s ease 0.2s, color 0.2s ease 0.25s;
+
+                                    &:focus {
+                                        background: none;
+                                        color: inherit;
+                                    }
+                                }
+                            }
+
+
+
+                            footer {
+                                margin-top: 10px;
+                                display: flex;
+                                flex-direction: row;
+                                height: 120px;
+
+                                .feedback {
+                                    float: left;
+                                    position: relative;
+                                    width: 45%;
+
+                                    a {
+                                        color: #858587;
+                                        padding: 5px;
+                                        cursor: pointer;
+
+                                        &:hover {
+                                            color: $accent-color;
+                                        }
+
+                                        &:active {
+                                            position: relative;
+                                            top: 1px;
+                                        }
+                                    }
+
+                                    .upvoted.active {
+                                        color: $accent-color;
+                                    }
+
+                                    .downvoted.active {
+                                        color: #c10000;
+                                    }
+
+                                    .fav.active {
+                                        color: $accent-color;
+                                    }
+                                }
+
+                                .info {
+                                    display: flex;
+                                    flex-direction: column;
+                                    text-align: right;
+                                    float: right;
+                                    width: 55%;
+
+                                    .author {
+                                        a {
+                                            font-size: 0.9rem;
+
+                                            &:hover {
+                                                text-decoration: underline;
+                                            }
+                                        }
+                                    }
+
+                                    .link {
+                                        a {
+                                            font-size: 0.9rem;
+
+                                            &:hover {
+                                                text-decoration: underline;
+                                            }
+                                        }
+
+                                        small {
+                                            color: #858587;
+                                            font-size: 0.7rem;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        h1 {
+                            width: 100%;
+                            font-size: 1.1rem;
+                            margin: 1rem 0;
+                            word-break: break-word;
+                            line-height: 1.4;
+
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+
+                        ul {
+                            li {
+                            }
+                        }
+                    }
                 }
             }
 
