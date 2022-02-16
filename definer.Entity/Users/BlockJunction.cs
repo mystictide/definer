@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace definer.Entity.Users
 {
-    public class Interactions
+    [Table("BlockJunction")]
+    public class BlockJunction
     {
-        [Write(false)]
-        public FollowJunction Follow { get; set; }
-        [Write(false)]
-        public BlockJunction Blocked { get; set; }
+        [Key]
+        public int ID { get; set; }
+        public int UserID { get; set; }
+        public int BlockerID { get; set; }
     }
 }

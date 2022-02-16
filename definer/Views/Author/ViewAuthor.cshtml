@@ -38,7 +38,14 @@
                     {
                         <li><a class="follow" href="javascript:void(0)" id="followAuthor">follow</a></li>
                     }
-                    <li><a class="ignore" href="#">ignore</a></li>
+                    @if (Model.Interactions.Blocked != null)
+                    {
+                        <li><a class="ignore active" href="javascript:void(0)" id="ignoreAuthor">ignored</a></li>
+                    }
+                    else
+                    {
+                        <li><a class="ignore" href="javascript:void(0)" id="ignoreAuthor">ignore</a></li>
+                    }
                     <li><a class="report" href="#">report</a></li>
                 </ul>
             </div>
@@ -73,6 +80,9 @@
             }),
             $('#followAuthor').on('click', function () {
                 interactions.setfollowstate($('#authorID').val());
+            }),
+            $('#ignoreAuthor').on('click', function () {
+                interactions.setblockstate($('#authorID').val());
             }),
         );
     </script>

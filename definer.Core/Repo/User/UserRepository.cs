@@ -209,18 +209,22 @@ namespace definer.Core.Repo.User
                 ,(select count(ID) from FollowJunction where UserID=t.ID) FollowerCount
                 ,(select count(ID) from FollowJunction where FollowerID=t.ID) FollowingCount
                 ,j.*
+                ,b.*
                 FROM Users t
                 LEFT JOIN FollowJunction as j ON t.ID = j.UserID AND j.FollowerID = @CurrentUserID
+                LEFT JOIN BlockJunction as b ON t.ID = b.UserID AND b.BlockerID = @CurrentUserID
                 {WhereClause}";
 
                 using (var connection = GetConnection)
                 {
                     //model = connection.Query<Users>(userQuery, param).FirstOrDefault();
-                    model = connection.Query<Users, FollowJunction, Users>(userQuery, (a, s) =>
+                    model = connection.Query<Users, FollowJunction, BlockJunction, Users>(userQuery, (a, b, s) =>
                     {
                         a.Interactions = new Interactions();
                         a.Interactions.Follow = new FollowJunction();
-                        a.Interactions.Follow = s; return a;
+                        a.Interactions.Blocked = new BlockJunction();
+                        a.Interactions.Follow = b;
+                        a.Interactions.Blocked = s; return a;
                     }, param, splitOn: "ID").FirstOrDefault();
                     return model;
                 }

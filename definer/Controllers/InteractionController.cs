@@ -20,5 +20,13 @@ namespace definer.Controllers
             var result = new FollowJunctionManager().SetState(model);
             return Json(result);
         }
+
+        [Route("setBlockState"), HttpGet]
+        public JsonResult SetBlockState(BlockJunction model)
+        {
+            model.BlockerID = user.ID;
+            var result = new BlockJunctionManager().SetState(model);
+            return Json(result);
+        }
     }
 }

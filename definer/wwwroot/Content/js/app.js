@@ -99,6 +99,23 @@ var interactions = {
             }
         });
     },
+    setblockstate: function (AuthorID) {
+        var data = { UserID: AuthorID };
+        $.ajax({
+            url: "/i/setBlockState",
+            data: data,
+            success: function (data) {
+                if (data == undefined || data == null) {
+                    $('#ignoreAuthor').toggleClass("active");
+                    $('#ignoreAuthor').text("ignore");
+                }
+                else {
+                    $('#ignoreAuthor').toggleClass("active");
+                    $('#ignoreAuthor').text("ignored");
+                }
+            }
+        });
+    },
 }
 
 var sidebar = {

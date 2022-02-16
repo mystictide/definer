@@ -61,9 +61,13 @@ namespace definer.Core.Repo.Thread
                 param.Add("@ID", request.filterModel.ThreadID);
                 param.Add("@UserID", UserID);
 
-                string WhereClause = @" WHERE t.ThreadID = @ID AND  (t.Body like '%' + @Keyword + '%')";
+                string WhereClause = @" WHERE t.ThreadID = @ID AND (t.Body like '%' + @Keyword + '%') AND NOT t.UserID = ISNULL(b.UserID, 0)";
 
-                string query_count = $@"  Select Count(t.ID) from Entry t {WhereClause}";
+                string query_count = $@" 
+                Select Count(t.ID)
+                from Entry t 
+                LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID
+                {WhereClause}";
 
                 string query = $@"
                 SELECT t.*
@@ -73,8 +77,10 @@ namespace definer.Core.Repo.Thread
                 ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Vote=0) Downvotes
                 ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Favourite=1) Favourites
                 ,j.*
+                ,b.UserID
                 FROM Entry t
                 LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID
+                LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID
                 {WhereClause} 
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS
