@@ -1,5 +1,5 @@
-﻿using definer.Core.Interface;
-using definer.Core.Repo;
+﻿using definer.Core.Interface.User;
+using definer.Core.Repo.User;
 using definer.Entity.Helpers;
 using definer.Entity.Threads;
 
@@ -50,9 +50,14 @@ namespace definer.Business.Users
             return _repo.GetbyUsername(request, Username);
         }
 
-        public Entity.Users.Users Get(string Username)
+        public Entity.Users.Users Get(string Username, int CurrentUserID)
         {
-            return _repo.Get(Username);
+            return _repo.Get(Username, CurrentUserID);
+        }
+
+        public Entity.Users.Users GetFavouritesbyUsername(FilteredList<Entry> request, string Username)
+        {
+            return _repo.GetFavouritesbyUsername(request, Username);
         }
     }
 }

@@ -2,7 +2,7 @@
 using definer.Entity.Threads;
 using definer.Entity.Users;
 
-namespace definer.Core.Interface
+namespace definer.Core.Interface.Thread
 {
     public interface IEntry : IBaseInterface<Entry>
     {

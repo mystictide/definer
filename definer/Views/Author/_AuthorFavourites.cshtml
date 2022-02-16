@@ -4,7 +4,7 @@
     ViewData["Title"] = Model.Username + " - definer";
 }
 
-@Html.Partial("/Views/Helper/AuthorEntries_Pager.cshtml", Model.Entries.filter.pager)
+@Html.Partial("/Views/Helper/AuthorFavourites_Pager.cshtml", Model.Entries.filter.pager)
 @foreach (var item in Model.Entries.data)
 {
     string def = "def" + item.ID;
@@ -185,7 +185,7 @@
         </ul>
     </div>
 }
-@Html.Partial("/Views/Helper/AuthorEntries_Pager.cshtml", Model.Entries.filter.pager)
+@Html.Partial("/Views/Helper/AuthorFavourites_Pager.cshtml", Model.Entries.filter.pager)
 <script>
     $('.pages').on('change', function () {
         var value = $(this).val();

@@ -6,14 +6,16 @@
 }
 
 @Html.Hidden("author", Model.Username)
+@Html.Hidden("authorID", Model.ID)
+@Html.Hidden("tab", "entries")
 <div class="thread">
     <h1><a href="/u/@CustomTagHelpers.FriendlyURLTitle(Model.Username)">@Model.Username</a></h1>
     <div class="user-info">
         <div class="stats">
             <ul>
-                <li>15 entries</li>
-                <li>5 followers</li>
-                <li>2 following</li>
+                <li>@Model.EntryCount entries</li>
+                <li>@Model.FollowerCount followers</li>
+                <li>@Model.FollowingCount following</li>
                 <li class="social"><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
                 <li class="social"><a class="instagram" href="#"><i class="fab fa-instagram"></i></a></li>
                 <li class="social"><a class="facebook" href="#"><i class="fab fa-facebook"></i></a></li>
@@ -23,28 +25,37 @@
         <div class="bio">
             <p>this is my bio oh i'm so random lulz</p>
         </div>
-        <div class="manage">
-            <ul>
-                <li><a class="message" href="#">message</a></li>
-                <li><a class="follow" href="#">follow</a></li>
-                <li><a class="ignore" href="#">ignore</a></li>
-                <li><a class="report" href="#">report</a></li>
-            </ul>
-        </div>
+        @if (Model.ID != User.ID)
+        {
+            <div class="manage">
+                <ul>
+                    <li><a class="message" href="#">message</a></li>
+                    @if (Model.Interactions.Follow != null)
+                    {
+                        <li><a class="follow active" href="javascript:void(0)" id="followAuthor">following</a></li>
+                    }
+                    else
+                    {
+                        <li><a class="follow" href="javascript:void(0)" id="followAuthor">follow</a></li>
+                    }
+                    <li><a class="ignore" href="#">ignore</a></li>
+                    <li><a class="report" href="#">report</a></li>
+                </ul>
+            </div>
+        }
     </div>
     <div class="user-entries">
         <div class="user-tabs">
             <ul>
-                <li><a href="#">entries</a></li>
-                <li><a href="#">favourites</a></li>
-                <li><a href="#">media</a></li>
+                <li><a href="javascript:void(0);" id="userEntries">entries</a></li>
+                <li><a href="javascript:void(0);" id="userFavourites">favourites</a></li>
+                <li><a href="javascript:void(0);" id="userMedia">media</a></li>
             </ul>
         </div>
-        <div class="user-rss" id="rss-entries">  
+        <div class="user-rss" id="rss-entries">
         </div>
     </div>
 </div>
-
 
 @section Js {
     <script>
@@ -52,6 +63,17 @@
             function () {
                 authorpage.fill();
             },
+            $('#userEntries').on('click', function () {
+                $('#tab').val("entries");
+                authorpage.fill();
+            }),
+            $('#userFavourites').on('click', function () {
+                $('#tab').val("favourites");
+                authorpage.fillFavourites();
+            }),
+            $('#followAuthor').on('click', function () {
+                interactions.setfollowstate($('#authorID').val());
+            }),
         );
     </script>
 }

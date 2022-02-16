@@ -1,10 +1,10 @@
 ﻿using Dapper;
 using Dapper.Contrib.Extensions;
-using definer.Core.Interface;
+using definer.Core.Interface.Thread;
 using definer.Entity.Helpers;
 using definer.Entity.Threads;
 
-namespace definer.Core.Repo
+namespace definer.Core.Repo.Thread
 {
     public class EntryAttributeRepository : Connection.dbConnection, IEntryAttribute
     {

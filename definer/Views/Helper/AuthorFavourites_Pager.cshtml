@@ -12,7 +12,7 @@
             @*<li> <a href="javascript:void(0)" onclick="authorpage.filter(1)" style="margin-right: 2px;"> &laquo;&laquo; </a> </li>*@
             @if (Model.CurrentPage != 1)
             {
-                <li class="page-item direction"> <a href="javascript:void(0)" onclick="authorpage.filter(@(page == 1 ? 1 : (page - 1)))"> &laquo; </a></li>
+                <li class="page-item direction"> <a href="javascript:void(0)" onclick="authorpage.filterFavourites(@(page == 1 ? 1 : (page - 1)))"> &laquo; </a></li>
             }
 
             <li class="page-item active">
@@ -32,11 +32,11 @@
             </li>
             @*<li class="page-item active"><a class="page-link" href="javascript:void(0)" onclick="authorpage.filter(@Model.CurrentPage)" style="margin-right: 2px;"> @Model.CurrentPage</a></li>*@
             <li class="page-item divider"> / </li>
-            <li class="page-item last"><a class="page-link" href="javascript:void(0)" onclick="authorpage.filter(@Model.EndPage)"> @Model.EndPage</a></li>
+            <li class="page-item last"><a class="page-link" href="javascript:void(0)" onclick="authorpage.filterFavourites(@Model.EndPage)"> @Model.EndPage</a></li>
 
             @if (page != Model.EndPage)
             {
-                <li class="page-item direction"> <a href="javascript:void(0)" onclick="authorpage.filter(@(Model.TotalPages == page ? Model.TotalPages : (page + 1)))"> &raquo; </a> </li>
+                <li class="page-item direction"> <a href="javascript:void(0)" onclick="authorpage.filterFavourites(@(Model.TotalPages == page ? Model.TotalPages : (page + 1)))"> &raquo; </a> </li>
             }
 
             @*<li> <a href="javascript:void(0)" onclick="authorpage.filter(@Model.TotalPages)" style="margin-right: 2px;"> &raquo;&raquo; </a> </li>*@

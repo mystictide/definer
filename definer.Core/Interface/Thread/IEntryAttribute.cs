@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace definer.Core.Interface
+namespace definer.Core.Interface.Thread
 {
     public interface IEntryAttribute : IBaseInterface<EntryAttribute>
     {

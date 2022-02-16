@@ -17,12 +17,6 @@ $(document).bind('change', '.spages', function () {
     sidebar.filter(value);
 });
 
-//$('.spages').on('change', function () {
-//    var value = $(this).val();
-//    console.log(value);
-//    sidebar.filter(value);
-//});
-
 function toggle() {
     document.getElementById('settings-dropdown').classList.toggle("show");
 }
@@ -52,17 +46,59 @@ var authorpage = {
             }
         });
     },
-    filter: function (page) {
+    fillFavourites: function () {
         var username = $("#author").val();
-        var filter = { page: page };
+        var data = { username: username };
         $.ajax({
-            url: "/u/authorEntries",
-            data: { filter: filter, username: username },
+            url: "/u/authorFavourites",
+            data: data,
             success: function (data) {
                 $('#rss-entries').empty().prepend(data);
             }
         });
-    }
+    },
+    filter: function (page) {
+        var name = $("#author").val();
+        var filter = { page: page };
+        $.ajax({
+            url: "/u/authorEntries/" + name,
+            data: filter,
+            success: function (data) {
+                $('#rss-entries').empty().prepend(data);
+            }
+        });
+    },
+    filterFavourites: function (page) {
+        var name = $("#author").val();
+        var filter = { page: page };
+        $.ajax({
+            url: "/u/authorFavourites/" + name,
+            data: filter,
+            success: function (data) {
+                $('#rss-entries').empty().prepend(data);
+            }
+        });
+    },
+}
+
+var interactions = {
+    setfollowstate: function (AuthorID) {
+        var data = { UserID: AuthorID };
+        $.ajax({
+            url: "/i/setFollowState",
+            data: data,
+            success: function (data) {
+                if (data == undefined || data == null) {
+                    $('#followAuthor').toggleClass("active");
+                    $('#followAuthor').text("follow");
+                }
+                else {
+                    $('#followAuthor').toggleClass("active");
+                    $('#followAuthor').text("following");
+                }
+            }
+        });
+    },
 }
 
 var sidebar = {
@@ -77,7 +113,7 @@ var sidebar = {
         });
     },
     filter: function (page) {
-        var filter = {page: page};
+        var filter = { page: page };
         $.ajax({
             url: "/sideBar",
             data: filter,
@@ -87,7 +123,7 @@ var sidebar = {
                 //return data;
             }
         });
-    }
+    },
 }
 
 var entryAttribute = {

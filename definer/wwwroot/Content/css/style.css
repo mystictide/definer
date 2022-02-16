@@ -447,9 +447,15 @@ header {
   background: #383840;
 }
 .page-container .main .thread .user-info .manage ul .follow {
+  background: #383840;
+}
+.page-container .main .thread .user-info .manage ul .follow.active {
   background: #aa00aa;
 }
 .page-container .main .thread .user-info .manage ul .ignore {
+  background: #383840;
+}
+.page-container .main .thread .user-info .manage ul .ignore.active {
   background: #871A00;
 }
 .page-container .main .thread .user-info .manage ul .report {
@@ -468,6 +474,10 @@ header {
 }
 .page-container .main .thread .user-entries .user-tabs a {
   color: #efeff1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
 }
 .page-container .main .thread .user-entries .user-tabs ul {
   display: flex;
@@ -476,9 +486,16 @@ header {
 .page-container .main .thread .user-entries .user-tabs ul li {
   padding: 0.9rem 1rem 0.9rem 1rem;
   cursor: pointer;
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 .page-container .main .thread .user-entries .user-tabs ul li:hover {
   background: #aa00aa;
+}
+.page-container .main .thread .user-entries .user-rss {
+  display: block;
+  margin-bottom: 3rem;
 }
 .page-container .main .thread .user-entries .user-rss .rss-threads {
   width: 100%;

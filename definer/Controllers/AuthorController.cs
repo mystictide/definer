@@ -33,16 +33,17 @@ namespace definer.Controllers
             var result = new Users();
             if (username == null || username.Length < 1)
             {
-                result = new UserManager().Get(user.Username);
+                result = new UserManager().Get(user.Username, user.ID);
             }
             else
             {
-                result = new UserManager().Get(username);
+                result = new UserManager().Get(username, user.ID);
             }
             return View(result);
         }
 
         [Route("authorEntries"), HttpGet]
+        [Route("authorEntries/{username}"), HttpGet]
         public async Task<JsonResult> authorEntries(string? username, Filter filter, Entry filterModel)
         {
             var result = new Users();
@@ -67,6 +68,35 @@ namespace definer.Controllers
                 result.CurrentUser = user;
             }
             var rendered = await _viewRenderService.RenderToStringAsync("Author/_AuthorEntries", result);
+            return Json(rendered);
+        }
+
+        [Route("authorFavourites"), HttpGet]
+        [Route("authorFavourites/{username}"), HttpGet]
+        public async Task<JsonResult> authorFavourites(string? username, Filter filter, Entry filterModel)
+        {
+            var result = new Users();
+            filter.Keyword = filter.Keyword ?? "";
+            filter.pageSize = 7;
+            filter.isDetailSearch = false;
+            FilteredList<Entry> request = new FilteredList<Entry>()
+            {
+                filter = filter,
+                filterModel = filterModel
+            };
+            if (username == null || username.Length < 1)
+            {
+                result = new UserManager().GetFavouritesbyUsername(request, user.Username);
+            }
+            else
+            {
+                result = new UserManager().GetFavouritesbyUsername(request, username);
+            }
+            if (user != null)
+            {
+                result.CurrentUser = user;
+            }
+            var rendered = await _viewRenderService.RenderToStringAsync("Author/_AuthorFavourites", result);
             return Json(rendered);
         }
     }

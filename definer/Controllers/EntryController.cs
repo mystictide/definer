@@ -11,7 +11,7 @@ namespace definer.Controllers
     [Authorize, Route("")]
     public class EntryController : Controller
     {
-         private Users _user;
+        private Users _user;
         public Users user { get { return _user ?? (_user = ValidateUser.ValidateCurrentUser(this)); } }
 
         [Route("vote"), HttpGet]

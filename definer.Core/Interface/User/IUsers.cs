@@ -2,7 +2,7 @@
 using definer.Entity.Threads;
 using definer.Entity.Users;
 
-namespace definer.Core.Interface
+namespace definer.Core.Interface.User
 {
     public interface IUsers
     {
@@ -13,7 +13,8 @@ namespace definer.Core.Interface
         ProcessResult Update(Users entity);
         ProcessResult Delete(int ID);
         Users Get(int ID);
-        Users Get(string Username);
+        Users Get(string Username, int CurrentUserID);
         Users GetbyUsername(FilteredList<Entry> request, string Username);
+        Users GetFavouritesbyUsername(FilteredList<Entry> request, string Username);
     }
 }

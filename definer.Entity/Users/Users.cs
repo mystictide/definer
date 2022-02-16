@@ -19,5 +19,17 @@ namespace definer.Entity.Users
 
         [Write(false)]
         public Users CurrentUser { get; set; }
+
+        [Write(false)]
+        public int EntryCount { get; set; }
+
+        [Write(false)]
+        public int FollowerCount { get; set; }
+
+        [Write(false)]
+        public int FollowingCount { get; set; }
+
+        [Write(false)]
+        public Interactions Interactions { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using definer.Core.Interface;
-using definer.Core.Repo;
+﻿using definer.Core.Interface.Thread;
+using definer.Core.Repo.Thread;
 using definer.Entity.Helpers;
 
 namespace definer.Business.Threads

@@ -38,7 +38,7 @@
                                             {
                                                 if (item.Attributes.Vote.HasValue)
                                                 {
-                                                    <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted @(@item.Attributes.Vote.Value ? "active" : "")"><i class="fas fa-chevron-up"></i></a>
+                                                    <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted @(item.Attributes.Vote.Value ? "active" : "")"><i class="fas fa-chevron-up"></i></a>
                                                     if (@item.Upvotes > 0)
                                                     {
                                                         <small class="upCount">@item.Upvotes</small>
@@ -47,7 +47,7 @@
                                                     {
                                                         <small class="upCount"></small>
                                                     }
-                                                    <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted @(@item.Attributes.Vote.Value ? "" : "active")"><i class="fas fa-chevron-down"></i></a>
+                                                    <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted @(item.Attributes.Vote.Value ? "" : "active")"><i class="fas fa-chevron-down"></i></a>
                                                     if (@item.Downvotes > 0)
                                                     {
                                                         <small class="downCount">@item.Downvotes</small>
@@ -80,7 +80,7 @@
                                                 }
                                                 if (item.Attributes.Favourite.HasValue)
                                                 {
-                                                    <a onclick="entryAttribute.fav(@item.ID)" class="fav @(@item.Attributes.Favourite.Value ? "active" : "")"><i class="fas fa-heart"></i></a>
+                                                    <a onclick="entryAttribute.fav(@item.ID)" class="fav @(item.Attributes.Favourite.Value ? "active" : "")"><i class="fas fa-heart"></i></a>
                                                     if (@item.Favourites > 0)
                                                     {
                                                         <small class="favCount">@item.Favourites</small>
