@@ -354,7 +354,7 @@ var Filter = {
 
     Clear: function () {
         let querystring = Filter.querystring.read();
-        KodLoading.refresh(window.location.pathname + "?keyword=" + querystring.get('keyword'));
+        Filter.refresh(window.location.pathname + "?keyword=" + querystring.get('keyword'));
     },
 
     querystring: {

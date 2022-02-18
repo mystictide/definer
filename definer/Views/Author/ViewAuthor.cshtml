@@ -8,7 +8,7 @@
 @Html.Hidden("author", Model.Username)
 @Html.Hidden("authorID", Model.ID)
 @Html.Hidden("tab", "entries")
-<div class="thread">
+<div class="view">
     <h1><a href="/u/@CustomTagHelpers.FriendlyURLTitle(Model.Username)">@Model.Username</a></h1>
     <div class="user-info">
         <div class="stats">
@@ -16,10 +16,38 @@
                 <li>@Model.EntryCount entries</li>
                 <li>@Model.FollowerCount followers</li>
                 <li>@Model.FollowingCount following</li>
-                <li class="social"><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
-                <li class="social"><a class="instagram" href="#"><i class="fab fa-instagram"></i></a></li>
-                <li class="social"><a class="facebook" href="#"><i class="fab fa-facebook"></i></a></li>
-                <li class="social"><a class="spotify" href="#"><i class="fab fa-spotify"></i></a></li>
+                @if (Model.Social.Twitter != "" && Model.Social.Twitter != null)
+                {
+                    <li class="social"><a class="twitter" href="@Model.Social.Twitter" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                }
+                @if (Model.Social.Instagram != "" && Model.Social.Instagram != null)
+                {
+                    <li class="social"><a class="instagram" href="@Model.Social.Instagram" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                }
+                @if (Model.Social.Facebook != "" && Model.Social.Facebook != null)
+                {
+                    <li class="social"><a class="facebook" href="@Model.Social.Facebook" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                }
+                @if (Model.Social.LinkedIn != "" && Model.Social.LinkedIn != null)
+                {
+                    <li class="social"><a class="linkedin" href="@Model.Social.LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                }
+                @if (Model.Social.YouTube != "" && Model.Social.YouTube != null)
+                {
+                    <li class="social"><a class="youtube" href="@Model.Social.YouTube" target="_blank"><i class="fab fa-youtube"></i></a></li>
+                }
+                @if (Model.Social.Spotify != "" && Model.Social.Spotify != null)
+                {
+                    <li class="social"><a class="spotify" href="@Model.Social.Spotify" target="_blank"><i class="fab fa-spotify"></i></a></li>
+                }
+                @if (Model.Social.Letterboxd != "" && Model.Social.Letterboxd != null)
+                {
+                    <li class="social"><a class="letterboxd" href="@Model.Social.Letterboxd" target="_blank"><img src="~/Content/img/icons/letterboxd-decal-dots-pos-rgb.svg" /></a></li>
+                }
+                @if (Model.Social.GitHub != "" && Model.Social.GitHub != null)
+                {
+                    <li class="social"><a class="github" href="@Model.Social.GitHub" target="_blank"><i class="fab fa-github"></i></a></li>
+                }
             </ul>
         </div>
         <div class="bio">

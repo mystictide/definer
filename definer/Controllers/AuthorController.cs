@@ -23,7 +23,6 @@ namespace definer.Controllers
 
         [Route("")]
         [Route("{username}")]
-        //[Route("{username}-{ID}")]
         public ActionResult ViewAuthor(string? username)
         {
             if (user != null)

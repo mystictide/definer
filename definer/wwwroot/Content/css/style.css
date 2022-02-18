@@ -346,7 +346,7 @@ header {
   column-gap: 2rem;
   margin-left: 30%;
 }
-.page-container .main .thread {
+.page-container .main .view {
   height: 100%;
   margin: 0.5rem 2rem;
   flex-grow: 2;
@@ -358,76 +358,88 @@ header {
   flex-direction: column;
   z-index: 20;
 }
-.page-container .main .thread h1 {
+.page-container .main .view h1 {
   width: 100%;
   font-size: 1.1rem;
   margin: 1rem 0;
   word-break: break-word;
   line-height: 1.4;
 }
-.page-container .main .thread h1:hover {
+.page-container .main .view h1:hover {
   text-decoration: underline;
 }
-.page-container .main .thread h4 {
+.page-container .main .view h4 {
   font-size: 0.8rem;
   margin: 1rem 0;
   word-break: break-word;
 }
-.page-container .main .thread .user-info {
+.page-container .main .view .user-info {
   display: block;
   width: 100%;
   min-height: 100px;
   font-size: 0.9rem;
 }
-.page-container .main .thread .user-info .bio {
+.page-container .main .view .user-info .bio {
   display: block;
 }
-.page-container .main .thread .user-info .stats {
+.page-container .main .view .user-info .stats {
   display: block;
   padding: 1rem 0 1rem 0;
 }
-.page-container .main .thread .user-info .stats ul {
+.page-container .main .view .user-info .stats ul {
   display: flex;
   flex-direction: row;
   column-gap: 1rem;
 }
-.page-container .main .thread .user-info .stats ul .social a {
+.page-container .main .view .user-info .stats ul .social a {
   font-size: 1rem;
   color: #858587;
   padding: 1px;
   cursor: pointer;
 }
-.page-container .main .thread .user-info .stats ul .social a:hover {
-  color: #aa00aa;
+.page-container .main .view .user-info .stats ul .social a:hover {
   position: relative;
   top: 1px;
 }
-.page-container .main .thread .user-info .stats ul .social a:active {
+.page-container .main .view .user-info .stats ul .social a:active {
   position: relative;
   left: 1px;
 }
-.page-container .main .thread .user-info .stats ul .social .twitter {
+.page-container .main .view .user-info .stats ul .social .twitter {
   color: #1DA1F2;
 }
-.page-container .main .thread .user-info .stats ul .social .instagram {
+.page-container .main .view .user-info .stats ul .social .instagram {
   color: #F56040;
 }
-.page-container .main .thread .user-info .stats ul .social .spotify {
+.page-container .main .view .user-info .stats ul .social .spotify {
   color: #1DB954;
 }
-.page-container .main .thread .user-info .stats ul .social .facebook {
+.page-container .main .view .user-info .stats ul .social .linkedin {
+  color: #2867B2;
+}
+.page-container .main .view .user-info .stats ul .social .youtube {
+  color: #FF0000;
+}
+.page-container .main .view .user-info .stats ul .social .facebook {
   color: #4267B2;
 }
-.page-container .main .thread .user-info .manage {
+.page-container .main .view .user-info .stats ul .social .letterboxd img {
+  width: 19px;
+  height: 18px;
+}
+.page-container .main .view .user-info .stats ul .social .github {
+  color: #f5f5f5;
+}
+.page-container .main .view .user-info .manage {
   display: block;
   padding: 1rem 0 1rem 0;
 }
-.page-container .main .thread .user-info .manage ul {
+.page-container .main .view .user-info .manage ul {
   display: flex;
   flex-direction: row;
   column-gap: 1rem;
 }
-.page-container .main .thread .user-info .manage ul a {
+.page-container .main .view .user-info .manage ul a {
   background: #65a9d7;
   padding: 5px 12px;
   -webkit-border-radius: 5px;
@@ -437,84 +449,84 @@ header {
   vertical-align: middle;
   font-size: 0.9rem;
 }
-.page-container .main .thread .user-info .manage ul a:hover {
+.page-container .main .view .user-info .manage ul a:hover {
   background: #18181b;
 }
-.page-container .main .thread .user-info .manage ul a:active {
+.page-container .main .view .user-info .manage ul a:active {
   background: #0e0e10;
 }
-.page-container .main .thread .user-info .manage ul .message {
+.page-container .main .view .user-info .manage ul .message {
   background: #383840;
 }
-.page-container .main .thread .user-info .manage ul .follow {
+.page-container .main .view .user-info .manage ul .follow {
   background: #383840;
 }
-.page-container .main .thread .user-info .manage ul .follow.active {
+.page-container .main .view .user-info .manage ul .follow.active {
   background: #aa00aa;
 }
-.page-container .main .thread .user-info .manage ul .ignore {
+.page-container .main .view .user-info .manage ul .ignore {
   background: #383840;
 }
-.page-container .main .thread .user-info .manage ul .ignore.active {
+.page-container .main .view .user-info .manage ul .ignore.active {
   background: #871A00;
 }
-.page-container .main .thread .user-info .manage ul .report {
+.page-container .main .view .user-info .manage ul .report {
   background: #383840;
 }
-.page-container .main .thread .user-entries {
+.page-container .main .view .user-entries {
   display: block;
   width: 100%;
   min-height: 100px;
   font-size: 0.9rem;
 }
-.page-container .main .thread .user-entries .user-tabs {
+.page-container .main .view .user-entries .user-tabs {
   border: 1px dashed #494949;
   border-width: 1px 0;
   margin: 0.9rem 0 0.9rem 0;
 }
-.page-container .main .thread .user-entries .user-tabs a {
+.page-container .main .view .user-entries .user-tabs a {
   color: #efeff1;
   display: block;
   width: 100%;
   height: 100%;
   text-align: center;
 }
-.page-container .main .thread .user-entries .user-tabs ul {
+.page-container .main .view .user-entries .user-tabs ul {
   display: flex;
   flex-direction: row;
 }
-.page-container .main .thread .user-entries .user-tabs ul li {
+.page-container .main .view .user-entries .user-tabs ul li {
   padding: 0.9rem 1rem 0.9rem 1rem;
   cursor: pointer;
   display: block;
   height: 100%;
   width: 100%;
 }
-.page-container .main .thread .user-entries .user-tabs ul li:hover {
+.page-container .main .view .user-entries .user-tabs ul li:hover {
   background: #aa00aa;
 }
-.page-container .main .thread .user-entries .user-rss {
+.page-container .main .view .user-entries .user-rss {
   display: block;
   margin-bottom: 3rem;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads {
+.page-container .main .view .user-entries .user-rss .rss-threads {
   width: 100%;
   word-wrap: break-word;
   margin-bottom: 1rem;
   margin-top: 1rem;
   line-height: 24px;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li {
+.page-container .main .view .user-entries .user-rss .rss-threads li {
   list-style: none;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li .body {
+.page-container .main .view .user-entries .user-rss .rss-threads li .body {
   white-space: pre-line;
   overflow: hidden;
   position: relative;
   font-size: 1rem;
   line-height: 22px;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li .body .spoiler {
+.page-container .main .view .user-entries .user-rss .rss-threads li .body .spoiler {
   opacity: 0.9;
   background: #0e0e10;
   border-radius: 5px;
@@ -523,93 +535,93 @@ header {
   user-select: none;
   transition: background 0.3s ease 0.2s, color 0.2s ease 0.25s;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li .body .spoiler:focus {
+.page-container .main .view .user-entries .user-rss .rss-threads li .body .spoiler:focus {
   background: none;
   color: inherit;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
   height: 120px;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .feedback {
   float: left;
   position: relative;
   width: 45%;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback a {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .feedback a {
   color: #858587;
   padding: 5px;
   cursor: pointer;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback a:hover {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .feedback a:hover {
   color: #aa00aa;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback a:active {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .feedback a:active {
   position: relative;
   top: 1px;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback .upvoted.active {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .feedback .upvoted.active {
   color: #aa00aa;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback .downvoted.active {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .feedback .downvoted.active {
   color: #c10000;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .feedback .fav.active {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .feedback .fav.active {
   color: #aa00aa;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .info {
   display: flex;
   flex-direction: column;
   text-align: right;
   float: right;
   width: 55%;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info .author a {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .info .author a {
   font-size: 0.9rem;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info .author a:hover {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .info .author a:hover {
   text-decoration: underline;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info .link a {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .info .link a {
   font-size: 0.9rem;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info .link a:hover {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .info .link a:hover {
   text-decoration: underline;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads li footer .info .link small {
+.page-container .main .view .user-entries .user-rss .rss-threads li footer .info .link small {
   color: #858587;
   font-size: 0.7rem;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads h1 {
+.page-container .main .view .user-entries .user-rss .rss-threads h1 {
   width: 100%;
   font-size: 1.1rem;
   margin: 1rem 0;
   word-break: break-word;
   line-height: 1.4;
 }
-.page-container .main .thread .user-entries .user-rss .rss-threads h1:hover {
+.page-container .main .view .user-entries .user-rss .rss-threads h1:hover {
   text-decoration: underline;
 }
-.page-container .main .thread .entries {
+.page-container .main .view .entries {
   width: 100%;
   word-wrap: break-word;
   margin-bottom: 1rem;
   margin-top: 1rem;
   line-height: 24px;
 }
-.page-container .main .thread .entries li {
+.page-container .main .view .entries li {
   list-style: none;
 }
-.page-container .main .thread .entries li .body {
+.page-container .main .view .entries li .body {
   white-space: pre-line;
   overflow: hidden;
   position: relative;
   font-size: 1rem;
   line-height: 22px;
 }
-.page-container .main .thread .entries li .body .spoiler {
+.page-container .main .view .entries li .body .spoiler {
   opacity: 0.9;
   background: #0e0e10;
   border-radius: 5px;
@@ -618,97 +630,97 @@ header {
   user-select: none;
   transition: background 0.3s ease 0.2s, color 0.2s ease 0.25s;
 }
-.page-container .main .thread .entries li .body .spoiler:focus {
+.page-container .main .view .entries li .body .spoiler:focus {
   background: none;
   color: inherit;
 }
-.page-container .main .thread .entries li footer {
+.page-container .main .view .entries li footer {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
   height: 120px;
 }
-.page-container .main .thread .entries li footer .feedback {
+.page-container .main .view .entries li footer .feedback {
   float: left;
   position: relative;
   width: 45%;
 }
-.page-container .main .thread .entries li footer .feedback a {
+.page-container .main .view .entries li footer .feedback a {
   color: #858587;
   padding: 5px;
   cursor: pointer;
 }
-.page-container .main .thread .entries li footer .feedback a:hover {
+.page-container .main .view .entries li footer .feedback a:hover {
   color: #aa00aa;
 }
-.page-container .main .thread .entries li footer .feedback a:active {
+.page-container .main .view .entries li footer .feedback a:active {
   position: relative;
   top: 1px;
 }
-.page-container .main .thread .entries li footer .feedback .upvoted.active {
+.page-container .main .view .entries li footer .feedback .upvoted.active {
   color: #aa00aa;
 }
-.page-container .main .thread .entries li footer .feedback .downvoted.active {
+.page-container .main .view .entries li footer .feedback .downvoted.active {
   color: #c10000;
 }
-.page-container .main .thread .entries li footer .feedback .fav.active {
+.page-container .main .view .entries li footer .feedback .fav.active {
   color: #aa00aa;
 }
-.page-container .main .thread .entries li footer .info {
+.page-container .main .view .entries li footer .info {
   display: flex;
   flex-direction: column;
   text-align: right;
   float: right;
   width: 55%;
 }
-.page-container .main .thread .entries li footer .info .author a {
+.page-container .main .view .entries li footer .info .author a {
   font-size: 0.9rem;
 }
-.page-container .main .thread .entries li footer .info .author a:hover {
+.page-container .main .view .entries li footer .info .author a:hover {
   text-decoration: underline;
 }
-.page-container .main .thread .entries li footer .info .link a {
+.page-container .main .view .entries li footer .info .link a {
   font-size: 0.9rem;
 }
-.page-container .main .thread .entries li footer .info .link a:hover {
+.page-container .main .view .entries li footer .info .link a:hover {
   text-decoration: underline;
 }
-.page-container .main .thread .entries li footer .info .link small {
+.page-container .main .view .entries li footer .info .link small {
   color: #858587;
   font-size: 0.7rem;
 }
-.page-container .main .thread .entry-editor {
+.page-container .main .view .entry-editor {
   height: 400px;
   width: 100%;
   display: block;
   margin-top: 20px;
 }
-.page-container .main .thread .entry-editor .field-validation-error {
+.page-container .main .view .entry-editor .field-validation-error {
   display: block;
   padding-bottom: 5px;
   font-size: 0.8rem;
 }
-.page-container .main .thread .entry-editor form {
+.page-container .main .view .entry-editor form {
   display: block;
   height: inherit;
   width: 100%;
   background-color: #0e0e10;
   border-radius: 5px;
 }
-.page-container .main .thread .entry-editor form .text-editor {
+.page-container .main .view .entry-editor form .text-editor {
   border: none;
   outline: none;
   height: 100%;
   width: 100%;
   padding: 1rem 2rem 2rem 2rem;
 }
-.page-container .main .thread .entry-editor form .text-editor .functions {
+.page-container .main .view .entry-editor form .text-editor .functions {
   display: block;
   width: 100%;
   height: 35px;
   margin-bottom: 5px;
 }
-.page-container .main .thread .entry-editor form .text-editor .functions button {
+.page-container .main .view .entry-editor form .text-editor .functions button {
   background-color: #0e0e10;
   border-radius: 5px;
   border: 1px solid #aa00aa;
@@ -720,14 +732,14 @@ header {
   padding: 8px 10px;
   text-decoration: none;
 }
-.page-container .main .thread .entry-editor form .text-editor .functions button:hover {
+.page-container .main .view .entry-editor form .text-editor .functions button:hover {
   background-color: #18181b;
 }
-.page-container .main .thread .entry-editor form .text-editor .functions button:active {
+.page-container .main .view .entry-editor form .text-editor .functions button:active {
   position: relative;
   top: 1px;
 }
-.page-container .main .thread .entry-editor form .text-editor textarea {
+.page-container .main .view .entry-editor form .text-editor textarea {
   height: 77%;
   width: 100%;
   border: none;
@@ -739,10 +751,10 @@ header {
   padding: 10px;
   resize: none;
 }
-.page-container .main .thread .entry-editor form .text-editor .process {
+.page-container .main .view .entry-editor form .text-editor .process {
   height: 20%;
 }
-.page-container .main .thread .entry-editor form .text-editor .process button {
+.page-container .main .view .entry-editor form .text-editor .process button {
   display: inline-block;
   float: right;
   border-radius: 6px;
@@ -753,8 +765,127 @@ header {
   background-color: #aa00aa;
   color: inherit;
 }
-.page-container .main .thread .entry-editor form .text-editor .process button:hover {
+.page-container .main .view .entry-editor form .text-editor .process button:hover {
   outline: 1px solid #efeff1;
+}
+.page-container .main .view .settings {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.page-container .main .view .settings .settings-tabs {
+  display: block;
+  width: 60%;
+}
+.page-container .main .view .settings .settings-tabs ul {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid #aa00aa;
+}
+.page-container .main .view .settings .settings-tabs ul li {
+  border-top-right-radius: 7px;
+  padding: 0.8rem;
+  cursor: pointer;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.page-container .main .view .settings .settings-tabs ul li:hover {
+  background-color: #aa00aa;
+  border-top-left-radius: 7px;
+}
+.page-container .main .view .settings .settings-tabs ul li a {
+  color: #efeff1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 0.8rem;
+}
+.page-container .main .view .settings .settings-tabs ul li.active {
+  border-top: 1px solid #aa00aa;
+  border-right: 1px solid #aa00aa;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset {
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .row .label {
+  float: left;
+  width: 15%;
+  text-align: left;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .row .label label {
+  font-size: 0.95rem;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .row .input {
+  float: left;
+  width: 85%;
+  position: relative;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .row .input input {
+  width: 50%;
+  background-color: #464649;
+  border: 2px solid;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 0.95rem;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .row .input input:hover {
+  outline: none;
+  border-color: #18181b;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .row .input input:focus {
+  outline: none;
+  background-color: #0e0e10;
+  border-color: #aa00aa;
+  color: #efeff1;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .row button {
+  width: 57%;
+  background-color: #0e0e10;
+  border-color: #18181b;
+  color: #aa00aa;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .row button:hover {
+  outline: none;
+  border: 2px solid;
+  border-color: #aa00aa;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset h3 {
+  font-size: 1rem;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .vertical-pick {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.2rem;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .vertical-pick button {
+  color: #efeff1;
+  padding: 6px 7px;
+  font-size: 0.8rem;
+  background-color: #0e0e10;
+  border: none;
+  cursor: pointer;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .vertical-pick button:hover {
+  background-color: #aa00aa;
+  transition: background 0.1s ease 0.2s, color 0.2s ease 0.25s;
+}
+.page-container .main .view .settings .preferences .prefs-form fieldset .vertical-pick button.active {
+  background-color: #aa00aa;
 }
 .page-container .main .res {
   margin: 1rem 2rem;

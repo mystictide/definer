@@ -38,8 +38,16 @@ namespace definer.Controllers
                 user.Mail = model.Mail;
                 user.Password = _passwordHasher.HashPassword(model.Password);
                 user.IsActive = true;
-
                 var result = new UserManager().Add(user);
+
+                var preferences = new PreferenceJunction();
+                preferences.UserID = result.ReturnID;
+                preferences.PageSize = 10;
+                preferences.Messaging = true;
+                new PreferenceJunctionManager().Add(preferences);
+                var social = new SocialJunction();
+                social.UserID = result.ReturnID;
+                new SocialJunctionManager().Add(social);
                 if (result.State == Entity.Helpers.ProcessState.Success)
                 {
                     return RedirectToAction("login", new { val = "true" });

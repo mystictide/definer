@@ -1,0 +1,61 @@
+﻿@model definer.Entity.Users.SocialJunction
+
+@{
+    ViewData["Title"] = "social - definer";
+}
+
+<div class="view">
+    <h1><a href="/settings/social">settings</a></h1>
+    <div class="settings">
+        <div class="settings-tabs">
+            <ul>
+                <li><a href="/settings/prefs">preferences</a></li>
+                <li class="active"><a href="/settings/social">social</a></li>
+                <li><a href="/settings/user">user</a></li>
+                <li><a href="/settings/personal">personal</a></li>
+                <li><a href="/settings/account">account</a></li>
+            </ul>
+        </div>
+        <div class="preferences">
+            <form action="/settings/social" autocomplete="off" method="post" class="prefs-form">
+                <fieldset>
+                    <div class="row">
+                        <div class="label">@Html.LabelFor(m => m.Twitter)</div>
+                        <div class="input">@Html.EditorFor(m => m.Twitter)</div>
+                    </div>
+                    <div class="row">
+                        <div class="label"> @Html.LabelFor(m => m.Instagram)</div>
+                        <div class="input">@Html.EditorFor(m => m.Instagram)</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">@Html.LabelFor(m => m.Facebook)</div>
+                        <div class="input">@Html.EditorFor(m => m.Facebook)</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">@Html.LabelFor(m => m.LinkedIn)</div>
+                        <div class="input">@Html.EditorFor(m => m.LinkedIn)</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">@Html.LabelFor(m => m.YouTube)</div>
+                        <div class="input">@Html.EditorFor(m => m.YouTube)</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">@Html.LabelFor(m => m.Spotify)</div>
+                        <div class="input">@Html.EditorFor(m => m.Spotify)</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">@Html.LabelFor(m => m.Letterboxd)</div>
+                        <div class="input">@Html.EditorFor(m => m.Letterboxd)</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">@Html.LabelFor(m => m.GitHub)</div>
+                        <div class="input">@Html.EditorFor(m => m.GitHub)</div>
+                    </div>
+                    <div class="row">
+                        <button type="submit">save</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

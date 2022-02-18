@@ -1,0 +1,18 @@
+﻿@model definer.Entity.Helpers.FilteredList<definer.Entity.Threads.Threads>
+
+@{
+
+}
+
+<div class="sidebar">
+    @Html.Partial("/Views/Helper/Sidebar_Pager.cshtml", Model.filter.pager)
+    <ul class="sidebar-list">
+        @foreach (var item in Model.data)
+        {
+            string url = "/" + CustomTagHelpers.FriendlyURLTitle(item.Title) + "-" + item.ID;
+            <li>
+                <a href="@url"> @item.Title<small>@item.Entries.ToString()</small></a>
+            </li>
+        }
+    </ul>
+</div>

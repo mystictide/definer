@@ -61,12 +61,15 @@ namespace definer.Core.Repo.Thread
                 param.Add("@ID", request.filterModel.ThreadID);
                 param.Add("@UserID", UserID);
 
-                string WhereClause = @" WHERE t.ThreadID = @ID AND (t.Body like '%' + @Keyword + '%') AND NOT t.UserID = ISNULL(b.UserID, 0)";
+                string WhereClause = @" WHERE t.ThreadID = @ID AND (t.Body like '%' + @Keyword + '%') 
+                AND (NOT t.UserID = ISNULL(b.UserID, 0)
+                AND NOT t.UserID = ISNULL(u.BlockerID, 0))";
 
                 string query_count = $@" 
                 Select Count(t.ID)
                 from Entry t 
                 LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID
+                LEFT JOIN BlockJunction as u ON @UserID = u.UserID
                 {WhereClause}";
 
                 string query = $@"
@@ -81,6 +84,7 @@ namespace definer.Core.Repo.Thread
                 FROM Entry t
                 LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID
                 LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID
+                LEFT JOIN BlockJunction as u ON @UserID = u.UserID
                 {WhereClause} 
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS

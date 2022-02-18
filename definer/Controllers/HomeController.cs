@@ -6,6 +6,7 @@ using definer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using static definer.Models.RenderView;
 
 namespace definer.Controllers
 {
@@ -14,6 +15,12 @@ namespace definer.Controllers
     {
         private Users _user;
         public Users user { get { return _user ?? (_user = ValidateUser.ValidateCurrentUser(this)); } }
+
+        private readonly IViewRenderService _viewRenderService;
+        public HomeController(IViewRenderService viewRenderService)
+        {
+            _viewRenderService = viewRenderService;
+        }
 
         [Route("")]
         [Route("{title}")]
@@ -73,7 +80,7 @@ namespace definer.Controllers
         }
 
         [Route("sideBar"), HttpGet]
-        public JsonResult sideBar(Filter filter, Threads filterModel)
+        public async Task<JsonResult> sideBar(Filter filter, Threads filterModel)
         {
             filter.Keyword = filter.Keyword ?? "";
             filter.pageSize = 25;
@@ -84,7 +91,8 @@ namespace definer.Controllers
                 filterModel = filterModel
             };
             FilteredList<Threads> result = new ThreadManager().FilteredList(request);
-            return Json(CustomTagHelpers.SidebarContent(result));
+            var rendered = await _viewRenderService.RenderToStringAsync("Home/_sidebarContent", result);
+            return Json(rendered);
         }
     }
 }

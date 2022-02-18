@@ -1,0 +1,43 @@
+﻿@model definer.Entity.Users.PreferenceJunction
+
+@{
+    ViewData["Title"] = "preferences - definer";
+}
+
+<div class="view">
+    <h1><a href="/settings/prefs">settings</a></h1>
+    <div class="settings">
+        <div class="settings-tabs">
+            <ul>
+                <li class="active"><a href="/settings/prefs">preferences</a></li>
+                <li><a href="/settings/social">social</a></li>
+                <li><a href="/settings/user">user</a></li>
+                <li><a href="/settings/personal">personal</a></li>
+                <li><a href="/settings/account">account</a></li>
+            </ul>
+        </div>
+        <div class="preferences">
+            <form action="/settings/prefs" autocomplete="off" method="post" class="prefs-form">     
+                <fieldset>
+                    <h3>messaging</h3>
+                    <small>accept private messages?</small>
+                    <div class="vertical-pick">
+                        <button name="pm" type="submit" value="True" class="@(Model.Messaging.Value ? "active" : "")">Yes</button>
+                        <button name="pm" type="submit" value="False" class=" @(Model.Messaging.Value ? "" : "active")">No</button>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <h3>entry view</h3>
+                    <small>entries to show per page</small>
+                    <div class="vertical-pick">
+                        <button name="pagesize" type="submit" value="10" class="@(Model.PageSize == 10 ? "active" : "")">10</button>
+                        <button name="pagesize" type="submit" value="25" class="@(Model.PageSize == 25 ? "active" : "")">25</button>
+                        <button name="pagesize" type="submit" value="50" class="@(Model.PageSize == 50 ? "active" : "")">50</button>
+                        <button name="pagesize" type="submit" value="75" class="@(Model.PageSize == 75 ? "active" : "")">75</button>
+                        <button name="pagesize" type="submit" value="100" class="@(Model.PageSize == 100 ? "active" : "")">100</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

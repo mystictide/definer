@@ -1,14 +1,14 @@
 ﻿using Dapper;
 using Dapper.Contrib.Extensions;
-using definer.Core.Interface.Thread;
+using definer.Core.Interface.User;
 using definer.Entity.Helpers;
-using definer.Entity.Threads;
+using definer.Entity.Users;
 
-namespace definer.Core.Repo.Thread
+namespace definer.Core.Repo.User
 {
-    public class ThreadsRepository : Connection.dbConnection, IThread
+    public class PreferenceJunctionRepository : Connection.dbConnection, IPreferenceJunction
     {
-        public ProcessResult Add(Threads entity)
+        public ProcessResult Add(PreferenceJunction entity)
         {
             ProcessResult result = new ProcessResult();
             try
@@ -16,7 +16,7 @@ namespace definer.Core.Repo.Thread
                 using (var con = GetConnection)
                 {
                     result.ReturnID = (int)con.Insert(entity);
-                    result.Message = "Thread saved successfully";
+                    result.Message = "Prefs saved successfully";
                     result.State = ProcessState.Success;
                 }
             }
@@ -35,7 +35,7 @@ namespace definer.Core.Repo.Thread
                 ProcessResult pr = new ProcessResult();
                 try
                 {
-                    con.Delete(new Threads() { ID = ID });
+                    con.Delete(new PreferenceJunction() { ID = ID });
                     pr.ReturnID = 0;
                     pr.Message = "Success";
                     pr.State = ProcessState.Success;
@@ -50,22 +50,27 @@ namespace definer.Core.Repo.Thread
             }
         }
 
-        public FilteredList<Threads> FilteredList(FilteredList<Threads> request)
+        public FilteredList<PreferenceJunction> FilteredList(FilteredList<PreferenceJunction> request)
         {
             try
             {
-                FilteredList<Threads> result = new FilteredList<Threads>();
+                FilteredList<PreferenceJunction> result = new FilteredList<PreferenceJunction>();
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@Keyword", request.filter.Keyword);
                 param.Add("@PageSize", request.filter.pageSize);
-                string WhereClause = @" WHERE (t.Title like '%' + @Keyword + '%')";
 
-                string query_count = $@"  Select Count(t.ID) from Thread t {WhereClause}";
+                string WhereClause = @" WHERE t.ThreadID = @ID AND  (t.Body like '%' + @Keyword + '%')";
+
+                string query_count = $@"  Select Count(t.ID) from PreferenceJunction t {WhereClause}";
 
                 string query = $@"
                 SELECT *
-                ,(select count(ID) from Entry where ThreadID = t.ID) Entries
-                FROM Thread t
+                ,(select Title from Thread where ID=@ID) Title
+                ,(select Username from Users where ID=t.UserID) Author
+                ,(select count(ID) from PreferenceJunctionAttribute where PreferenceJunctionID=@ID AND Vote=1) Upvotes
+                ,(select count(ID) from PreferenceJunctionAttribute where PreferenceJunctionID=@ID AND Vote=0) Downvotes
+                ,(select count(ID) from PreferenceJunctionAttribute where PreferenceJunctionID=@ID AND Favourite=1) Favourites
+                FROM PreferenceJunction t
                 {WhereClause} 
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS
@@ -76,7 +81,7 @@ namespace definer.Core.Repo.Thread
                     result.totalItems = connection.QueryFirstOrDefault<int>(query_count, param);
                     request.filter.pager = new Page(result.totalItems, request.filter.pageSize, request.filter.page);
                     param.Add("@StartIndex", request.filter.pager.StartIndex);
-                    result.data = connection.Query<Threads>(query, param);
+                    result.data = connection.Query<PreferenceJunction>(query, param);
                     result.filter = request.filter;
                     result.filterModel = request.filterModel;
                     return result;
@@ -89,56 +94,23 @@ namespace definer.Core.Repo.Thread
             }
         }
 
-        public Threads Get(int ID)
+        public PreferenceJunction Get(int ID)
         {
             try
             {
-                using (var con = GetConnection)
-                {
-                    return con.Get<Threads>(ID);
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public IEnumerable<Threads> GetAll()
-        {
-            try
-            {
-                using (var con = GetConnection)
-                {
-                    return con.GetAll<Threads>();
-                }
-            }
-            catch (Exception ex)
-            {
-                //LogsRepository.CreateLog(ex);
-                return null;
-            }
-        }
-
-        public Threads GetbyTitle(string Title)
-        {
-            try
-            {
-                Threads model = new Threads();
                 DynamicParameters param = new DynamicParameters();
-                param.Add("@Title", Title);
+                param.Add("@ID", ID);
 
-                string WhereClause = @" WHERE (t.Title like '%' + @Title + '%')";
+                string WhereClause = @" WHERE t.UserID = @ID";
 
                 string query = $@"
                 SELECT *
-                FROM Thread t 
-                {WhereClause}";
+                FROM PreferenceJunction t 
+                {WhereClause} ";
 
                 using (var connection = GetConnection)
                 {
-                    model = connection.QueryFirstOrDefault<Threads>(query, param);
-                    return model;
+                    return connection.Query<PreferenceJunction>(query, param).FirstOrDefault();
                 }
             }
             catch (Exception ex)
@@ -148,7 +120,55 @@ namespace definer.Core.Repo.Thread
             }
         }
 
-        public ProcessResult Update(Threads entity)
+        public IEnumerable<PreferenceJunction> GetAll()
+        {
+            try
+            {
+                using (var con = GetConnection)
+                {
+                    return con.GetAll<PreferenceJunction>();
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
+        public PreferenceJunction Manage(PreferenceJunction model)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@ID", model.ID);
+                param.Add("@UserID", model.UserID);
+                param.Add("@Messaging", model.Messaging);
+                param.Add("@PageSize", model.PageSize);
+
+                string query = $@"
+                DECLARE  @result table(ID Int, UserID Int, Messaging bit, PageSize int)
+                UPDATE PreferenceJunction
+                SET Messaging = coalesce(@Messaging, Messaging),
+                PageSize = coalesce(@PageSize, PageSize)
+                OUTPUT INSERTED.* INTO @result
+                WHERE UserID = @UserID                                   
+                SELECT *
+                FROM @result";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.Query<PreferenceJunction>(query, param).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
+        public ProcessResult Update(PreferenceJunction entity)
         {
             ProcessResult result = new ProcessResult();
             try
@@ -159,7 +179,7 @@ namespace definer.Core.Repo.Thread
                     if (res == true)
                     {
                         result.ReturnID = entity.ID;
-                        result.Message = "Thread updated successfully.";
+                        result.Message = "Prefs updated successfully.";
                         result.State = ProcessState.Success;
                     }
                 }

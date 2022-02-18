@@ -310,7 +310,7 @@ header {
         column-gap: 2rem;
         margin-left: 30%;
 
-        .thread {
+        .view {
             height: 100%;
             margin: 0.5rem 2rem;
             flex-grow: 2;
@@ -367,7 +367,6 @@ header {
                                 cursor: pointer;
 
                                 &:hover {
-                                    color: $accent-color;
                                     position: relative;
                                     top: 1px;
                                 }
@@ -390,8 +389,27 @@ header {
                                 color: #1DB954;
                             }
 
+                            .linkedin {
+                                color: #2867B2;
+                            }
+
+                            .youtube {
+                                color: #FF0000;
+                            }
+
                             .facebook {
                                 color: #4267B2;
+                            }
+
+                            .letterboxd {
+                                img {
+                                    width: 19px;
+                                    height: 18px;
+                                }
+                            }
+
+                            .github {
+                                color: #f5f5f5;
                             }
                         }
                     }
@@ -822,9 +840,152 @@ header {
                     }
                 }
             }
+
+            .settings {
+                display: block;
+                height: 100%;
+                width: 100%;
+
+                .settings-tabs {
+                    display: block;
+                    width: 60%;
+
+                    ul {
+                        display: flex;
+                        flex-direction: row;
+                        margin-bottom: 0.9rem;
+                        border-bottom: 1px solid $accent-color;
+
+                        li {
+                            border-top-right-radius: 7px;
+                            padding: 0.8rem;
+                            cursor: pointer;
+                            display: block;
+                            height: 100%;
+                            width: 100%;
+
+                            &:hover {
+                                background-color: $accent-color;
+                                border-top-left-radius: 7px;
+                            }
+
+                            a {
+                                color: #efeff1;
+                                display: block;
+                                width: 100%;
+                                height: 100%;
+                                text-align: center;
+                                font-size: 0.8rem;
+                            }
+                        }
+
+                        li.active {
+                            border-top: 1px solid $accent-color;
+                            border-right: 1px solid $accent-color;
+                        }
+                    }
+                }
+
+                .preferences {
+                    .prefs-form {
+                        fieldset {
+                            display: flex;
+                            flex-direction: column;
+                            border: none;
+
+                            .row {
+                                display: flex;
+                                flex-direction: row;
+                                align-items: center;
+                                margin-bottom: 5px;
+
+                                .label {
+                                    float: left;
+                                    width: 15%;
+                                    text-align: left;
+
+                                    label {
+                                        font-size: 0.95rem;
+                                    }
+                                }
+
+                                .input {
+                                    float: left;
+                                    width: 85%;
+                                    position: relative;
+
+                                    input {
+                                        width: 50%;
+                                        background-color: #464649;
+                                        border: 2px solid;
+                                        border-radius: 5px;
+                                        padding: 8px;
+                                        font-size: 0.95rem;
+
+                                        &:hover {
+                                            outline: none;
+                                            border-color: $base-bg-colour;
+                                        }
+
+                                        &:focus {
+                                            outline: none;
+                                            background-color: $body-colour;
+                                            border-color: $accent-color;
+                                            color: $base-font-colour;
+                                        }
+                                    }
+                                }
+
+                                button {
+                                    width: 57%;
+                                    background-color: $body-colour;
+                                    border-color: $base-bg-colour;
+                                    color: $accent-color;
+                                    border-radius: 5px;
+                                    padding: 10px;
+                                    cursor: pointer;
+
+                                    &:hover {
+                                        outline: none;
+                                        border: 2px solid;
+                                        border-color: $accent-color;
+                                    }
+                                }
+                            }
+
+                            h3 {
+                                font-size: 1rem;
+                            }
+
+                            .vertical-pick {
+                                margin-top: 5px;
+                                display: flex;
+                                flex-direction: row;
+                                column-gap: 0.2rem;
+
+                                button {
+                                    color: $base-font-colour;
+                                    padding: 6px 7px;
+                                    font-size: 0.8rem;
+                                    background-color: $body-colour;
+                                    border: none;
+                                    cursor: pointer;
+
+                                    &:hover {
+                                        background-color: $accent-color;
+                                        transition: background 0.1s ease 0.2s, color 0.2s ease 0.25s;
+                                    }
+                                }
+
+                                button.active {
+                                    background-color: $accent-color;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-
-
 
         .res {
             margin: 1rem 2rem;

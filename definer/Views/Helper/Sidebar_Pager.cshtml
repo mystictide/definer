@@ -1,0 +1,49 @@
+﻿@model definer.Entity.Helpers.Page
+
+@{
+    var page = Model.CurrentPage == 0 ? 1 : Model.CurrentPage;
+}
+
+@if (Model.TotalItems != 0)
+{
+    if (Model.TotalPages > 1)
+    {
+        <div class="pagination-sidebar">
+            <ul class="paging-list">
+
+                @*<li> <a href="javascript:void(0)" onclick="Filter.Page(1)" style="margin-right: 2px;"> &laquo;&laquo; </a> </li>*@
+                @if (Model.CurrentPage != 1)
+                {
+                    <li class="page-item direction"> <a href="javascript:void(0)" onclick="sidebar.filter(@(page == 1 ? 1 : (page - 1)))"> &laquo; </a></li>
+                }
+
+                <li class="page-item active">
+                    <select id="spages" class="spages">
+                        @foreach (var item in Model.Pages)
+                        {
+                            if (item == Model.CurrentPage)
+                            {
+                                <option selected="selected" class="page-link" value="@item">@item</option>
+                            }
+                            else
+                            {
+                                <option class="page-link" value="@item">@item</option>
+                            }
+                        }
+                    </select>
+                </li>
+                @*<li class="page-item active"><a class="page-link" href="javascript:void(0)" onclick="Filter.Page(@Model.CurrentPage)" style="margin-right: 2px;"> @Model.CurrentPage</a></li>*@
+                <li class="page-item divider"> / </li>
+                <li class="page-item last"><a class="page-link" href="javascript:void(0)" onclick="sidebar.filter(@Model.EndPage)"> @Model.EndPage</a></li>
+
+                @if (page != Model.EndPage)
+                {
+                    <li class="page-item direction"> <a href="javascript:void(0)" onclick="sidebar.filter(@(Model.TotalPages == page ? Model.TotalPages : (page + 1)))"> &raquo; </a> </li>
+                }
+
+                @*<li> <a href="javascript:void(0)" onclick="Filter.Page(@Model.TotalPages)" style="margin-right: 2px;"> &raquo;&raquo; </a> </li>*@
+
+            </ul>
+        </div>
+    }
+}

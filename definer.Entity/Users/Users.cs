@@ -31,5 +31,8 @@ namespace definer.Entity.Users
 
         [Write(false)]
         public Interactions Interactions { get; set; }
+
+        [Write(false)]
+        public SocialJunction Social { get; set; }
     }
 }
