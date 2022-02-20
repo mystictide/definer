@@ -16,5 +16,7 @@ namespace definer.Core.Interface.User
         Users Get(string Username, int CurrentUserID);
         Users GetbyUsername(FilteredList<Entry> request, string Username);
         Users GetFavouritesbyUsername(FilteredList<Entry> request, string Username);
+        string ManageBio(int ID, string? text);
+        string GetBio(int ID);
     }
 }

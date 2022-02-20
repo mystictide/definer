@@ -296,5 +296,45 @@ namespace definer.Core.Repo.User
                 return null;
             }
         }
+
+        public string ManageBio(int ID, string? text)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@ID", ID);
+                param.Add("@Bio", text);
+
+                string query = $@"
+                DECLARE  @result table(Bio nvarchar(250))
+                UPDATE Users
+                SET Bio = @Bio
+                OUTPUT INSERTED.Bio INTO @result
+                WHERE ID = @ID                                   
+                SELECT *
+                FROM @result";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.Query<string>(query, param).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
+        public string GetBio(int ID)
+        {
+            string query = @"Select Bio from Users where ID=@ID";
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@ID", ID);
+            using (var connection = GetConnection)
+            {
+                return connection.Query<string>(query, param).FirstOrDefault();
+            }
+        }
     }
 }

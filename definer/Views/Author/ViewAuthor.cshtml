@@ -51,7 +51,12 @@
             </ul>
         </div>
         <div class="bio">
-            <p>this is my bio oh i'm so random lulz</p>
+            <p id="authorBio">@Model.Bio</p>
+            @if (Model.ID == User.ID)
+            {
+                <a href="javascript:void(0)" id="bioDialog">update bio</a>
+                @Html.Partial("/Views/Author/ManageBio.cshtml")
+            }
         </div>
         @if (Model.ID != User.ID)
         {
@@ -111,6 +116,32 @@
             }),
             $('#ignoreAuthor').on('click', function () {
                 interactions.setblockstate($('#authorID').val());
+            }),
+            $('#bioDialog').on('click', function () {
+                $.ajax({
+                    url: "/u/getbio",
+                    method: "get",
+                    success: function (data) {
+                        $("#manageBio").toggle();
+                        if (data != undefined || data != null) {
+                            $('#bio').val(data);
+                        }
+                    }
+                });
+            }),
+            $('#saveBio').on('click', function () {
+                var text = $('#bio').val();
+                var data = { bio: text }
+                $.ajax({
+                    url: "/u/managebio",
+                    data: data,
+                    success: function (data) {
+                        if (data != undefined || data != null) {
+                            $('#authorBio').text(data);
+                            $("#manageBio").toggle();
+                        }
+                    }
+                });
             }),
         );
     </script>

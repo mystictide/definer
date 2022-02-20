@@ -59,5 +59,15 @@ namespace definer.Business.Users
         {
             return _repo.GetFavouritesbyUsername(request, Username);
         }
+
+        public string ManageBio(int ID, string? text)
+        {
+            return _repo.ManageBio(ID, text);
+        }
+
+        public string GetBio(int ID)
+        {
+            return _repo.GetBio(ID);
+        }
     }
 }

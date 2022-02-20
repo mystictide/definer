@@ -12,6 +12,7 @@ namespace definer.Entity.Users
         public string Username { get; set; }
         public string Mail { get; set; }
         public string Password { get; set; }
+        public string? Bio { get; set; }
         public bool IsActive { get; set; }
 
         [Write(false)]

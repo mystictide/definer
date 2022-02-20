@@ -98,5 +98,19 @@ namespace definer.Controllers
             var rendered = await _viewRenderService.RenderToStringAsync("Author/_AuthorFavourites", result);
             return Json(rendered);
         }
+
+        [Route("managebio"), HttpGet]
+        public JsonResult ManageBio(string? bio)
+        {
+            var result = new UserManager().ManageBio(user.ID, bio);
+            return Json(result);
+        }
+
+        [Route("getbio"), HttpGet]
+        public JsonResult GetBio()
+        {
+            var result = new UserManager().GetBio(user.ID);
+            return Json(result);
+        }
     }
 }
