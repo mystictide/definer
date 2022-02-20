@@ -349,9 +349,7 @@ header {
 .page-container .main .view {
   height: 100%;
   margin: 0.5rem 2rem;
-  flex-grow: 2;
-  flex-shrink: 1;
-  width: 40%;
+  width: 50%;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -935,10 +933,107 @@ header {
 .page-container .main .view .settings .preferences .prefs-form fieldset .vertical-pick button.active {
   background-color: #aa00aa;
 }
+.page-container .main .author-wall {
+  height: 100%;
+  margin: 0.5rem 0.6rem;
+  width: 45%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  z-index: 20;
+}
+.page-container .main .author-wall .wall-editor {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  margin-top: 0.6rem;
+}
+.page-container .main .author-wall .wall-editor fieldset {
+  display: block;
+  border: none;
+  outline: none;
+  height: 100%;
+  width: 80%;
+}
+.page-container .main .author-wall .wall-editor fieldset textarea {
+  font-size: 0.8rem;
+  height: 77%;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  outline: 1px solid #aa00aa;
+  background-color: #18181b;
+  cursor: text;
+  color: inherit;
+  padding: 10px;
+  resize: none;
+}
+.page-container .main .author-wall .wall-editor fieldset button {
+  display: inline-block;
+  float: right;
+  border-radius: 6px;
+  border: 1px solid #a511c0;
+  cursor: pointer;
+  padding: 6px 12px;
+  margin-top: 5px;
+  background-color: #a0a;
+  color: inherit;
+}
+.page-container .main .author-wall .wall-entries {
+  width: 80%;
+  word-wrap: break-word;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  line-height: 24px;
+}
+.page-container .main .author-wall .wall-entries ul .wall-li {
+  padding: 5px 12px 0 12px;
+}
+.page-container .main .author-wall .wall-entries ul li {
+  list-style: none;
+}
+.page-container .main .author-wall .wall-entries ul li .body {
+  white-space: pre-line;
+  overflow: hidden;
+  position: relative;
+  font-size: 0.9rem;
+  line-height: 22px;
+}
+.page-container .main .author-wall .wall-entries ul li footer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  height: 65px;
+}
+.page-container .main .author-wall .wall-entries ul li footer .info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  float: left;
+  width: 100%;
+}
+.page-container .main .author-wall .wall-entries ul li footer .info .author a {
+  font-size: 0.8rem;
+}
+.page-container .main .author-wall .wall-entries ul li footer .info .author a:hover {
+  text-decoration: underline;
+}
+.page-container .main .author-wall .wall-entries ul li footer .info .link a {
+  font-size: 0.8rem;
+}
+.page-container .main .author-wall .wall-entries ul li footer .info .link a:hover {
+  text-decoration: underline;
+}
+.page-container .main .author-wall .wall-entries ul li footer .info .link small {
+  color: #858587;
+  font-size: 0.6rem;
+}
 .page-container .main .res {
   margin: 1rem 2rem;
-  flex-grow: 1;
-  flex-shrink: 2;
   width: 35%;
   display: flex;
   justify-content: flex-start;

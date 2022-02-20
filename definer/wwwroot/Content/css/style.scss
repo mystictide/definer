@@ -313,9 +313,7 @@ header {
         .view {
             height: 100%;
             margin: 0.5rem 2rem;
-            flex-grow: 2;
-            flex-shrink: 1;
-            width: 40%;
+            width: 50%;
             display: flex;
             align-items: flex-start;
             justify-content: flex-start;
@@ -685,11 +683,6 @@ header {
                                 text-decoration: underline;
                             }
                         }
-
-                        ul {
-                            li {
-                            }
-                        }
                     }
                 }
             }
@@ -1041,10 +1034,129 @@ header {
             }
         }
 
+        .author-wall {
+            height: 100%;
+            margin: 0.5rem 0.6rem;
+            width: 45%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            z-index: 20;
+
+            .wall-editor {
+                display: block;
+                position: relative;
+                z-index: 1;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                margin-top: 0.6rem;
+
+                fieldset {
+                    display: block;
+                    border: none;
+                    outline: none;
+                    height: 100%;
+                    width: 80%;
+
+                    textarea {
+                        font-size: 0.8rem;
+                        height: 77%;
+                        width: 100%;
+                        border: none;
+                        border-radius: 5px;
+                        outline: 1px solid $accent-color;
+                        background-color: #18181b;
+                        cursor: text;
+                        color: inherit;
+                        padding: 10px;
+                        resize: none;
+                    }
+
+                    button {
+                        display: inline-block;
+                        float: right;
+                        border-radius: 6px;
+                        border: 1px solid #a511c0;
+                        cursor: pointer;
+                        padding: 6px 12px;
+                        margin-top: 5px;
+                        background-color: #a0a;
+                        color: inherit;
+                    }
+                }
+            }
+
+            .wall-entries {
+                width: 80%;
+                word-wrap: break-word;
+                margin-bottom: 1rem;
+                margin-top: 1rem;
+                line-height: 24px;
+
+                ul {
+                    .wall-li {
+                        padding: 5px 12px 0 12px;
+                    }
+
+                    li {
+                        list-style: none;
+
+                        .body {
+                            white-space: pre-line;
+                            overflow: hidden;
+                            position: relative;
+                            font-size: 0.9rem;
+                            line-height: 22px;
+                        }
+
+                        footer {
+                            margin-top: 10px;
+                            display: flex;
+                            flex-direction: row;
+                            height: 65px;
+
+                            .info {
+                                display: flex;
+                                flex-direction: column;
+                                text-align: left;
+                                float: left;
+                                width: 100%;
+
+                                .author {
+                                    a {
+                                        font-size: 0.8rem;
+
+                                        &:hover {
+                                            text-decoration: underline;
+                                        }
+                                    }
+                                }
+
+                                .link {
+                                    a {
+                                        font-size: 0.8rem;
+
+                                        &:hover {
+                                            text-decoration: underline;
+                                        }
+                                    }
+
+                                    small {
+                                        color: #858587;
+                                        font-size: 0.6rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         .res {
             margin: 1rem 2rem;
-            flex-grow: 1;
-            flex-shrink: 2;
             width: 35%;
             display: flex;
             justify-content: flex-start;

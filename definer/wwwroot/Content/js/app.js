@@ -46,6 +46,17 @@ var authorpage = {
             }
         });
     },
+    fillWall: function () {
+        var username = $("#author").val();
+        var data = { username: username };
+        $.ajax({
+            url: "/u/authorWall",
+            data: data,
+            success: function (data) {
+                $('#wallEntries').empty().prepend(data);
+            }
+        });
+    },
     fillFavourites: function () {
         var username = $("#author").val();
         var data = { username: username };
@@ -65,6 +76,17 @@ var authorpage = {
             data: filter,
             success: function (data) {
                 $('#rss-entries').empty().prepend(data);
+            }
+        });
+    },
+    filterWall: function (page) {
+        var name = $("#author").val();
+        var filter = { page: page };
+        $.ajax({
+            url: "/u/authorWall/" + name,
+            data: filter,
+            success: function (data) {
+                $('#wallEntries').empty().prepend(data);
             }
         });
     },

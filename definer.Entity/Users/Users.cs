@@ -19,6 +19,9 @@ namespace definer.Entity.Users
         public FilteredList<Entry> Entries { get; set; }
 
         [Write(false)]
+        public FilteredList<AuthorWall> WallEntries { get; set; }
+
+        [Write(false)]
         public Users CurrentUser { get; set; }
 
         [Write(false)]

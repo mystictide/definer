@@ -99,6 +99,54 @@ namespace definer.Controllers
             return Json(rendered);
         }
 
+        [Route("authorWall"), HttpGet]
+        [Route("authorWall/{username}"), HttpGet]
+        public async Task<JsonResult> authorWall(string? username, Filter filter, AuthorWall filterModel)
+        {
+            var result = new Users();
+            filter.Keyword = filter.Keyword ?? "";
+            filter.pageSize = 7;
+            filter.isDetailSearch = false;
+            FilteredList<AuthorWall> request = new FilteredList<AuthorWall>()
+            {
+                filter = filter,
+                filterModel = filterModel
+            };
+            if (username == null || username.Length < 1)
+            {
+                result = new AuthorWallManager().GetbyUsername(request, user.Username);
+            }
+            else
+            {
+                result = new AuthorWallManager().GetbyUsername(request, username);
+            }
+            if (user != null)
+            {
+                result.CurrentUser = user;
+            }
+            var rendered = await _viewRenderService.RenderToStringAsync("Author/_AuthorWallEntries", result);
+            return Json(rendered);
+        }
+
+        [Route("manageWall"), HttpGet]
+        [Route("manageWall/{UserID}"), HttpGet]
+        public JsonResult ManageWall(AuthorWall model)
+        {
+            var result = new ProcessResult();
+            if (model.ID > 0)
+            {
+                model.EditDate = DateTime.Now;
+                result = new AuthorWallManager().Update(model);
+            }
+            else
+            {
+                model.SenderID = user.ID;
+                model.Date = DateTime.Now;
+                result = new AuthorWallManager().Add(model);
+            }
+            return Json(result);
+        }
+
         [Route("managebio"), HttpGet]
         public JsonResult ManageBio(string? bio)
         {

@@ -96,12 +96,27 @@
         </div>
     </div>
 </div>
+<div class="author-wall">
+    <h4>@Model.Username's wall</h4>
+    <div class="wall-editor">
+        <fieldset class="wall-editor">
+            <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+            <textarea id="wallBody" name="Body" placeholder="say something about @Model.Username.."></textarea>
+            <div class="process">
+                <button type="button" id="saveWall">save</button>
+            </div>
+        </fieldset>
+    </div>
+    <div class="wall-entries" id="wallEntries">
+    </div>
+</div>
 
 @section Js {
     <script>
         $(document).ready(
             function () {
                 authorpage.fill();
+                authorpage.fillWall();
             },
             $('#userEntries').on('click', function () {
                 $('#tab').val("entries");
@@ -139,6 +154,21 @@
                         if (data != undefined || data != null) {
                             $('#authorBio').text(data);
                             $("#manageBio").toggle();
+                        }
+                    }
+                });
+            }),
+            $('#saveWall').on('click', function () {
+                var text = $('#wallBody').val();
+                var user = $("#authorID").val();
+                var data = { Body: text }
+                $.ajax({
+                    url: "/u/manageWall/" + user,
+                    data: data,
+                    success: function (data) {
+                        if (data != undefined || data != null) {
+                            authorpage.fillWall();
+                            $('#wallBody').val('');
                         }
                     }
                 });
