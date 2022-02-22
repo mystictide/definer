@@ -1,0 +1,63 @@
+﻿@model definer.Entity.Helpers.FilteredList<definer.Entity.Users.DMessages>
+
+@{
+    var User = (definer.Entity.Users.Users)ViewBag.User;
+    ViewData["Title"] = "messages - definer";
+}
+
+<div class="view">
+    <h1><a href="/m/">messages</a></h1>
+    <div class="messages">
+        <div class="messages-tabs">
+            <ul>
+                <li class="active"><a href="/m/">incoming</a></li>
+                <li><a href="/m/archived">archived</a></li>
+            </ul>
+        </div>
+        <div class="mlist">
+            @if (Model.data.Count() > 0)
+            {
+                @Html.Partial("/Views/Helper/Table_Pager.cshtml", Model.filter.pager)
+                <div class="dm-list">
+                    @foreach (var item in Model.data)
+                    {
+                        <ul class="dm">
+                            <li>
+                                <div class="dm-container">
+                                    <a href="/m/@item.ID">
+                                        <h3>@(item.ReceiverID == User.ID ? item.Sender : item.Receiver) <small>(@item.MessageCount)</small></h3>
+                                        <p>@Html.Raw(@CustomTagHelpers.FormatEntry(item.LastMessage.Body))</p>
+                                    </a>
+                                    <div class="info">
+                                        <div class="link">
+                                            <div class="functions">
+                                                <a href="/m/delete/@item.ID"><small>delete</small></a>
+                                                <a href="/m/archive/@item.ID"><small>archive</small></a>
+                                            </div>
+                                            <small>@item.LastMessage.Date.ToString("dd.MM.yyyy HH:mm")</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                            </li>
+                        </ul>
+                    }
+                </div>
+                @Html.Partial("/Views/Helper/Table_Pager.cshtml", Model.filter.pager)
+            }
+            else
+            {
+                <div class="dm">
+                    <h5>you have no direct messages yet</h5>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.pages').on('change', function () {
+        var value = $(this).val();
+        Filter.Page(value);
+    });
+</script>

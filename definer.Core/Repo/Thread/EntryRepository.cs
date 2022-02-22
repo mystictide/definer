@@ -57,7 +57,7 @@ namespace definer.Core.Repo.Thread
                 FilteredList<Entry> result = new FilteredList<Entry>();
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@Keyword", request.filter.Keyword);
-                param.Add("@PageSize", request.filter.pageSize);
+                //param.Add("@PageSize", request.filter.pageSize);
                 param.Add("@ID", request.filterModel.ThreadID);
                 param.Add("@UserID", UserID);
 
@@ -73,6 +73,7 @@ namespace definer.Core.Repo.Thread
                 {WhereClause}";
 
                 string query = $@"
+                DECLARE @PageSize INT = (select coalesce(PageSize, 10) from PreferenceJunction WHERE UserID = @UserID)
                 SELECT t.*
                 ,(select Title from Thread where ID=@ID) Title
                 ,(select Username from Users where ID=t.UserID) Author
@@ -115,7 +116,7 @@ namespace definer.Core.Repo.Thread
                 FilteredList<Entry> result = new FilteredList<Entry>();
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@Keyword", request.filter.Keyword);
-                param.Add("@PageSize", request.filter.pageSize);
+                //param.Add("@PageSize", request.filter.pageSize);
                 param.Add("@ID", request.filterModel.ThreadID);
 
                 string WhereClause = @" WHERE t.ThreadID = @ID AND  (t.Body like '%' + @Keyword + '%')";
@@ -123,6 +124,7 @@ namespace definer.Core.Repo.Thread
                 string query_count = $@"  Select Count(t.ID) from Entry t {WhereClause}";
 
                 string query = $@"
+                DECLARE @PageSize INT = (select coalesce(PageSize, 10) from PreferenceJunction WHERE UserID = @UserID)
                 SELECT *
                 ,(select Title from Thread where ID=@ID) Title
                 ,(select Username from Users where ID=t.UserID) Author

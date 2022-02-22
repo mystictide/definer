@@ -123,11 +123,15 @@ namespace definer.Core.Repo.User
                 string query = $@"
                 SELECT *
                 FROM Users t 
+                LEFT JOIN PreferenceJunction as j ON t.ID = j.UserID
                 {WhereClause}";
 
                 using (var connection = GetConnection)
                 {
-                    return connection.QueryFirstOrDefault<Users>(query, param);
+                    return connection.Query<Users, PreferenceJunction, Users>(query, (a, b) =>
+                    {
+                        a.UserSettings = b; return a;
+                    }, param, splitOn: "ID").FirstOrDefault();
                 }
             }
             catch (Exception ex)
@@ -334,6 +338,105 @@ namespace definer.Core.Repo.User
             using (var connection = GetConnection)
             {
                 return connection.Query<string>(query, param).FirstOrDefault();
+            }
+        }
+
+        public ProcessResult UpdateUsername(int ID, string Username)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@ID", ID);
+                param.Add("@Username", Username);
+
+                string query = $@"
+                UPDATE Users
+                SET Username = @Username
+                WHERE ID = @ID";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.Query<ProcessResult>(query, param).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
+        public ProcessResult UpdatePassword(int ID, string Password)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@ID", ID);
+                param.Add("@Password", Password);
+
+                string query = $@"
+                UPDATE Users
+                SET Password = @Password
+                WHERE ID = @ID";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.Query<ProcessResult>(query, param).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
+        public ProcessResult UpdateEmail(int ID, string Mail)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@ID", ID);
+                param.Add("@Mail", Mail);
+
+                string query = $@"
+                UPDATE Users
+                SET Mail = @Mail
+                WHERE ID = @ID";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.Query<ProcessResult>(query, param).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
+        public ProcessResult DeactivateAccount(int ID)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@ID", ID);
+
+                string query = $@"
+                UPDATE Users
+                SET IsActive = 0
+                WHERE ID = @ID";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.Query<ProcessResult>(query, param).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
             }
         }
     }

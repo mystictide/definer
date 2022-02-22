@@ -18,5 +18,9 @@ namespace definer.Core.Interface.User
         Users GetFavouritesbyUsername(FilteredList<Entry> request, string Username);
         string ManageBio(int ID, string? text);
         string GetBio(int ID);
+        ProcessResult UpdateUsername(int ID, string Username);
+        ProcessResult UpdatePassword(int ID, string Password);
+        ProcessResult UpdateEmail(int ID, string Mail);
+        ProcessResult DeactivateAccount(int ID);
     }
 }

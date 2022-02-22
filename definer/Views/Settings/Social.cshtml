@@ -11,8 +11,6 @@
             <ul>
                 <li><a href="/settings/prefs">preferences</a></li>
                 <li class="active"><a href="/settings/social">social</a></li>
-                <li><a href="/settings/user">user</a></li>
-                <li><a href="/settings/personal">personal</a></li>
                 <li><a href="/settings/account">account</a></li>
             </ul>
         </div>
@@ -21,35 +19,35 @@
                 <fieldset>
                     <div class="row">
                         <div class="label">@Html.LabelFor(m => m.Twitter)</div>
-                        <div class="input">@Html.EditorFor(m => m.Twitter)</div>
+                        <div class="input">@Html.EditorFor(m => m.Twitter, new { htmlAttributes = new { placeholder = "https://" } })</div>
                     </div>
                     <div class="row">
                         <div class="label"> @Html.LabelFor(m => m.Instagram)</div>
-                        <div class="input">@Html.EditorFor(m => m.Instagram)</div>
+                        <div class="input">@Html.EditorFor(m => m.Instagram, new { htmlAttributes = new { placeholder = "https://" } })</div>
                     </div>
                     <div class="row">
                         <div class="label">@Html.LabelFor(m => m.Facebook)</div>
-                        <div class="input">@Html.EditorFor(m => m.Facebook)</div>
+                        <div class="input">@Html.EditorFor(m => m.Facebook, new { htmlAttributes = new { placeholder = "https://" } })</div>
                     </div>
                     <div class="row">
                         <div class="label">@Html.LabelFor(m => m.LinkedIn)</div>
-                        <div class="input">@Html.EditorFor(m => m.LinkedIn)</div>
+                        <div class="input">@Html.EditorFor(m => m.LinkedIn, new { htmlAttributes = new { placeholder = "https://" } })</div>
                     </div>
                     <div class="row">
                         <div class="label">@Html.LabelFor(m => m.YouTube)</div>
-                        <div class="input">@Html.EditorFor(m => m.YouTube)</div>
+                        <div class="input">@Html.EditorFor(m => m.YouTube, new { htmlAttributes = new { placeholder = "https://" } })</div>
                     </div>
                     <div class="row">
                         <div class="label">@Html.LabelFor(m => m.Spotify)</div>
-                        <div class="input">@Html.EditorFor(m => m.Spotify)</div>
+                        <div class="input">@Html.EditorFor(m => m.Spotify, new { htmlAttributes = new { placeholder = "https://" } })</div>
                     </div>
                     <div class="row">
                         <div class="label">@Html.LabelFor(m => m.Letterboxd)</div>
-                        <div class="input">@Html.EditorFor(m => m.Letterboxd)</div>
+                        <div class="input">@Html.EditorFor(m => m.Letterboxd, new { htmlAttributes = new { placeholder = "https://" } })</div>
                     </div>
                     <div class="row">
                         <div class="label">@Html.LabelFor(m => m.GitHub)</div>
-                        <div class="input">@Html.EditorFor(m => m.GitHub)</div>
+                        <div class="input">@Html.EditorFor(m => m.GitHub, new { htmlAttributes = new { placeholder = "https://" } })</div>
                     </div>
                     <div class="row">
                         <button type="submit">save</button>

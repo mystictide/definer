@@ -1,0 +1,78 @@
+﻿@model definer.Models.UserViewModel
+
+@{
+    ViewData["Title"] = "account - definer";
+}
+
+<div class="view">
+    <h1><a href="/settings/account">settings</a></h1>
+    <div class="settings">
+        <div class="settings-tabs">
+            <ul>
+                <li><a href="/settings/prefs">preferences</a></li>
+                <li><a href="/settings/social">social</a></li>
+                <li class="active"><a href="/settings/account">account</a></li>
+            </ul>
+        </div>
+        <div class="preferences">
+            <h6>you will be logged out of your account after making changes</h6>
+            <form action="/settings/username" autocomplete="off" method="post" class="prefs-form">
+                <fieldset>
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="label">@Html.LabelFor(m => m.Username)</div>
+                        <div class="input">@Html.EditorFor(m => m.Username, new { htmlAttributes = new { placeholder = Model.Username } })</div>
+                        @Html.ValidationMessageFor(m => m.Username)
+                    </div>
+                    <div class="row">
+                        <button type="submit">update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="/settings/password" autocomplete="off" method="post" class="prefs-form">
+                <fieldset>
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="label">@Html.LabelFor(m => m.Password)</div>
+                        <div class="input">@Html.PasswordFor(m => m.Password, new { htmlAttributes = new { placeholder = Model.Password } })</div>
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                    <div class="row">
+                        <div class="label">Confirm</div>
+                        <div class="input">@Html.PasswordFor(m => m.ConfirmPassword, new { htmlAttributes = new { placeholder = Model.Password } })</div>
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </div>
+                    <div class="row">
+                        <button type="submit">update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="/settings/email" autocomplete="off" method="post" class="prefs-form">
+                <fieldset>
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="label">@Html.LabelFor(m => m.Mail)</div>
+                        <div class="input">@Html.EditorFor(m => m.Mail, new { htmlAttributes = new { placeholder = Model.Password } })</div>
+                        @Html.ValidationMessageFor(m => m.Mail)
+                    </div>
+                    <div class="row">
+                        <button type="submit">update</button>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="/settings/deactivate" autocomplete="off" method="post" class="prefs-form">
+                <fieldset>
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <button type="submit">deactivate account</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Js {
+    <script type="text/javascript" src=~/Content/lib/validate/jquery.validate.min.js></script>
+    <script type="text/javascript" src=~/Content/lib/validate/jquery.validate.unobtrusive.js></script>
+}

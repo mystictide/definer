@@ -1,6 +1,7 @@
 ﻿using definer.Business.Users;
 using definer.Entity.Users;
 using definer.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +50,46 @@ namespace definer.Controllers
             model.UserID = user.ID;
             var result = new SocialJunctionManager().Manage(model);
             return Redirect("/settings/social");
+        }
+
+        [Route("account")]
+        public ActionResult Account()
+        {
+            var model = new UserViewModel();
+            model.Mail = user.Mail;
+            model.Password = user.Password;
+            model.Username = user.Username;
+            return View(model);
+        }
+
+        [Route("username"), HttpPost]
+        public ActionResult ChangeUsername(UserViewModel model)
+        {
+            var result = new UserManager().UpdateUsername(user.ID, model.Username);
+            return Redirect("/account/logout");
+        }
+
+        [Route("password"), HttpPost]
+        public ActionResult ChangePassword(UserViewModel model)
+        {
+            PasswordHasher _passwordHasher = new PasswordHasher();
+            model.Password = _passwordHasher.HashPassword(model.Password);
+            var result = new UserManager().UpdatePassword(user.ID, model.Password);
+            return Redirect("/account/logout");
+        }
+
+        [Route("email"), HttpPost]
+        public ActionResult ChangeEmail(UserViewModel model)
+        {
+            var result = new UserManager().UpdateEmail(user.ID, model.Mail);
+            return Redirect("/account/logout");
+        }
+
+        [Route("deactivate"), HttpPost]
+        public ActionResult DeactivateAccount()
+        {
+            var result = new UserManager().DeactivateAccount(user.ID);
+            return Redirect("/account/logout");
         }
     }
 }

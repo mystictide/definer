@@ -38,5 +38,8 @@ namespace definer.Entity.Users
 
         [Write(false)]
         public SocialJunction Social { get; set; }
+
+        [Write(false)]
+        public PreferenceJunction UserSettings { get; set; }
     }
 }

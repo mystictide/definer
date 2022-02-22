@@ -853,6 +853,9 @@ header {
   border-top: 1px solid #aa00aa;
   border-right: 1px solid #aa00aa;
 }
+.page-container .main .view .settings .preferences .prefs-form {
+  margin-top: 15px;
+}
 .page-container .main .view .settings .preferences .prefs-form fieldset {
   display: flex;
   flex-direction: column;
@@ -873,12 +876,11 @@ header {
   font-size: 0.95rem;
 }
 .page-container .main .view .settings .preferences .prefs-form fieldset .row .input {
-  float: left;
-  width: 85%;
+  width: 42%;
   position: relative;
 }
 .page-container .main .view .settings .preferences .prefs-form fieldset .row .input input {
-  width: 50%;
+  width: 100%;
   background-color: #464649;
   border: 2px solid;
   border-radius: 5px;
@@ -909,6 +911,12 @@ header {
   border: 2px solid;
   border-color: #aa00aa;
 }
+.page-container .main .view .settings .preferences .prefs-form fieldset .row .field-validation-error {
+  display: block;
+  width: 42%;
+  font-size: 0.8rem;
+  margin-left: 5px;
+}
 .page-container .main .view .settings .preferences .prefs-form fieldset h3 {
   font-size: 1rem;
 }
@@ -932,6 +940,102 @@ header {
 }
 .page-container .main .view .settings .preferences .prefs-form fieldset .vertical-pick button.active {
   background-color: #aa00aa;
+}
+.page-container .main .view .messages {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.page-container .main .view .messages .messages-tabs {
+  display: block;
+  width: 45%;
+}
+.page-container .main .view .messages .messages-tabs ul {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid #aa00aa;
+}
+.page-container .main .view .messages .messages-tabs ul li {
+  border-top-right-radius: 7px;
+  padding: 0.8rem;
+  cursor: pointer;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.page-container .main .view .messages .messages-tabs ul li:hover {
+  background-color: #aa00aa;
+  border-top-left-radius: 7px;
+}
+.page-container .main .view .messages .messages-tabs ul li a {
+  color: #efeff1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 0.8rem;
+}
+.page-container .main .view .messages .messages-tabs ul li.active {
+  border-top: 1px solid #aa00aa;
+  border-right: 1px solid #aa00aa;
+}
+.page-container .main .view .messages .mlist {
+  margin-top: 15px;
+}
+.page-container .main .view .messages .mlist .dm-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.2rem;
+  margin: 0.9rem 0 0.9rem 0;
+}
+.page-container .main .view .messages .mlist .dm-list .dm {
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+.page-container .main .view .messages .mlist .dm-list .dm:hover {
+  background-color: #0e0e10;
+  border-radius: 5px;
+}
+.page-container .main .view .messages .mlist .dm-list .dm hr {
+  border: 1px solid #0e0e10;
+}
+.page-container .main .view .messages .mlist .dm-list .dm .dm-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0.7rem 7px 5px 7px;
+}
+.page-container .main .view .messages .mlist .dm-list .dm .dm-container a {
+  display: block;
+}
+.page-container .main .view .messages .mlist .dm-list .dm .dm-container a h3 {
+  margin-bottom: 1rem;
+}
+.page-container .main .view .messages .mlist .dm-list .dm .dm-container a h3 small {
+  font-size: 0.7rem;
+}
+.page-container .main .view .messages .mlist .dm-list .dm .dm-container a p {
+  white-space: pre-line;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+}
+.page-container .main .view .messages .mlist .dm-list .dm .dm-container .info .link {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.page-container .main .view .messages .mlist .dm-list .dm .dm-container .info .link .functions {
+  display: flex;
+  flex-direction: row;
+  column-gap: 7px;
+}
+.page-container .main .view .messages .mlist .dm-list .dm .dm-container .info .link .functions a:hover {
+  text-decoration: underline;
+}
+.page-container .main .view .messages .mlist .dm-list .dm .dm-container .info .link small {
+  font-size: 0.75rem;
 }
 .page-container .main .author-wall {
   height: 100%;
@@ -1041,7 +1145,7 @@ header {
 }
 .page-container .account-container {
   height: 90%;
-  width: 90%;
+  width: 50%;
 }
 .page-container .account-container .register {
   height: 100%;
@@ -1079,7 +1183,7 @@ header {
   font-size: 1rem;
 }
 .page-container .account-container .register .account-form input {
-  width: 50%;
+  width: 65%;
   background-color: #464649;
   border: 2px solid;
   border-radius: 5px;
@@ -1096,7 +1200,7 @@ header {
   color: #efeff1;
 }
 .page-container .account-container .register .account-form button {
-  width: 50%;
+  width: 65%;
   background-color: #0e0e10;
   border-color: #18181b;
   color: #aa00aa;

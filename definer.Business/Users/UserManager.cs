@@ -69,5 +69,25 @@ namespace definer.Business.Users
         {
             return _repo.GetBio(ID);
         }
+
+        public ProcessResult UpdateUsername(int ID, string Username)
+        {
+            return _repo.UpdateUsername(ID, Username);
+        }
+
+        public ProcessResult UpdatePassword(int ID, string Password)
+        {
+            return _repo.UpdatePassword(ID, Password);
+        }
+
+        public ProcessResult UpdateEmail(int ID, string Mail)
+        {
+            return _repo.UpdateEmail(ID, Mail);
+        }
+
+        public ProcessResult DeactivateAccount(int ID)
+        {
+            return _repo.DeactivateAccount(ID);
+        }
     }
 }

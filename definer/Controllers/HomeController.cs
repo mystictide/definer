@@ -35,7 +35,7 @@ namespace definer.Controllers
             {
                 FilteredList<Entry> result = new FilteredList<Entry>();
                 filter.Keyword = filter.Keyword ?? "";
-                filter.pageSize = 2;
+                //filter.pageSize = user?.UserSettings.PageSize ?? 10;
                 filter.isDetailSearch = false;
                 filterModel.ThreadID = ID.Value;
                 FilteredList<Entry> request = new FilteredList<Entry>()
