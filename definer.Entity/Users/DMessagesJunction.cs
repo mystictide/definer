@@ -17,7 +17,12 @@ namespace definer.Entity.Users
         public string Body { get; set; }
         public DateTime Date { get; set; }
 
+        public bool IsRead { get; set; }
+
         [Write(false)]
         public string LastReplier { get; set; }
+
+        [Write(false)]
+        public string Author { get; set; }
     }
 }

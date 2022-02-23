@@ -65,14 +65,15 @@ namespace definer.Core.Repo.User
                 string query_count = $@"  Select Count(t.ID) from DMessages t {WhereClause}";
 
                 string query = $@"
-                SELECT *
+                SELECT
+                t.*
                 ,(select Username from Users where ID=t.ReceiverID) Receiver
                 ,(select Username from Users where ID=t.SenderID) Sender 
                 ,(select count(ID) from DMessagesJunction where DMID=t.ID) MessageCount
                 ,j.*
                 ,(select Username from Users where ID=j.UserID) LastReplier
                 FROM DMessages t
-                OUTER APPLY (SELECT TOP 1 * FROM DMessagesJunction WHERE DMID = t.ID ORDER BY Date DESC) j
+                CROSS APPLY (SELECT TOP 1 * FROM DMessagesJunction WHERE DMID = t.ID ORDER BY Date DESC) j
                 {WhereClause} 
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS
@@ -123,8 +124,6 @@ namespace definer.Core.Repo.User
         {
             throw new NotImplementedException();
         }
-
-
         public ProcessResult Update(DMessages entity)
         {
             ProcessResult result = new ProcessResult();

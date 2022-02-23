@@ -1,4 +1,5 @@
 ﻿using Dapper.Contrib.Extensions;
+using definer.Entity.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,5 +27,8 @@ namespace definer.Entity.Users
 
         [Write(false)]
         public DMessagesJunction LastMessage { get; set; }
+
+        [Write(false)]
+        public FilteredList<DMessagesJunction> Messages { get; set; }
     }
 }

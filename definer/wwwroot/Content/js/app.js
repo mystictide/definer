@@ -367,6 +367,87 @@ var textEditor = {
     }
 }
 
+var dmEditor = {
+    checkSelection: function (e) {
+        var textarea = document.getElementById("dmBody");
+        var len = textarea.value.length;
+        var start = textarea.selectionStart;
+        var end = textarea.selectionEnd;
+        var sel = textarea.value.substring(start, end);
+
+        if (e.target.id == "bthread") {
+            if (sel < 1) {
+                var val = textEditor.promt("which thread did you mean?");
+                if (val.length > 0) {
+                    textEditor.appendThread(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapThread(textarea, len, start, end, sel);
+            }
+        }
+
+        if (e.target.id == "bspoiler") {
+            if (sel < 1) {
+                var val = textEditor.promt("what do we not spoil?");
+                if (val.length > 0) {
+                    textEditor.appendSpoiler(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapSpoiler(textarea, len, start, end, sel);
+            }
+        }
+
+        if (e.target.id == "blink") {
+            if (sel < 1) {
+                var val = textEditor.promt("enter some link");
+                if (val.length > 0) {
+                    textEditor.appendLink(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapLink(textarea, len, start, end, sel);
+            }
+        }
+    },
+
+    promt: function (q) {
+        return prompt(q);
+    },
+
+    appendThread: function (textarea, len, start, end, val) {
+        var replace = '[thread ' + val + ']';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapThread: function (textarea, len, start, end, sel) {
+        //var replace = '<a href="' + sel + '">' + sel + '</a>';
+        var replace = '[thread ' + sel + ']';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    appendLink: function (textarea, len, start, end, val) {
+        var replace = '[link ' + val + ']';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapLink: function (textarea, len, start, end, sel) {
+        var replace = '[link ' + sel + ']';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    appendSpoiler: function (textarea, len, start, end, val) {
+        var replace = '[spoiler ' + val + ']';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapSpoiler: function (textarea, len, start, end, sel) {
+        var replace = '[spoiler ' + sel + ']';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    }
+}
+
 var Filter = {
 
     Page: function (page) {

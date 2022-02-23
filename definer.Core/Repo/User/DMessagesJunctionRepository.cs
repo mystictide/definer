@@ -110,6 +110,54 @@ namespace definer.Core.Repo.User
             throw new NotImplementedException();
         }
 
+        public DMessages GetDMs(FilteredList<DMessagesJunction> request, int ID)
+        {
+            try
+            {
+                var DM = new DMessages();
+                FilteredList<DMessagesJunction> result = new FilteredList<DMessagesJunction>();
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@DMID", ID);
+                param.Add("@PageSize", request.filter.pageSize);
+
+                string DMQuery = $@"
+                SELECT *
+                ,(select Username from Users where ID=t.ReceiverID) Receiver
+                ,(select Username from Users where ID=t.SenderID) Sender
+                FROM DMessages t
+                WHERE t.ID = @DMID";
+
+                string WhereClause = @" WHERE t.DMID = @DMID";
+                string query_count = $@"  Select Count(t.ID) from DMessagesJunction t {WhereClause}";
+                string messagesQuery = $@"
+                SELECT *
+                ,(select Username from Users where ID=t.UserID) Author
+                FROM DMessagesJunction t
+                {WhereClause} 
+                ORDER BY t.ID ASC 
+                OFFSET @StartIndex ROWS
+                FETCH NEXT @PageSize ROWS ONLY";
+
+                using (var connection = GetConnection)
+                {
+                    DM = connection.QueryFirstOrDefault<DMessages>(DMQuery, param);
+                    result.totalItems = connection.QueryFirstOrDefault<int>(query_count, param);
+                    request.filter.pager = new Page(result.totalItems, request.filter.pageSize, request.filter.page);
+                    param.Add("@StartIndex", request.filter.pager.StartIndex);
+                    result.data = connection.Query<DMessagesJunction>(messagesQuery, param);
+                    result.filter = request.filter;
+                    result.filterModel = request.filterModel;
+                    DM.Messages = result;
+                    return DM;
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
         public ProcessResult Update(DMessagesJunction entity)
         {
             ProcessResult result = new ProcessResult();

@@ -83,6 +83,7 @@
         <div class="main">
             @RenderBody()
         </div>
+        @Html.Partial("/Views/Messaging/_SendMessage.cshtml", new definer.Entity.Users.DMessages())
         @RenderSection("JS", required: false)
         <footer>
         </footer>

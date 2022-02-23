@@ -354,7 +354,20 @@ header {
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  z-index: 20;
+  z-index: 1;
+}
+.page-container .main .view .breadcrumb {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  width: 50%;
+}
+.page-container .main .view .breadcrumb h1 {
+  width: auto;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  word-break: break-word;
+  line-height: 1.4;
 }
 .page-container .main .view h1 {
   width: 100%;
@@ -363,7 +376,7 @@ header {
   word-break: break-word;
   line-height: 1.4;
 }
-.page-container .main .view h1:hover {
+.page-container .main .view h1 a:hover {
   text-decoration: underline;
 }
 .page-container .main .view h4 {
@@ -735,85 +748,6 @@ header {
   color: #858587;
   font-size: 0.7rem;
 }
-.page-container .main .view .entry-editor {
-  height: 400px;
-  width: 100%;
-  display: block;
-  margin-top: 20px;
-}
-.page-container .main .view .entry-editor .field-validation-error {
-  display: block;
-  padding-bottom: 5px;
-  font-size: 0.8rem;
-}
-.page-container .main .view .entry-editor form {
-  display: block;
-  height: inherit;
-  width: 100%;
-  background-color: #0e0e10;
-  border-radius: 5px;
-}
-.page-container .main .view .entry-editor form .text-editor {
-  border: none;
-  outline: none;
-  height: 100%;
-  width: 100%;
-  padding: 1rem 2rem 2rem 2rem;
-}
-.page-container .main .view .entry-editor form .text-editor .functions {
-  display: block;
-  width: 100%;
-  height: 35px;
-  margin-bottom: 5px;
-}
-.page-container .main .view .entry-editor form .text-editor .functions button {
-  background-color: #0e0e10;
-  border-radius: 5px;
-  border: 1px solid #aa00aa;
-  display: inline-block;
-  cursor: pointer;
-  color: #efeff1;
-  font-family: Arial;
-  font-size: 0.75rem;
-  padding: 8px 10px;
-  text-decoration: none;
-}
-.page-container .main .view .entry-editor form .text-editor .functions button:hover {
-  background-color: #18181b;
-}
-.page-container .main .view .entry-editor form .text-editor .functions button:active {
-  position: relative;
-  top: 1px;
-}
-.page-container .main .view .entry-editor form .text-editor textarea {
-  height: 77%;
-  width: 100%;
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  background-color: #18181b;
-  cursor: text;
-  color: inherit;
-  padding: 10px;
-  resize: none;
-}
-.page-container .main .view .entry-editor form .text-editor .process {
-  height: 20%;
-}
-.page-container .main .view .entry-editor form .text-editor .process button {
-  display: inline-block;
-  float: right;
-  border-radius: 6px;
-  border: 1px solid #a511c0;
-  cursor: pointer;
-  padding: 6px 24px;
-  margin-top: 5px;
-  background-color: #aa00aa;
-  color: inherit;
-}
-.page-container .main .view .entry-editor form .text-editor .process button:hover {
-  outline: 1px solid #efeff1;
-}
 .page-container .main .view .settings {
   display: block;
   height: 100%;
@@ -986,7 +920,6 @@ header {
 .page-container .main .view .messages .mlist .dm-list {
   display: flex;
   flex-direction: column;
-  row-gap: 0.2rem;
   margin: 0.9rem 0 0.9rem 0;
 }
 .page-container .main .view .messages .mlist .dm-list .dm {
@@ -1019,6 +952,7 @@ header {
   white-space: pre-line;
   margin-bottom: 1rem;
   font-size: 0.85rem;
+  color: #efeff1;
 }
 .page-container .main .view .messages .mlist .dm-list .dm .dm-container .info .link {
   display: flex;
@@ -1036,6 +970,33 @@ header {
 }
 .page-container .main .view .messages .mlist .dm-list .dm .dm-container .info .link small {
   font-size: 0.75rem;
+}
+.page-container .main .view .messages .mlist .dm-list .replies {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+.page-container .main .view .messages .mlist .dm-list .replies li {
+  border: 1px solid #aa00aa;
+  border-radius: 5px;
+  padding: 15px 15px 7px 15px;
+  width: 80%;
+}
+.page-container .main .view .messages .mlist .dm-list .replies li .reply-container .info .link {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.page-container .main .view .messages .mlist .dm-list .replies li .reply-container .info .link small {
+  float: right;
+  font-size: 0.75rem;
+}
+.page-container .main .view .messages .mlist .dm-list .replies li .reply-container p {
+  white-space: pre-line;
+  margin-bottom: 15px;
+}
+.page-container .main .view .messages .mlist .dm-list .replies li.self {
+  align-self: flex-end;
 }
 .page-container .main .author-wall {
   height: 100%;
@@ -1212,6 +1173,191 @@ header {
   outline: none;
   border: 2px solid;
   border-color: #aa00aa;
+}
+
+.entry-editor {
+  height: 400px;
+  width: 100%;
+  display: block;
+  margin-top: 20px;
+}
+.entry-editor .field-validation-error {
+  display: block;
+  padding-bottom: 5px;
+  font-size: 0.8rem;
+}
+.entry-editor form {
+  display: block;
+  height: inherit;
+  width: 100%;
+  background-color: #0e0e10;
+  border-radius: 5px;
+}
+.entry-editor form .text-editor {
+  border: none;
+  outline: none;
+  height: 100%;
+  width: 100%;
+  padding: 1rem 2rem 2rem 2rem;
+}
+.entry-editor form .text-editor .functions {
+  display: block;
+  width: 100%;
+  height: 35px;
+  margin-bottom: 5px;
+}
+.entry-editor form .text-editor .functions button {
+  background-color: #0e0e10;
+  border-radius: 5px;
+  border: 1px solid #aa00aa;
+  display: inline-block;
+  cursor: pointer;
+  color: #efeff1;
+  font-family: Arial;
+  font-size: 0.75rem;
+  padding: 8px 10px;
+  text-decoration: none;
+}
+.entry-editor form .text-editor .functions button:hover {
+  background-color: #18181b;
+}
+.entry-editor form .text-editor .functions button:active {
+  position: relative;
+  top: 1px;
+}
+.entry-editor form .text-editor textarea {
+  height: 77%;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #18181b;
+  cursor: text;
+  color: inherit;
+  padding: 10px;
+  resize: none;
+}
+.entry-editor form .text-editor .process {
+  height: 20%;
+}
+.entry-editor form .text-editor .process button {
+  display: inline-block;
+  float: right;
+  border-radius: 6px;
+  border: 1px solid #a511c0;
+  cursor: pointer;
+  padding: 6px 24px;
+  margin-top: 5px;
+  background-color: #aa00aa;
+  color: inherit;
+}
+.entry-editor form .text-editor .process button:hover {
+  outline: 1px solid #efeff1;
+}
+
+.dm-modal {
+  display: none;
+  z-index: 1;
+  position: fixed;
+  /* Stay in place */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+}
+.dm-modal .modal-dm-editor {
+  height: 340px;
+  width: 37%;
+  display: flex;
+  align-self: center;
+  margin-top: 1rem;
+}
+.dm-modal .modal-dm-editor .field-validation-error {
+  display: block;
+  padding-bottom: 5px;
+  font-size: 0.8rem;
+}
+.dm-modal .modal-dm-editor form {
+  display: block;
+  height: inherit;
+  width: 100%;
+  background-color: #0e0e10;
+  border-radius: 5px;
+}
+.dm-modal .modal-dm-editor form .text-editor {
+  border: none;
+  outline: none;
+  height: 100%;
+  width: 100%;
+  padding: 1rem 2rem 2rem 2rem;
+}
+.dm-modal .modal-dm-editor form .text-editor .functions {
+  display: block;
+  width: 100%;
+  height: 35px;
+  margin-bottom: 5px;
+}
+.dm-modal .modal-dm-editor form .text-editor .functions button {
+  background-color: #0e0e10;
+  border-radius: 5px;
+  border: 1px solid #aa00aa;
+  display: inline-block;
+  cursor: pointer;
+  color: #efeff1;
+  font-family: Arial;
+  font-size: 0.75rem;
+  padding: 8px 10px;
+  text-decoration: none;
+}
+.dm-modal .modal-dm-editor form .text-editor .functions button:hover {
+  background-color: #18181b;
+}
+.dm-modal .modal-dm-editor form .text-editor .functions button:active {
+  position: relative;
+  top: 1px;
+}
+.dm-modal .modal-dm-editor form .text-editor textarea {
+  height: 77%;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #18181b;
+  cursor: text;
+  color: inherit;
+  padding: 10px;
+  resize: none;
+}
+.dm-modal .modal-dm-editor form .text-editor .process {
+  height: 20%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 7px;
+  justify-content: flex-end;
+  align-items: baseline;
+}
+.dm-modal .modal-dm-editor form .text-editor .process button {
+  border-radius: 6px;
+  border: 1px solid #a511c0;
+  cursor: pointer;
+  padding: 6px 24px;
+  margin-top: 5px;
+  background-color: #aa00aa;
+  color: inherit;
+}
+.dm-modal .modal-dm-editor form .text-editor .process button:hover {
+  outline: 1px solid #efeff1;
+}
+
+.dm-modal.active {
+  display: flex;
+  justify-content: center;
 }
 
 .pagination {

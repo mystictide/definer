@@ -1,0 +1,90 @@
+﻿@model definer.Entity.Users.DMessages
+
+@{
+    var User = (definer.Entity.Users.Users)ViewBag.User;
+    ViewData["Title"] = "definer";
+}
+
+<div class="view">
+    <div class="breadcrumb">
+        <h1><a href="/m/">messages</a></h1>
+        <h1>></h1>
+        <h1><a href="/u/@CustomTagHelpers.FriendlyURLTitle((Model.ReceiverID == User.ID ? Model.Sender : Model.Receiver))">@(Model.ReceiverID == User.ID ? Model.Sender : Model.Receiver)</a></h1>
+    </div>
+    <div class="functions">
+        <a href="/m/delete/@Model.ID"><small>delete</small></a>
+        <a href="/m/archive/@Model.ID"><small>archive</small></a>
+    </div>
+    <div class="messages">
+        <div class="mlist">
+            @if (Model.Messages.data.Count() > 0)
+            {
+                @Html.Partial("/Views/Helper/Table_Pager.cshtml", Model.Messages.filter.pager)
+                <div class="dm-list">
+                    <ul class="replies">
+                        @foreach (var item in Model.Messages.data)
+                        {
+                            <li class="@(item.UserID == User.ID ? "self" : "")">
+                                <div class="reply-container">
+                                    <p>@Html.Raw(@CustomTagHelpers.FormatEntry(item.Body))</p>
+                                    <div class="info">
+                                        <div class="link">
+                                            <small>@item.Date.ToString("dd.MM.yyyy HH:mm")</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                @Html.Partial("/Views/Helper/Table_Pager.cshtml", Model.Messages.filter.pager)
+                <div class="entry-editor">
+                    <form action="/m/reply" method="post" autocomplete="off">
+                        @Html.Hidden("DMID", Model.ID)
+                        <fieldset class="text-editor">
+                            <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                            <div class="functions">
+                                <button type="button" id="bthread">thread</button>
+                                <button type="button" id="bspoiler">spoiler</button>
+                                <button type="button" id="blink">link</button>
+                            </div>
+                            @Html.TextArea("dmBody")
+                            <div class="process">
+                                <button type="submit">reply</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <div class="dm">
+                    <h5>oops</h5>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Js {
+    <script>
+        $(document).ready(
+            function () {
+                authorpage.fill();
+                authorpage.fillWall();
+            },
+            $('.pages').on('change', function () {
+                var value = $(this).val();
+                Filter.Page(value);
+            }),
+        );
+    </script>
+    <script>
+        const bthread = document.getElementById("bthread");
+        const bspoiler = document.getElementById("bspoiler");
+        const blink = document.getElementById("blink");
+        bthread.addEventListener("click", dmEditor.checkSelection);
+        bspoiler.addEventListener("click", dmEditor.checkSelection);
+        blink.addEventListener("click", dmEditor.checkSelection);
+    </script>
+}

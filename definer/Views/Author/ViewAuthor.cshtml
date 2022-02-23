@@ -62,7 +62,7 @@
         {
             <div class="manage">
                 <ul>
-                    <li><a class="message" href="#">message</a></li>
+                    <li><a class="message" href="javascript:void(0)" id="sendDM">message</a></li>
                     @if (Model.Interactions.Follow != null)
                     {
                         <li><a class="follow active" href="javascript:void(0)" id="followAuthor">following</a></li>
@@ -110,6 +110,8 @@
     <div class="wall-entries" id="wallEntries">
     </div>
 </div>
+
+
 
 @section Js {
     <script>
@@ -169,6 +171,27 @@
                         if (data != undefined || data != null) {
                             authorpage.fillWall();
                             $('#wallBody').val('');
+                        }
+                    }
+                });
+            }),
+            $('#sendDM').on('click', function () {
+                $("#dm-modal").toggleClass("active");
+            }),
+            $('#closeDM').on('click', function () {
+                $("#dm-modal").toggleClass("active");
+            }),
+            $('#createDM').on('click', function () {
+                var text = $('#dmBody').val();
+                var ID = $('#authorID').val();
+                var data = { dmBody: text }
+                $.ajax({
+                    url: "/m/create/" + ID,
+                    data: data,
+                    success: function (data) {
+                        var link = "/m/" + data;
+                        if (data != undefined || data != null) {
+                            window.location = link;
                         }
                     }
                 });

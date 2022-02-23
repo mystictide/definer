@@ -28,6 +28,12 @@ namespace definer.Business.Users
             return _repo.FilteredList(request);
         }
 
+        public DMessages GetDMs(FilteredList<DMessagesJunction> request, int ID)
+        {
+            return _repo.GetDMs(request, ID);
+        }
+
+
         public DMessagesJunction Get(int ID)
         {
             return _repo.Get(ID);

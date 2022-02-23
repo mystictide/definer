@@ -55,9 +55,13 @@
     </div>
 </div>
 
-<script>
-    $('.pages').on('change', function () {
-        var value = $(this).val();
-        Filter.Page(value);
-    });
-</script>
+@section Js {
+    <script>
+        $(document).ready(
+            $('.pages').on('change', function () {
+                var value = $(this).val();
+                Filter.Page(value);
+            }),
+        );
+    </script>
+}
