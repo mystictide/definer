@@ -5,6 +5,6 @@ namespace definer.Core.Interface.User
 {
     public interface IDMessagesJunction : IBaseInterface<DMessagesJunction>
     {
-        DMessages GetDMs(FilteredList<DMessagesJunction> request, int ID);
+        DMessages GetDMs(FilteredList<DMessagesJunction> request, int ID, int CurrentUserID);
     }
 }

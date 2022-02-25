@@ -1,0 +1,38 @@
+﻿@model definer.Entity.Users.AuthorWall
+
+@{
+    var User = (definer.Entity.Users.Users)ViewBag.User;
+    ViewData["Title"] = "wall entry - definer";
+}
+<div class="view">
+    <div class="entries">
+        <ul>
+            <li>
+                <div class="body">@Html.Raw(@CustomTagHelpers.FormatEntry(Model.Body))</div>
+                <footer>
+                    <div class="feedback"></div>
+                    <div class="info">
+                        <div class="author">
+                            <a href="/u/@CustomTagHelpers.FriendlyURLTitle(Model.Author)">@Model.Author</a>
+                        </div>
+                        <div class="link">
+                            @if (User != null)
+                            {
+                                @if (@Model.UserID == User.ID)
+                                {
+                                    <a href="/u/edit/wall/@Model.ID"><small>edit</small></a>
+                                }
+                            }
+                            <a href="/u/wall/@Model.ID">
+                                <small>
+                                    @Model.Date.ToString("dd.MM.yyyy HH:mm") @if (@Model.EditDate != null)
+                                    {<text>~ </text>@Model.EditDate?.ToString("dd.MM.yyyy HH:mm")}
+                                </small>
+                            </a>
+                        </div>
+                    </div>
+                </footer>
+            </li>
+        </ul>
+    </div>
+</div>

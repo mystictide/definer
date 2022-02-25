@@ -28,9 +28,9 @@ namespace definer.Business.Users
             return _repo.FilteredList(request);
         }
 
-        public DMessages GetDMs(FilteredList<DMessagesJunction> request, int ID)
+        public DMessages GetDMs(FilteredList<DMessagesJunction> request, int ID, int CurrentUserID)
         {
-            return _repo.GetDMs(request, ID);
+            return _repo.GetDMs(request, ID, CurrentUserID);
         }
 
 

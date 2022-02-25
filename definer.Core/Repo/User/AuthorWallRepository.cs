@@ -98,13 +98,25 @@ namespace definer.Core.Repo.User
         {
             try
             {
-                using (var con = GetConnection)
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@ID", ID);
+
+                string WhereClause = @" WHERE t.ID = @ID";
+
+                string query = $@"
+                SELECT *
+                ,(select Username from Users where ID=t.SenderID) Author
+                FROM AuthorWall t 
+                {WhereClause} ";
+
+                using (var connection = GetConnection)
                 {
-                    return con.Get<AuthorWall>(ID);
+                    return connection.Query<AuthorWall>(query, param).FirstOrDefault();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                //LogsRepository.CreateLog(ex);
                 return null;
             }
         }

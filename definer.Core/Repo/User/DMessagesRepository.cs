@@ -56,7 +56,6 @@ namespace definer.Core.Repo.User
             {
                 FilteredList<DMessages> result = new FilteredList<DMessages>();
                 DynamicParameters param = new DynamicParameters();
-                param.Add("@Keyword", request.filter.Keyword);
                 param.Add("@PageSize", request.filter.pageSize);
                 param.Add("@UserID", UserID);
 
@@ -124,6 +123,40 @@ namespace definer.Core.Repo.User
         {
             throw new NotImplementedException();
         }
+
+        public bool UnreadMessages(int UserID)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@UserID", UserID);
+                string query = $@"
+                SELECT
+	                CASE WHEN EXISTS 
+	                    (
+		                        SELECT
+		                        t.*
+		                        ,j.*
+		                        FROM DMessages t
+		                        CROSS APPLY (SELECT * FROM DMessagesJunction WHERE DMID = t.ID AND UserID != 1004 AND IsRead = 0) j
+		                        WHERE t.ReceiverID = 1004 OR t.SenderID = 1004
+                          )
+	                THEN 'TRUE'
+	                ELSE 'FALSE'
+                END";
+
+                using (var connection = GetConnection)
+                {  
+                    return connection.QueryFirstOrDefault<bool>(query, param);
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return false;
+            }
+        }
+
         public ProcessResult Update(DMessages entity)
         {
             ProcessResult result = new ProcessResult();

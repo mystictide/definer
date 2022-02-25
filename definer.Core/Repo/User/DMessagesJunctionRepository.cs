@@ -61,7 +61,7 @@ namespace definer.Core.Repo.User
 
                 string WhereClause = @" WHERE t.DMessagesJunctionID = @ID AND  (t.Body like '%' + @Keyword + '%')";
 
-                string query_count = $@"  Select Count(t.ID) from DMessagesJunction t {WhereClause}";
+                string query_count = $@" Select Count(t.ID) from DMessagesJunction t {WhereClause}";
 
                 string query = $@"
                 SELECT *
@@ -110,7 +110,7 @@ namespace definer.Core.Repo.User
             throw new NotImplementedException();
         }
 
-        public DMessages GetDMs(FilteredList<DMessagesJunction> request, int ID)
+        public DMessages GetDMs(FilteredList<DMessagesJunction> request, int ID, int CurrentUserID)
         {
             try
             {
@@ -119,6 +119,7 @@ namespace definer.Core.Repo.User
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@DMID", ID);
                 param.Add("@PageSize", request.filter.pageSize);
+                param.Add("@CurrentUserID", CurrentUserID);
 
                 string DMQuery = $@"
                 SELECT *
@@ -130,6 +131,7 @@ namespace definer.Core.Repo.User
                 string WhereClause = @" WHERE t.DMID = @DMID";
                 string query_count = $@"  Select Count(t.ID) from DMessagesJunction t {WhereClause}";
                 string messagesQuery = $@"
+                UPDATE DMessagesJunction SET IsRead = 1 WHERE DMID = @DMID AND UserID != @CurrentUserID
                 SELECT *
                 ,(select Username from Users where ID=t.UserID) Author
                 FROM DMessagesJunction t

@@ -99,6 +99,35 @@ namespace definer.Controllers
             return Json(rendered);
         }
 
+        [AllowAnonymous]
+        [Route("wall/{ID}")]
+        public ActionResult ViewWallEntry(int ID)
+        {
+            AuthorWall result;
+            if (user != null)
+            {
+                ViewBag.User = user;
+            }
+            result = new AuthorWallManager().Get(ID);
+            return View(result);
+        }
+
+        [Route("edit/wall/{ID}")]
+        public ActionResult EditWallEntry(int ID)
+        {
+            var result = new AuthorWallManager().Get(ID);
+            return View(result);
+        }
+
+        [Route("edit/wall"), HttpPost]
+        public ActionResult EditWallEntry(AuthorWall model)
+        {
+            model.EditDate = DateTime.Now;
+            model.SenderID = user.ID;
+            var result = new AuthorWallManager().Update(model);
+            return Redirect("/u/wall/" + model.ID);
+        }
+
         [Route("authorWall"), HttpGet]
         [Route("authorWall/{username}"), HttpGet]
         public async Task<JsonResult> authorWall(string? username, Filter filter, AuthorWall filterModel)

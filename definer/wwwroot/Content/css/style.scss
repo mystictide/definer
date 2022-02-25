@@ -159,6 +159,10 @@ header {
                 @include link-anim();
             }
 
+            a.active {
+                color: $base-font-colour;
+            }
+
             .settings-toggle {
                 cursor: pointer;
 
@@ -594,24 +598,7 @@ header {
                                 position: relative;
                                 font-size: 1rem;
                                 line-height: 22px;
-
-                                .spoiler {
-                                    opacity: 0.9;
-                                    background: $body-colour;
-                                    border-radius: 5px;
-                                    color: transparent;
-                                    cursor: help;
-                                    user-select: none;
-                                    transition: background 0.3s ease 0.2s, color 0.2s ease 0.25s;
-
-                                    &:focus {
-                                        background: none;
-                                        color: inherit;
-                                    }
-                                }
                             }
-
-
 
                             footer {
                                 margin-top: 10px;
@@ -1023,19 +1010,30 @@ header {
                             flex-direction: column;
                             border: none;
 
-                            &:hover {
-                                background-color: $body-colour;
-                                border-radius: 5px;
+                            li {
+                                hr {
+                                    border: 1px solid $body-colour;
+                                }
                             }
 
-                            hr {
-                                border: 1px solid $body-colour;
+                            li.unread {
+                                border: 1px solid $accent-color;
+                                border-radius: 5px;
+
+                                hr {
+                                    border: none;
+                                }
                             }
 
                             .dm-container {
                                 display: flex;
                                 flex-direction: column;
                                 padding: .7rem 7px 5px 7px;
+
+                                &:hover {
+                                    background-color: $body-colour;
+                                    border-radius: 5px;
+                                }
 
                                 a {
                                     display: block;
@@ -1707,6 +1705,21 @@ header {
                 height: 100%;
             }
         }
+    }
+}
+
+.spoiler {
+    opacity: 0.9;
+    background: $body-colour;
+    border-radius: 5px;
+    color: transparent;
+    cursor: help;
+    user-select: none;
+    transition: background 0.3s ease 0.2s, color 0.2s ease 0.25s;
+
+    &:focus {
+        background: none;
+        color: inherit;
     }
 }
 

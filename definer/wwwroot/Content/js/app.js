@@ -1,6 +1,7 @@
 ﻿$(document).ready(
     function () {
         sidebar.fill();
+        checkdms();
     },
 );
 
@@ -19,6 +20,17 @@ $(document).bind('change', '.spages', function () {
 
 function toggle() {
     document.getElementById('settings-dropdown').classList.toggle("show");
+}
+
+function checkdms() {
+    $.ajax({
+        url: "/unreaddms",
+        success: function (data) {
+            if (data) {
+                $('#dmEnvelope').toggleClass("active");
+            }
+        }
+    });
 }
 
 window.onclick = function (event) {

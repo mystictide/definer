@@ -43,6 +43,11 @@ namespace definer.Business.Users
             return _repo.GetAll();
         }
 
+        public bool UnreadMessages(int UserID)
+        {
+            return _repo.UnreadMessages(UserID);
+        }
+
         public ProcessResult Update(DMessages entity)
         {
             return _repo.Update(entity);

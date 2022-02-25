@@ -1,27 +1,24 @@
-﻿@model definer.Entity.Threads.Entry
+﻿@model definer.Entity.Users.AuthorWall
 
 @{
-    ViewData["Title"] = Model.Title + " - definer";
+    ViewData["Title"] = "editing wall entry - definer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="view">
-    <h1><a href="/@CustomTagHelpers.FriendlyURLTitle(@Model.Title)-@Model.ThreadID">@Model.Title</a></h1>
     <div class="entry-editor">
-        <form action="/edit/entry" method="post" autocomplete="off">
+        <form action="/u/edit/wall" method="post" autocomplete="off">
             @Html.Hidden("ID", @Model.ID)
-            @Html.Hidden("ThreadID", @Model.ThreadID)
+            @Html.Hidden("UserID", @Model.UserID)
             @Html.Hidden("Date", @Model.Date)
-            @Html.Hidden("EditDate", @Model.EditDate)
-            @Html.Hidden("Title", @Model.Title)
             <fieldset class="text-editor">
                 <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
-                <div class="functions">
+                @*<div class="functions">
                     <button type="button" id="bthread">thread</button>
                     <button type="button" id="bspoiler">spoiler</button>
                     <button type="button" id="blink">link</button>
-                </div>
-                @Html.TextAreaFor(m => m.Body, new { @placeholder = "say something about \"" + Model.Title + "\"" })
+                </div>*@
+                @Html.TextAreaFor(m => m.Body)
                 <div class="process">
                     <button type="submit">submit</button>
                 </div>
@@ -29,11 +26,11 @@
         </form>
     </div>
 </div>
-<script>
+@*<script>
     const bthread = document.getElementById("bthread");
     const bspoiler = document.getElementById("bspoiler");
     const blink = document.getElementById("blink");
     bthread.addEventListener("click", textEditor.checkSelection);
     bspoiler.addEventListener("click", textEditor.checkSelection);
     blink.addEventListener("click", textEditor.checkSelection);
-</script>
+</script>*@

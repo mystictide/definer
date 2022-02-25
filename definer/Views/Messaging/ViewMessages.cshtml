@@ -19,10 +19,10 @@
             {
                 @Html.Partial("/Views/Helper/Table_Pager.cshtml", Model.filter.pager)
                 <div class="dm-list">
-                    @foreach (var item in Model.data)
-                    {
-                        <ul class="dm">
-                            <li>
+                    <ul class="dm">
+                        @foreach (var item in Model.data)
+                        {
+                            <li class="@(item.LastMessage.UserID != User.ID && !item.LastMessage.IsRead ? "unread" : "")">
                                 <div class="dm-container">
                                     <a href="/m/@item.ID">
                                         <h3>@(item.ReceiverID == User.ID ? item.Sender : item.Receiver) <small>(@item.MessageCount)</small></h3>
@@ -40,8 +40,8 @@
                                 </div>
                                 <hr />
                             </li>
-                        </ul>
-                    }
+                        }
+                    </ul>
                 </div>
                 @Html.Partial("/Views/Helper/Table_Pager.cshtml", Model.filter.pager)
             }

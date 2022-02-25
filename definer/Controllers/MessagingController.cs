@@ -45,7 +45,7 @@ namespace definer.Controllers
                 filter = filter,
                 filterModel = filterModel
             };
-            var result = new DMessagesJunctionManager().GetDMs(request, ID);
+            var result = new DMessagesJunctionManager().GetDMs(request, ID, user.ID);
             return View(result);
         }
 
@@ -77,6 +77,13 @@ namespace definer.Controllers
             message.IsRead = false;
             new DMessagesJunctionManager().Add(message);
             return Json(result.ReturnID);
+        }
+
+        [Route("unreaddms"), HttpGet]
+        public JsonResult CheckUnreadMessages()
+        {
+            var result = new DMessagesManager().UnreadMessages(user.ID);
+            return Json(result);
         }
     }
 }
