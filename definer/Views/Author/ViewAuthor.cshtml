@@ -101,7 +101,7 @@
     <div class="wall-editor">
         <fieldset class="wall-editor">
             <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
-            <textarea id="wallBody" name="Body" placeholder="say something about @Model.Username.."></textarea>
+            <textarea id="wallBody" name="Body" placeholder="say something about @Model.Username.." required></textarea>
             <div class="process">
                 <button type="button" id="saveWall">save</button>
             </div>
@@ -111,9 +111,11 @@
     </div>
 </div>
 
-
+@Html.Partial("/Views/Messaging/_SendMessage.cshtml", new definer.Models.DMViewModel())
 
 @section Js {
+    <script type="text/javascript" src=~/Content/lib/validate/jquery.validate.min.js></script>
+    <script type="text/javascript" src=~/Content/lib/validate/jquery.validate.unobtrusive.js></script>
     <script>
         $(document).ready(
             function () {
@@ -177,24 +179,11 @@
             }),
             $('#sendDM').on('click', function () {
                 $("#dm-modal").toggleClass("active");
+                var uid = $("#authorID").val();
+                $("#UserID").val(uid);
             }),
             $('#closeDM').on('click', function () {
                 $("#dm-modal").toggleClass("active");
-            }),
-            $('#createDM').on('click', function () {
-                var text = $('#dmBody').val();
-                var ID = $('#authorID').val();
-                var data = { dmBody: text }
-                $.ajax({
-                    url: "/m/create/" + ID,
-                    data: data,
-                    success: function (data) {
-                        var link = "/m/" + data;
-                        if (data != undefined || data != null) {
-                            window.location = link;
-                        }
-                    }
-                });
             }),
         );
     </script>

@@ -84,7 +84,7 @@ namespace definer.Controllers
         public async Task<JsonResult> sideBar(Filter filter, Threads filterModel)
         {
             filter.Keyword = filter.Keyword ?? "";
-            filter.pageSize = 25;
+            filter.pageSize = 50;
             filter.isDetailSearch = false;
             FilteredList<Threads> request = new FilteredList<Threads>()
             {

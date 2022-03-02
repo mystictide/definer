@@ -38,45 +38,56 @@ namespace definer.Controllers
             {
                 ViewBag.User = user;
             }
-            filter.pageSize = 10;
-            filter.isDetailSearch = false;
-            FilteredList<DMessagesJunction> request = new FilteredList<DMessagesJunction>()
+            if (new DMessagesManager().CheckDMOwner(user.ID))
             {
-                filter = filter,
-                filterModel = filterModel
-            };
-            var result = new DMessagesJunctionManager().GetDMs(request, ID, user.ID);
-            return View(result);
+                filter.pageSize = 10;
+                filter.isDetailSearch = false;
+                FilteredList<DMessagesJunction> request = new FilteredList<DMessagesJunction>()
+                {
+                    filter = filter,
+                    filterModel = filterModel
+                };
+                var result = new DMessagesJunctionManager().GetDMs(request, ID, user.ID);
+                if (result == null)
+                {
+                    return Redirect("/m/");
+                }
+                return View(result);
+            }
+            else
+            {
+                return Redirect("/m/");
+            }
         }
 
         [Route("m/reply"), HttpPost]
-        public ActionResult ReplyMessage(int DMID, string dmBody)
+        public ActionResult ReplyMessage(DMessages dm)
         {
             var model = new DMessagesJunction();
-            model.DMID = DMID;
+            model.DMID = dm.ID;
             model.Date = DateTime.Now;
-            model.Body = dmBody;
+            model.Body = dm.dmBody;
             model.UserID = user.ID;
             model.IsRead = false;
             new DMessagesJunctionManager().Add(model);
-            return Redirect("/m/" + DMID);
+            return Redirect("/m/" + dm.ID);
         }
 
-        [Route("m/create/{UserID}"), HttpGet]
-        public JsonResult CreateDM(int UserID, string dmBody)
+        [Route("m/create"), HttpPost]
+        public ActionResult CreateDM(DMViewModel dm)
         {
             var model = new DMessages();
-            model.ReceiverID = UserID;
+            model.ReceiverID = dm.UserID;
             model.SenderID = user.ID;
             var result = new DMessagesManager().Add(model);
             var message = new DMessagesJunction();
             message.DMID = result.ReturnID;
-            message.Body = dmBody;
+            message.Body = dm.dmBody;
             message.Date = DateTime.Now;
             message.UserID = user.ID;
             message.IsRead = false;
             new DMessagesJunctionManager().Add(message);
-            return Json(result.ReturnID);
+            return Redirect("/m/" + result.ReturnID);
         }
 
         [Route("unreaddms"), HttpGet]

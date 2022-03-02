@@ -17,6 +17,10 @@ namespace definer.Entity.Users
         public int SenderID { get; set; }
 
         [Write(false)]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "don't be shy.")]
+        public string dmBody { get; set; }
+
+        [Write(false)]
         public string Receiver { get; set; }
 
         [Write(false)]

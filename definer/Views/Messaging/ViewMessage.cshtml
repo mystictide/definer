@@ -40,15 +40,17 @@
                 @Html.Partial("/Views/Helper/Table_Pager.cshtml", Model.Messages.filter.pager)
                 <div class="entry-editor">
                     <form action="/m/reply" method="post" autocomplete="off">
-                        @Html.Hidden("DMID", Model.ID)
+                        @Html.HiddenFor(m => m.ID)
                         <fieldset class="text-editor">
-                            <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                            <span class="field-validation-error" data-valmsg-for="dmBody" data-valmsg-replace="true"></span>
                             <div class="functions">
+                                <button type="button" id="buser">user</button>
+                                <button type="button" id="bentry">entry</button>
                                 <button type="button" id="bthread">thread</button>
                                 <button type="button" id="bspoiler">spoiler</button>
                                 <button type="button" id="blink">link</button>
                             </div>
-                            @Html.TextArea("dmBody")
+                            @Html.TextAreaFor(m => m.dmBody, new { @placeholder = "say something interesting" })
                             <div class="process">
                                 <button type="submit">reply</button>
                             </div>
@@ -67,6 +69,8 @@
 </div>
 
 @section Js {
+    <script type="text/javascript" src=~/Content/lib/validate/jquery.validate.min.js></script>
+    <script type="text/javascript" src=~/Content/lib/validate/jquery.validate.unobtrusive.js></script>
     <script>
         $(document).ready(
             function () {
@@ -80,9 +84,13 @@
         );
     </script>
     <script>
+        const buser = document.getElementById("buser");
+        const bentry = document.getElementById("bentry");
         const bthread = document.getElementById("bthread");
         const bspoiler = document.getElementById("bspoiler");
         const blink = document.getElementById("blink");
+        buser.addEventListener("click", dmEditor.checkSelection);
+        bentry.addEventListener("click", dmEditor.checkSelection);
         bthread.addEventListener("click", dmEditor.checkSelection);
         bspoiler.addEventListener("click", dmEditor.checkSelection);
         blink.addEventListener("click", dmEditor.checkSelection);

@@ -186,6 +186,10 @@
                                             {
                                                 <a href="/edit/entry/@item.ID"><small>edit</small></a>
                                             }
+                                            else
+                                            {
+                                                <a href="javascript:void(0);" onclick="replyEditor.replyWith(@item.ID, @item.UserID)"><small>message</small></a>
+                                            }
                                         }
                                         <a href="/entry/@item.ID">
                                             <small>
@@ -210,6 +214,8 @@
                         <fieldset class="text-editor">
                             <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
                             <div class="functions">
+                                <button type="button" id="buser">user</button>
+                                <button type="button" id="bentry">entry</button>
                                 <button type="button" id="bthread">thread</button>
                                 <button type="button" id="bspoiler">spoiler</button>
                                 <button type="button" id="blink">link</button>
@@ -222,9 +228,13 @@
                     </form>
                 </div>
                 <script>
+                    const buser = document.getElementById("buser");
+                    const bentry = document.getElementById("bentry");
                     const bthread = document.getElementById("bthread");
                     const bspoiler = document.getElementById("bspoiler");
                     const blink = document.getElementById("blink");
+                    buser.addEventListener("click", textEditor.checkSelection);
+                    bentry.addEventListener("click", textEditor.checkSelection);
                     bthread.addEventListener("click", textEditor.checkSelection);
                     bspoiler.addEventListener("click", textEditor.checkSelection);
                     blink.addEventListener("click", textEditor.checkSelection);
@@ -236,6 +246,7 @@
                 </script>
             }
         </div>
+        @Html.Partial("/Views/Messaging/_SendMessageWithContent.cshtml", new definer.Models.DMViewModel())
     }
 }
 else if (Thread != null)

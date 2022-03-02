@@ -1,0 +1,41 @@
+﻿@model definer.Models.DMViewModel
+
+<div class="dm-modal" id="dm-modal">
+    <div class="modal-dm-editor">
+        <form action="/m/create/" method="post" autocomplete="off">
+            @Html.HiddenFor(m => m.UserID)
+            @Html.AntiForgeryToken()
+            <fieldset class="text-editor">
+                <span class="field-validation-error" data-valmsg-for="dmBody" data-valmsg-replace="true"></span>
+                <div class="functions">
+                    <button type="button" id="dmuser">user</button>
+                    <button type="button" id="dmentry">entry</button>
+                    <button type="button" id="dmthread">thread</button>
+                    <button type="button" id="dmspoiler">spoiler</button>
+                    <button type="button" id="dmlink">link</button>
+                </div>
+                @Html.TextAreaFor(m => m.dmBody, new { @placeholder = "say something interesting" })
+                <div class="process">
+                    <button type="button" id="closeDM">close</button>
+                    <button type="submit">send message</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script>
+    const dmuser = document.getElementById("dmuser");
+    const dmentry = document.getElementById("dmentry");
+    const dmthread = document.getElementById("dmthread");
+    const dmspoiler = document.getElementById("dmspoiler");
+    const dmlink = document.getElementById("dmlink");
+    dmuser.addEventListener("click", replyEditor.checkSelection);
+    dmentry.addEventListener("click", replyEditor.checkSelection);
+    dmthread.addEventListener("click", replyEditor.checkSelection);
+    dmspoiler.addEventListener("click", replyEditor.checkSelection);
+    dmlink.addEventListener("click", replyEditor.checkSelection);
+
+    $('#closeDM').on('click', function () {
+        $("#dm-modal").toggleClass("active");
+    });
+</script>

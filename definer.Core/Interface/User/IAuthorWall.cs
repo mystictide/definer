@@ -5,6 +5,6 @@ namespace definer.Core.Interface.User
 {
     public interface IAuthorWall : IBaseInterface<AuthorWall>
     {
-        Users GetbyUsername(FilteredList<AuthorWall> request, string Username);
+        Users GetbyUsername(FilteredList<AuthorWall> request, string Username, int CurrentUserID);
     }
 }

@@ -1,28 +1,36 @@
-﻿@model definer.Entity.Users.DMessages
+﻿@model definer.Models.DMViewModel
 
 <div class="dm-modal" id="dm-modal">
     <div class="modal-dm-editor">
-        <form action="/m/reply" method="post" autocomplete="off">
+        <form action="/m/create/" method="post" autocomplete="off">
+            @Html.HiddenFor(m => m.UserID)
+            @Html.AntiForgeryToken()
             <fieldset class="text-editor">
-                <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                <span class="field-validation-error" data-valmsg-for="dmBody" data-valmsg-replace="true"></span>
                 <div class="functions">
+                    <button type="button" id="buser">user</button>
+                    <button type="button" id="bentry">entry</button>
                     <button type="button" id="bthread">thread</button>
                     <button type="button" id="bspoiler">spoiler</button>
                     <button type="button" id="blink">link</button>
                 </div>
-                @Html.TextArea("dmBody")
+                @Html.TextAreaFor(m => m.dmBody, new { @placeholder = "say something interesting" })
                 <div class="process">
                     <button type="button" id="closeDM">close</button>
-                    <button type="button" id="createDM">send message</button>
+                    <button type="submit">send message</button>
                 </div>
             </fieldset>
         </form>
     </div>
 </div>
 <script>
+    const buser = document.getElementById("buser");
+    const bentry = document.getElementById("bentry");
     const bthread = document.getElementById("bthread");
     const bspoiler = document.getElementById("bspoiler");
     const blink = document.getElementById("blink");
+    buser.addEventListener("click", dmEditor.checkSelection);
+    bentry.addEventListener("click", dmEditor.checkSelection);
     bthread.addEventListener("click", dmEditor.checkSelection);
     bspoiler.addEventListener("click", dmEditor.checkSelection);
     blink.addEventListener("click", dmEditor.checkSelection);

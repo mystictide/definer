@@ -143,11 +143,11 @@ namespace definer.Controllers
             };
             if (username == null || username.Length < 1)
             {
-                result = new AuthorWallManager().GetbyUsername(request, user.Username);
+                result = new AuthorWallManager().GetbyUsername(request, user.Username, user.ID);
             }
             else
             {
-                result = new AuthorWallManager().GetbyUsername(request, username);
+                result = new AuthorWallManager().GetbyUsername(request, username, user.ID);
             }
             if (user != null)
             {
@@ -162,16 +162,19 @@ namespace definer.Controllers
         public JsonResult ManageWall(AuthorWall model)
         {
             var result = new ProcessResult();
-            if (model.ID > 0)
+            if (model.Body != null || model.Body != "")
             {
-                model.EditDate = DateTime.Now;
-                result = new AuthorWallManager().Update(model);
-            }
-            else
-            {
-                model.SenderID = user.ID;
-                model.Date = DateTime.Now;
-                result = new AuthorWallManager().Add(model);
+                if (model.ID > 0)
+                {
+                    model.EditDate = DateTime.Now;
+                    result = new AuthorWallManager().Update(model);
+                }
+                else
+                {
+                    model.SenderID = user.ID;
+                    model.Date = DateTime.Now;
+                    result = new AuthorWallManager().Add(model);
+                }
             }
             return Json(result);
         }

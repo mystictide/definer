@@ -5,6 +5,19 @@
     },
 );
 
+window.onclick = function (event) {
+    if (!event.target.matches('.settings-toggle')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+
 $('#sbutton').attr('disabled', true);
 $('#search').on('input change', function () {
     if ($(this).val().length != 0)
@@ -33,18 +46,6 @@ function checkdms() {
     });
 }
 
-window.onclick = function (event) {
-    if (!event.target.matches('.settings-toggle')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
 
 var authorpage = {
     fill: function () {
@@ -306,10 +307,38 @@ var textEditor = {
         var end = textarea.selectionEnd;
         var sel = textarea.value.substring(start, end);
 
+        if (e.target.id == "buser") {
+            if (sel < 1) {
+                var val = textEditor.promt("which user did you mean?");
+                if (val !== null) {
+                    textEditor.appendUser(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapUser(textarea, len, start, end, sel);
+            }
+        }
+
+        if (e.target.id == "bentry") {
+            if (sel < 1) {
+
+                do {
+                    var val = parseInt(textEditor.promt("enter entry ID, only numbers"), 10);
+                } while (isNaN(val) || val < 1);
+
+                if (val !== null) {
+                    textEditor.appendEntry(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapEntry(textarea, len, start, end, sel);
+            }
+        }
+
         if (e.target.id == "bthread") {
             if (sel < 1) {
                 var val = textEditor.promt("which thread did you mean?");
-                if (val.length > 0) {
+                if (val !== null) {
                     textEditor.appendThread(textarea, len, start, end, val);
                 }
             }
@@ -321,7 +350,7 @@ var textEditor = {
         if (e.target.id == "bspoiler") {
             if (sel < 1) {
                 var val = textEditor.promt("what do we not spoil?");
-                if (val.length > 0) {
+                if (val !== null) {
                     textEditor.appendSpoiler(textarea, len, start, end, val);
                 }
             }
@@ -333,7 +362,7 @@ var textEditor = {
         if (e.target.id == "blink") {
             if (sel < 1) {
                 var val = textEditor.promt("enter some link");
-                if (val.length > 0) {
+                if (val !== null) {
                     textEditor.appendLink(textarea, len, start, end, val);
                 }
             }
@@ -347,34 +376,56 @@ var textEditor = {
         return prompt(q);
     },
 
+    appendUser: function (textarea, len, start, end, val) {
+        var replace = '[user ' + val + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapUser: function (textarea, len, start, end, sel) {
+        //var replace = '<a href="' + sel + '">' + sel + '</a>';
+        var replace = '[user ' + sel + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    appendEntry: function (textarea, len, start, end, val) {
+        var replace = '[entry ' + val + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapEntry: function (textarea, len, start, end, sel) {
+        //var replace = '<a href="' + sel + '">' + sel + '</a>';
+        var replace = '[entry ' + sel + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
     appendThread: function (textarea, len, start, end, val) {
-        var replace = '[thread ' + val + ']';
+        var replace = '[thread ' + val + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     },
 
     wrapThread: function (textarea, len, start, end, sel) {
         //var replace = '<a href="' + sel + '">' + sel + '</a>';
-        var replace = '[thread ' + sel + ']';
+        var replace = '[thread ' + sel + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     },
 
     appendLink: function (textarea, len, start, end, val) {
-        var replace = '[link ' + val + ']';
+        var replace = '[link ' + val + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     },
 
     wrapLink: function (textarea, len, start, end, sel) {
-        var replace = '[link ' + sel + ']';
+        var replace = '[link ' + sel + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     },
 
     appendSpoiler: function (textarea, len, start, end, val) {
-        var replace = '[spoiler ' + val + ']';
+        var replace = '[spoiler ' + val + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     },
 
     wrapSpoiler: function (textarea, len, start, end, sel) {
-        var replace = '[spoiler ' + sel + ']';
+        var replace = '[spoiler ' + sel + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     }
 }
@@ -387,10 +438,37 @@ var dmEditor = {
         var end = textarea.selectionEnd;
         var sel = textarea.value.substring(start, end);
 
+        if (e.target.id == "buser") {
+            if (sel < 1) {
+                var val = textEditor.promt("which user did you mean?");
+                if (val !== null) {
+                    textEditor.appendUser(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapUser(textarea, len, start, end, sel);
+            }
+        }
+
+        if (e.target.id == "bentry") {
+            if (sel < 1) {
+                do {
+                    var val = parseInt(textEditor.promt("enter entry ID, only numbers"), 10);
+                } while (isNaN(val) || val < 1);
+
+                if (val !== null) {
+                    textEditor.appendEntry(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapEntry(textarea, len, start, end, sel);
+            }
+        }
+
         if (e.target.id == "bthread") {
             if (sel < 1) {
                 var val = textEditor.promt("which thread did you mean?");
-                if (val.length > 0) {
+                if (val !== null) {
                     textEditor.appendThread(textarea, len, start, end, val);
                 }
             }
@@ -402,7 +480,7 @@ var dmEditor = {
         if (e.target.id == "bspoiler") {
             if (sel < 1) {
                 var val = textEditor.promt("what do we not spoil?");
-                if (val.length > 0) {
+                if (val !== null) {
                     textEditor.appendSpoiler(textarea, len, start, end, val);
                 }
             }
@@ -414,7 +492,7 @@ var dmEditor = {
         if (e.target.id == "blink") {
             if (sel < 1) {
                 var val = textEditor.promt("enter some link");
-                if (val.length > 0) {
+                if (val !== null) {
                     textEditor.appendLink(textarea, len, start, end, val);
                 }
             }
@@ -428,34 +506,192 @@ var dmEditor = {
         return prompt(q);
     },
 
+    appendUser: function (textarea, len, start, end, val) {
+        var replace = '[user ' + val + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapUser: function (textarea, len, start, end, sel) {
+        //var replace = '<a href="' + sel + '">' + sel + '</a>';
+        var replace = '[user ' + sel + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    appendEntry: function (textarea, len, start, end, val) {
+        var replace = '[entry ' + val + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapEntry: function (textarea, len, start, end, sel) {
+        //var replace = '<a href="' + sel + '">' + sel + '</a>';
+        var replace = '[entry ' + sel + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
     appendThread: function (textarea, len, start, end, val) {
-        var replace = '[thread ' + val + ']';
+        var replace = '[thread ' + val + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     },
 
     wrapThread: function (textarea, len, start, end, sel) {
         //var replace = '<a href="' + sel + '">' + sel + '</a>';
-        var replace = '[thread ' + sel + ']';
+        var replace = '[thread ' + sel + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     },
 
     appendLink: function (textarea, len, start, end, val) {
-        var replace = '[link ' + val + ']';
+        var replace = '[link ' + val + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     },
 
     wrapLink: function (textarea, len, start, end, sel) {
-        var replace = '[link ' + sel + ']';
+        var replace = '[link ' + sel + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     },
 
     appendSpoiler: function (textarea, len, start, end, val) {
-        var replace = '[spoiler ' + val + ']';
+        var replace = '[spoiler ' + val + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     },
 
     wrapSpoiler: function (textarea, len, start, end, sel) {
-        var replace = '[spoiler ' + sel + ']';
+        var replace = '[spoiler ' + sel + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    }
+}
+
+var replyEditor = {
+    replyWith: function (id, uid) {
+        $("#dmBody").val("[entry " + id + "] ");
+        $("#UserID").val(uid);
+        $("#dm-modal").toggleClass("active");
+    },
+
+    checkSelection: function (e) {
+        var textarea = document.getElementById("dmBody");
+        var len = textarea.value.length;
+        var start = textarea.selectionStart;
+        var end = textarea.selectionEnd;
+        var sel = textarea.value.substring(start, end);
+
+        if (e.target.id == "buser") {
+            if (sel < 1) {
+                var val = textEditor.promt("which user did you mean?");
+                if (val !== null) {
+                    textEditor.appendUser(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapUser(textarea, len, start, end, sel);
+            }
+        }
+
+        if (e.target.id == "bentry") {
+            if (sel < 1) {
+                do {
+                    var val = parseInt(textEditor.promt("enter entry ID, only numbers"), 10);
+                } while (isNaN(val) || val < 1);
+
+                if (val !== null) {
+                    textEditor.appendEntry(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapEntry(textarea, len, start, end, sel);
+            }
+        }
+
+        if (e.target.id == "bthread") {
+            if (sel < 1) {
+                var val = textEditor.promt("which thread did you mean?");
+                if (val !== null) {
+                    textEditor.appendThread(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapThread(textarea, len, start, end, sel);
+            }
+        }
+
+        if (e.target.id == "bspoiler") {
+            if (sel < 1) {
+                var val = textEditor.promt("what do we not spoil?");
+                if (val !== null) {
+                    textEditor.appendSpoiler(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapSpoiler(textarea, len, start, end, sel);
+            }
+        }
+
+        if (e.target.id == "blink") {
+            if (sel < 1) {
+                var val = textEditor.promt("enter some link");
+                if (val !== null) {
+                    textEditor.appendLink(textarea, len, start, end, val);
+                }
+            }
+            else {
+                textEditor.wrapLink(textarea, len, start, end, sel);
+            }
+        }
+    },
+
+    promt: function (q) {
+        return prompt(q);
+    },
+
+    appendUser: function (textarea, len, start, end, val) {
+        var replace = '[user ' + val + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapUser: function (textarea, len, start, end, sel) {
+        //var replace = '<a href="' + sel + '">' + sel + '</a>';
+        var replace = '[user ' + sel + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    appendEntry: function (textarea, len, start, end, val) {
+        var replace = '[entry ' + val + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapEntry: function (textarea, len, start, end, sel) {
+        //var replace = '<a href="' + sel + '">' + sel + '</a>';
+        var replace = '[entry ' + sel + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    appendThread: function (textarea, len, start, end, val) {
+        var replace = '[thread ' + val + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapThread: function (textarea, len, start, end, sel) {
+        //var replace = '<a href="' + sel + '">' + sel + '</a>';
+        var replace = '[thread ' + sel + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    appendLink: function (textarea, len, start, end, val) {
+        var replace = '[link ' + val + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapLink: function (textarea, len, start, end, sel) {
+        var replace = '[link ' + sel + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    appendSpoiler: function (textarea, len, start, end, val) {
+        var replace = '[spoiler ' + val + '] ';
+        textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
+    },
+
+    wrapSpoiler: function (textarea, len, start, end, sel) {
+        var replace = '[spoiler ' + sel + '] ';
         textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end, len);
     }
 }

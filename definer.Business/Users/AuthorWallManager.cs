@@ -38,9 +38,9 @@ namespace definer.Business.Users
             return _repo.GetAll();
         }
 
-        public Entity.Users.Users GetbyUsername(FilteredList<AuthorWall> request, string Username)
+        public Entity.Users.Users GetbyUsername(FilteredList<AuthorWall> request, string Username, int CurrentUserID)
         {
-            return _repo.GetbyUsername(request, Username);
+            return _repo.GetbyUsername(request, Username, CurrentUserID);
         }
 
         public ProcessResult Update(AuthorWall entity)

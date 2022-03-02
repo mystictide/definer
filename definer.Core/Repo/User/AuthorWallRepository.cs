@@ -52,46 +52,7 @@ namespace definer.Core.Repo.User
 
         public FilteredList<AuthorWall> FilteredList(FilteredList<AuthorWall> request)
         {
-            try
-            {
-                FilteredList<AuthorWall> result = new FilteredList<AuthorWall>();
-                DynamicParameters param = new DynamicParameters();
-                param.Add("@Keyword", request.filter.Keyword);
-                param.Add("@PageSize", request.filter.pageSize);
-
-                string WhereClause = @" WHERE t.AuthorWallID = @ID AND  (t.Body like '%' + @Keyword + '%')";
-
-                string query_count = $@"  Select Count(t.ID) from AuthorWall t {WhereClause}";
-
-                string query = $@"
-                SELECT *
-                ,(select Title from AuthorWall where ID=@ID) Title
-                ,(select Username from Users where ID=t.UserID) Author
-                ,(select count(ID) from AuthorWallAttribute where AuthorWallID=@ID AND Vote=1) Upvotes
-                ,(select count(ID) from AuthorWallAttribute where AuthorWallID=@ID AND Vote=0) Downvotes
-                ,(select count(ID) from AuthorWallAttribute where AuthorWallID=@ID AND Favourite=1) Favourites
-                FROM AuthorWall t
-                {WhereClause} 
-                ORDER BY t.ID ASC 
-                OFFSET @StartIndex ROWS
-                FETCH NEXT @PageSize ROWS ONLY";
-
-                using (var connection = GetConnection)
-                {
-                    result.totalItems = connection.QueryFirstOrDefault<int>(query_count, param);
-                    request.filter.pager = new Page(result.totalItems, request.filter.pageSize, request.filter.page);
-                    param.Add("@StartIndex", request.filter.pager.StartIndex);
-                    result.data = connection.Query<AuthorWall>(query, param);
-                    result.filter = request.filter;
-                    result.filterModel = request.filterModel;
-                    return result;
-                }
-            }
-            catch (Exception ex)
-            {
-                //LogsRepository.CreateLog(ex);
-                return null;
-            }
+            throw new NotImplementedException();
         }
 
         public AuthorWall Get(int ID)
@@ -126,7 +87,7 @@ namespace definer.Core.Repo.User
             throw new NotImplementedException();
         }
 
-        public Users GetbyUsername(FilteredList<AuthorWall> request, string Username)
+        public Users GetbyUsername(FilteredList<AuthorWall> request, string Username, int CurrentUserID)
         {
             try
             {
@@ -134,9 +95,10 @@ namespace definer.Core.Repo.User
                 FilteredList<AuthorWall> entries = new FilteredList<AuthorWall>();
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@Username", Username);
+                param.Add("@CurrentUserID", CurrentUserID);
 
                 string WhereClause = @" WHERE (t.Username like '%' + @Username + '%')";
-                string query_count = $@"  Select Count(t.ID) from AuthorWall t WHERE t.UserID = @UserID";
+                string query_count = $@" Select Count(t.ID) from AuthorWall t LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID WHERE NOT t.SenderID = b.UserID AND t.UserID = @UserID";
 
                 string userQuery = $@"
                 SELECT t.*
@@ -147,7 +109,8 @@ namespace definer.Core.Repo.User
                 SELECT t.*
                 ,(select Username from Users where ID=t.SenderID) Author
                 FROM AuthorWall t
-                WHERE t.UserID = @UserID
+                LEFT JOIN BlockJunction as b ON @CurrentUserID = b.BlockerID
+                WHERE NOT t.SenderID = b.UserID AND t.UserID = @UserID
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS
                 FETCH NEXT @PageSize ROWS ONLY";

@@ -28,6 +28,37 @@ namespace definer.Core.Repo.User
             return result;
         }
 
+        public bool CheckDMOwner(int UserID)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@UserID", UserID);
+                string query = $@"
+                SELECT
+	                CASE WHEN EXISTS 
+	                    (
+		                        SELECT
+		                        t.*
+		                        FROM DMessages t
+		                        WHERE t.SenderID = @UserID OR t.ReceiverID = @UserID
+                          )
+	                THEN 'TRUE'
+	                ELSE 'FALSE'
+                END";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.QueryFirstOrDefault<bool>(query, param);
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return false;
+            }
+        }
+
         public ProcessResult Delete(int ID)
         {
             using (var con = GetConnection)
@@ -59,9 +90,9 @@ namespace definer.Core.Repo.User
                 param.Add("@PageSize", request.filter.pageSize);
                 param.Add("@UserID", UserID);
 
-                string WhereClause = @" WHERE t.ReceiverID = @UserID OR t.SenderID = @UserID";
+                string WhereClause = @" WHERE NOT t.SenderID = b.UserID AND t.ReceiverID = @UserID OR t.SenderID = @UserID";
 
-                string query_count = $@"  Select Count(t.ID) from DMessages t {WhereClause}";
+                string query_count = $@" Select Count(t.ID) from DMessages t LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID {WhereClause}";
 
                 string query = $@"
                 SELECT
@@ -73,6 +104,7 @@ namespace definer.Core.Repo.User
                 ,(select Username from Users where ID=j.UserID) LastReplier
                 FROM DMessages t
                 CROSS APPLY (SELECT TOP 1 * FROM DMessagesJunction WHERE DMID = t.ID ORDER BY Date DESC) j
+                LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID
                 {WhereClause} 
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS
@@ -138,8 +170,9 @@ namespace definer.Core.Repo.User
 		                        t.*
 		                        ,j.*
 		                        FROM DMessages t
-		                        CROSS APPLY (SELECT * FROM DMessagesJunction WHERE DMID = t.ID AND UserID != 1004 AND IsRead = 0) j
-		                        WHERE t.ReceiverID = 1004 OR t.SenderID = 1004
+		                        CROSS APPLY (SELECT * FROM DMessagesJunction WHERE DMID = t.ID AND UserID != @UserID AND IsRead = 0) j
+                                LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID
+		                        WHERE NOT t.SenderID = b.UserID AND t.ReceiverID = @UserID OR t.SenderID = @UserID
                           )
 	                THEN 'TRUE'
 	                ELSE 'FALSE'
