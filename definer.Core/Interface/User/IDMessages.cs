@@ -6,7 +6,7 @@ namespace definer.Core.Interface.User
     public interface IDMessages : IBaseInterface<DMessages>
     {
         bool UnreadMessages(int UserID);
-        bool CheckDMOwner(int UserID);
+        bool CheckDMOwner(int DMID, int UserID);
         FilteredList<DMessages> FilteredList(FilteredList<DMessages> request, int UserID);
     }
 }

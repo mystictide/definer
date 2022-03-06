@@ -598,6 +598,11 @@ header {
                                 position: relative;
                                 font-size: 1rem;
                                 line-height: 22px;
+                                max-height: 246px;
+                            }
+
+                            .body.more {
+                                max-height: 100%;
                             }
 
                             footer {
@@ -700,6 +705,7 @@ header {
                     list-style: none;
 
                     .body {
+                        max-height: 246px;
                         white-space: pre-line;
                         overflow: hidden;
                         position: relative;
@@ -722,7 +728,9 @@ header {
                         }
                     }
 
-
+                    .body.more {
+                        max-height: 100%;
+                    }
 
                     footer {
                         margin-top: 10px;
@@ -1198,6 +1206,11 @@ header {
                             position: relative;
                             font-size: 0.9rem;
                             line-height: 22px;
+                            max-height: 246px;
+                        }
+
+                        .body.more {
+                            max-height: 100%;
                         }
 
                         footer {
@@ -1334,6 +1347,22 @@ header {
                     }
                 }
             }
+        }
+    }
+}
+
+.read-more {
+    display: block;
+    padding: 5px;
+
+    .read-more-link {
+        font-style: italic;
+        font-size: 0.9rem;
+        color: $accent-color;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
         }
     }
 }
@@ -1723,7 +1752,7 @@ header {
     }
 }
 
-footer {
+.page-footer {
     content: "";
     display: block;
     width: 100%;

@@ -587,6 +587,10 @@ header {
   position: relative;
   font-size: 1rem;
   line-height: 22px;
+  max-height: 246px;
+}
+.page-container .main .view .user-entries .user-rss .rss-threads li .body.more {
+  max-height: 100%;
 }
 .page-container .main .view .user-entries .user-rss .rss-threads li footer {
   margin-top: 10px;
@@ -664,6 +668,7 @@ header {
   list-style: none;
 }
 .page-container .main .view .entries li .body {
+  max-height: 246px;
   white-space: pre-line;
   overflow: hidden;
   position: relative;
@@ -682,6 +687,9 @@ header {
 .page-container .main .view .entries li .body .spoiler:focus {
   background: none;
   color: inherit;
+}
+.page-container .main .view .entries li .body.more {
+  max-height: 100%;
 }
 .page-container .main .view .entries li footer {
   margin-top: 10px;
@@ -1064,6 +1072,10 @@ header {
   position: relative;
   font-size: 0.9rem;
   line-height: 22px;
+  max-height: 246px;
+}
+.page-container .main .author-wall .wall-entries ul li .body.more {
+  max-height: 100%;
 }
 .page-container .main .author-wall .wall-entries ul li footer {
   margin-top: 10px;
@@ -1170,6 +1182,20 @@ header {
   outline: none;
   border: 2px solid;
   border-color: #aa00aa;
+}
+
+.read-more {
+  display: block;
+  padding: 5px;
+}
+.read-more .read-more-link {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #aa00aa;
+  cursor: pointer;
+}
+.read-more .read-more-link:hover {
+  text-decoration: underline;
 }
 
 .entry-editor {
@@ -1520,7 +1546,7 @@ header {
   color: inherit;
 }
 
-footer {
+.page-footer {
   content: "";
   display: block;
   width: 100%;

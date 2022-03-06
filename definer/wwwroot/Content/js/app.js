@@ -46,7 +46,6 @@ function checkdms() {
     });
 }
 
-
 var authorpage = {
     fill: function () {
         var username = $("#author").val();

@@ -18,6 +18,11 @@ namespace definer.Business.Threads
             return _repo.Add(entity);
         }
 
+        public bool CheckEntryOwner(int EntryID, int UserID)
+        {
+            return _repo.CheckEntryOwner(EntryID, UserID);
+        }
+
         public ProcessResult Delete(int ID)
         {
             return _repo.Delete(ID);
@@ -46,6 +51,11 @@ namespace definer.Business.Threads
         public IEnumerable<Entry> GetAll()
         {
             return _repo.GetAll();
+        }
+
+        public IEnumerable<Entry> GetTopRandom(int? UserID = null)
+        {
+            return _repo.GetTopRandom(UserID);
         }
 
         public ProcessResult Update(Entry entity)

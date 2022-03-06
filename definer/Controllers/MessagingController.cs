@@ -38,7 +38,7 @@ namespace definer.Controllers
             {
                 ViewBag.User = user;
             }
-            if (new DMessagesManager().CheckDMOwner(user.ID))
+            if (new DMessagesManager().CheckDMOwner(ID, user.ID))
             {
                 filter.pageSize = 10;
                 filter.isDetailSearch = false;

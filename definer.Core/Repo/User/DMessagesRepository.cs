@@ -28,12 +28,13 @@ namespace definer.Core.Repo.User
             return result;
         }
 
-        public bool CheckDMOwner(int UserID)
+        public bool CheckDMOwner(int DMID, int UserID)
         {
             try
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@UserID", UserID);
+                param.Add("@DMID", DMID);
                 string query = $@"
                 SELECT
 	                CASE WHEN EXISTS 
@@ -41,7 +42,7 @@ namespace definer.Core.Repo.User
 		                        SELECT
 		                        t.*
 		                        FROM DMessages t
-		                        WHERE t.SenderID = @UserID OR t.ReceiverID = @UserID
+		                        WHERE t.ID = @DMID AND t.SenderID = @UserID OR t.ReceiverID = @UserID
                           )
 	                THEN 'TRUE'
 	                ELSE 'FALSE'

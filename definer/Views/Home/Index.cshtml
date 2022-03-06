@@ -4,6 +4,7 @@
     var User = (definer.Entity.Users.Users)ViewBag.User;
     var Entries = (definer.Entity.Helpers.FilteredList<definer.Entity.Threads.Entry>)ViewBag.Entries;
     var Thread = (definer.Entity.Threads.Threads)ViewBag.Threads;
+    var RequestedEntries = (IEnumerable<definer.Entity.Threads.Entry>)ViewBag.RequestedEntries;
     if (Entries != null)
     {
         ViewData["Title"] = Entries.data.FirstOrDefault().Title + " - definer";
@@ -27,7 +28,13 @@
                     {
                         string def = "def" + item.ID;
                         <li>
-                            <div class="body">@Html.Raw(@CustomTagHelpers.FormatEntry(@item.Body))</div>
+                            <div class="body">@Html.Raw(@CustomTagHelpers.FormatEntry(item.Body))</div>
+                            @if (item.Body.Length > 599)
+                            {
+                                <span class="read-more">
+                                    <a class="read-more-link">read more...</a>
+                                </span>
+                            }
                             <footer>
                                 <div class="feedback" id="@def">
                                     @if (User != null)
@@ -285,10 +292,220 @@ else if (Thread != null)
 }
 else
 {
-
+    @if (RequestedEntries.Count() > 0)
+    {
+        <div class="view">
+            <div class="user-entries">
+                <div class="user-rss">
+                    @foreach (var item in RequestedEntries)
+                    {
+                        string def = "def" + item.ID;
+                        <div class="rss-threads">
+                            <h1><a href="/@CustomTagHelpers.FriendlyURLTitle(item.Title)-@item.ThreadID">@item.Title</a></h1>
+                            <ul>
+                                <li>
+                                    <div class="body">@Html.Raw(@CustomTagHelpers.FormatEntry(item.Body))</div>
+                                    @if (item.Body.Length > 599)
+                                    {
+                                        <span class="read-more">
+                                            <a class="read-more-link">read more...</a>
+                                        </span>
+                                    }
+                                    <footer>
+                                        <div class="feedback" id="@def">
+                                            @if (User != null)
+                                            {
+                                                if (item.UserID != User.ID)
+                                                {
+                                                    if (item.Attributes != null)
+                                                    {
+                                                        if (item.Attributes.Vote.HasValue)
+                                                        {
+                                                            <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted @(item.Attributes.Vote.Value ? "active" : "")"><i class="fas fa-chevron-up"></i></a>
+                                                            if (item.Upvotes > 0)
+                                                            {
+                                                                <small class="upCount">@item.Upvotes</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <small class="upCount"></small>
+                                                            }
+                                                            <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted @(item.Attributes.Vote.Value ? "" : "active")"><i class="fas fa-chevron-down"></i></a>
+                                                            if (item.Downvotes > 0)
+                                                            {
+                                                                <small class="downCount">@item.Downvotes</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <small class="downCount"></small>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                                            if (item.Upvotes > 0)
+                                                            {
+                                                                <small class="upCount">@item.Upvotes</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <small class="upCount"></small>
+                                                            }
+                                                            <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                                            if (item.Downvotes > 0)
+                                                            {
+                                                                <small class="downCount">@item.Downvotes</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <small class="downCount"></small>
+                                                            }
+                                                        }
+                                                        if (item.Attributes.Favourite.HasValue)
+                                                        {
+                                                            <a onclick="entryAttribute.fav(@item.ID)" class="fav @(item.Attributes.Favourite.Value ? "active" : "")"><i class="fas fa-heart"></i></a>
+                                                            if (@item.Favourites > 0)
+                                                            {
+                                                                <small class="favCount">@item.Favourites</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <small class="favCount"></small>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <a onclick="entryAttribute.fav(@item.ID)" class="fav"><i class="fas fa-heart"></i></a>
+                                                            if (item.Favourites > 0)
+                                                            {
+                                                                <small class="favCount">@item.Favourites</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <small class="favCount"></small>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                                        if (item.Upvotes > 0)
+                                                        {
+                                                            <small class="upCount">@item.Upvotes</small>
+                                                        }
+                                                        else
+                                                        {
+                                                            <small class="upCount"></small>
+                                                        }
+                                                        <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                                        if (item.Downvotes > 0)
+                                                        {
+                                                            <small class="downCount">@item.Downvotes</small>
+                                                        }
+                                                        else
+                                                        {
+                                                            <small class="downCount"></small>
+                                                        }
+                                                        <a onclick="entryAttribute.fav(@item.ID)" class="fav"><i class="fas fa-heart"></i></a>
+                                                        if (item.Favourites > 0)
+                                                        {
+                                                            <small class="favCount">@item.Favourites</small>
+                                                        }
+                                                        else
+                                                        {
+                                                            <small class="favCount"></small>
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (item.Attributes != null)
+                                                    {
+                                                        if (item.Attributes.Vote.HasValue)
+                                                        {
+                                                            <a class="upvoted"><i class="fas fa-chevron-up"></i></a>
+                                                            if (item.Upvotes > 0)
+                                                            {
+                                                                <small class="upCount">@item.Upvotes</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <small class="upCount"></small>
+                                                            }
+                                                            <a class="downvoted"><i class="fas fa-chevron-down"></i></a>
+                                                            if (item.Downvotes > 0)
+                                                            {
+                                                                <small class="downCount">@item.Downvotes</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <small class="downCount"></small>
+                                                            }
+                                                        }
+                                                        if (item.Attributes.Favourite.HasValue)
+                                                        {
+                                                            <a class="fav"><i class="fas fa-heart"></i></a>
+                                                            if (item.Favourites > 0)
+                                                            {
+                                                                <small class="favCount">@item.Favourites</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <small class="favCount"></small>
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </div>
+                                        <div class="info">
+                                            <div class="author">
+                                                <a href="/u/@CustomTagHelpers.FriendlyURLTitle(item.Author)">@item.Author</a>
+                                            </div>
+                                            <div class="link">
+                                                @if (User != null)
+                                                {
+                                                    @if (item.UserID == User.ID)
+                                                    {
+                                                        <a href="/edit/entry/@item.ID"><small>edit</small></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="javascript:void(0);" onclick="replyEditor.replyWith(@item.ID, @item.UserID)"><small>message</small></a>
+                                                    }
+                                                }
+                                                <a href="/entry/@item.ID">
+                                                    <small>
+                                                        @item.Date.ToString("dd.MM.yyyy HH:mm") @if (item.EditDate != null)
+                                                        {<text>~ </text>@item.EditDate?.ToString("dd.MM.yyyy HH:mm")}
+                                                    </small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </footer>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @Html.Partial("/Views/Messaging/_SendMessageWithContent.cshtml", new definer.Models.DMViewModel())
+    }
 }
 
 @section Js {
     <script type="text/javascript" src=~/Content/lib/validate/jquery.validate.min.js></script>
     <script type="text/javascript" src=~/Content/lib/validate/jquery.validate.unobtrusive.js></script>
+    <script>
+        $(document).ready(
+            function () {
+                $(".read-more-link").on('click', function () {
+                    var inner = $(this).text();
+                    $(this).text(inner == "read less" ? "read more" : "read less");
+                    $(this).parent().siblings(".body").toggleClass("more");
+                });
+            },
+        );
+    </script>
 }

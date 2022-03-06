@@ -15,6 +15,12 @@
             <ul>
                 <li>
                     <div class="body">@Html.Raw(@CustomTagHelpers.FormatEntry(item.Body))</div>
+                    @if (item.Body.Length > 599)
+                    {
+                        <span class="read-more">
+                            <a class="read-more-link">read more...</a>
+                        </span>
+                    }
                     <footer>
                         <div class="feedback" id="@def">
                             @if (Model.CurrentUser != null)
@@ -207,5 +213,10 @@ else
         else if (tab === "favourites") {
             authorpage.filterFavourites(value);
         }
+    });
+    $(".read-more-link").on('click', function () {
+        var inner = $(this).text();
+        $(this).text(inner == "read less" ? "read more" : "read less");
+        $(this).parent().siblings(".body").toggleClass("more");
     });
 </script>

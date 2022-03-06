@@ -64,6 +64,14 @@ namespace definer.Controllers
             }
             else
             {
+                if (user != null)
+                {
+                    ViewBag.RequestedEntries = new EntryManager().GetTopRandom(user.ID);
+                }
+                else
+                {
+                    ViewBag.RequestedEntries = new EntryManager().GetTopRandom();
+                }   
                 return View();
             }
         }

@@ -18,9 +18,9 @@ namespace definer.Business.Users
             return _repo.Add(entity);
         }
 
-        public bool CheckDMOwner(int UserID)
+        public bool CheckDMOwner(int DMID, int UserID)
         {
-            return _repo.CheckDMOwner(UserID);
+            return _repo.CheckDMOwner(DMID, UserID);
         }
 
         public ProcessResult Delete(int ID)

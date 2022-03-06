@@ -28,6 +28,38 @@ namespace definer.Core.Repo.Thread
             return result;
         }
 
+        public bool CheckEntryOwner(int EntryID, int UserID)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@UserID", UserID);
+                param.Add("@EntryID", EntryID);
+                string query = $@"
+                SELECT
+	                CASE WHEN EXISTS 
+	                    (
+		                        SELECT
+		                        t.*
+		                        FROM Entry t
+		                        WHERE ID = @EntryID AND  t.UserID = @UserID
+                          )
+	                THEN 'TRUE'
+	                ELSE 'FALSE'
+                END";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.QueryFirstOrDefault<bool>(query, param);
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return false;
+            }
+        }
+
         public ProcessResult Delete(int ID)
         {
             using (var con = GetConnection)
@@ -96,7 +128,7 @@ namespace definer.Core.Repo.Thread
                     result.totalItems = connection.QueryFirstOrDefault<int>(query_count, param);
                     request.filter.pager = new Page(result.totalItems, request.filter.pageSize, request.filter.page);
                     param.Add("@StartIndex", request.filter.pager.StartIndex);
-                    result.data = connection.Query<Entry, EntryAttribute, Entry>(query, (a, s) => { a.Attributes = s; return a;}, param, splitOn: "ID");
+                    result.data = connection.Query<Entry, EntryAttribute, Entry>(query, (a, s) => { a.Attributes = s; return a; }, param, splitOn: "ID");
                     result.filter = request.filter;
                     result.filterModel = request.filterModel;
                     return result;
@@ -229,6 +261,39 @@ namespace definer.Core.Repo.Thread
                 using (var con = GetConnection)
                 {
                     return con.GetAll<Entry>();
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
+        public IEnumerable<Entry> GetTopRandom(int? UserID = null)
+        {
+            try
+            {
+                FilteredList<Entry> result = new FilteredList<Entry>();
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@UserID", UserID);
+
+                string WhereClause = @" WHERE (select count(ID) from EntryAttribute where EntryID=t.ID AND Vote=1) >= 1 ";
+                string query = $@"
+                    SELECT TOP (15) t.*
+                    ,(select Title from Thread where ID=t.ThreadID) Title
+                    ,(select Username from Users where ID=t.UserID) Author
+                    ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Vote=1) Upvotes
+                    ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Vote=0) Downvotes
+                    ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Favourite=1) Favourites
+                    ,j.*
+                    FROM Entry t
+                    LEFT JOIN EntryAttribute j ON t.ID = j.EntryID AND j.UserID = @UserID
+                    {WhereClause}";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.Query<Entry, EntryAttribute, Entry>(query, (a, s) => { a.Attributes = s; return a; }, param, splitOn: "ID");
                 }
             }
             catch (Exception ex)
