@@ -68,7 +68,7 @@ namespace definer.Controllers
             else
             {
                 return Redirect("/");
-            }     
+            }
         }
 
         [Route("edit/entry"), HttpPost]
@@ -81,13 +81,27 @@ namespace definer.Controllers
             return Redirect("/" + CustomTagHelpers.FriendlyURLTitle(model.Title) + "-" + model.ThreadID);
         }
 
+        [Route("archive/entry"), HttpGet]
+        public JsonResult ArchiveEntry(int ID)
+        {
+            if (new EntryManager().CheckEntryOwner(ID, user.ID))
+            {
+                var result = new EntryManager().Archive(ID);
+                return Json(result);
+            }
+            else
+            {
+                return Json(null);
+            }
+        }
+
         [Route("vote"), HttpGet]
         public JsonResult Vote(EntryAttribute model)
         {
             EntryAttribute result;
             model.UserID = user.ID;
             if (model.Vote.Value)
-            { 
+            {
                 result = new EntryAttributeManager().Vote(model, true);
             }
             else if (!model.Vote.Value)

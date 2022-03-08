@@ -1,4 +1,7 @@
-﻿using definer.Business.Users;
+﻿using definer.Business.Threads;
+using definer.Business.Users;
+using definer.Entity.Helpers;
+using definer.Entity.Threads;
 using definer.Entity.Users;
 using definer.Models;
 using Microsoft.AspNet.Identity;
@@ -60,6 +63,27 @@ namespace definer.Controllers
             model.Password = user.Password;
             model.Username = user.Username;
             return View(model);
+        }
+
+        [Route("archive")]
+        public ActionResult EntryArchive(Filter filter, Entry filterModel)
+        {
+            var result = new Users();
+            filter.Keyword = filter.Keyword ?? "";
+            filter.pageSize = 15;
+            filter.isDetailSearch = false;
+            FilteredList<Entry> request = new FilteredList<Entry>()
+            {
+                filter = filter,
+                filterModel = filterModel
+            };
+            result = new UserManager().GetbyUsername(request, user.Username);
+
+            if (user != null)
+            {
+                result.CurrentUser = user;
+            }
+            return View(result);
         }
 
         [Route("username"), HttpPost]

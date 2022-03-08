@@ -64,7 +64,7 @@ namespace definer.Core.Repo.Thread
 
                 string query = $@"
                 SELECT *
-                ,(select count(ID) from Entry where ThreadID = t.ID) Entries
+                ,(select count(ID) from Entry where ThreadID = t.ID AND IsActive = 1) Entries
                 FROM Thread t
                 {WhereClause} 
                 ORDER BY t.ID ASC 

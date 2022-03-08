@@ -177,6 +177,65 @@ var sidebar = {
     },
 }
 
+var entries = {
+    archive: function (ID) {
+        var model = { ID: ID };
+        if (confirm('go ahead with archiving this entry?')) {
+            $.ajax({
+                url: "/archive/entry",
+                data: model,
+                success: function (data) {
+                    if (data) {
+                        $("#def" + ID).closest("li").remove();
+                    }
+                }
+            });
+        }
+    },
+    archiveAuthor: function (ID) {
+        var model = { ID: ID };
+        if (confirm('go ahead with archiving this entry?')) {
+            $.ajax({
+                url: "/archive/entry",
+                data: model,
+                success: function (data) {
+                    if (data) {
+                        $("#def" + ID).closest(".rss-threads").remove();
+                    }
+                }
+            });
+        }
+    },
+    archiveView: function (ID) {
+        var model = { ID: ID };
+        if (confirm('go ahead with archiving this entry?')) {
+            $.ajax({
+                url: "/archive/entry",
+                data: model,
+                success: function (data) {
+                    if (data) {
+                        $(this).text("archived");
+                    }
+                }
+            });
+        }
+    },
+    archiveWall: function (ID) {
+        var model = { ID: ID };
+        if (confirm('go ahead with archiving this entry?')) {
+            $.ajax({
+                url: "/u/archive/wall",
+                data: model,
+                success: function (data) {
+                    if (data) {
+                        $("#def" + ID).remove();
+                    }
+                }
+            });
+        }
+    },
+}
+
 var entryAttribute = {
     voteUP: function (EntryID) {
         var model = { EntryID: EntryID, Vote: 'True' };

@@ -28,6 +28,37 @@ namespace definer.Core.Repo.Thread
             return result;
         }
 
+        public bool Archive(int ID)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@ID", ID);
+                string query = $@"
+                UPDATE Entry
+                SET IsActive = 0
+                WHERE ID = @ID";
+
+                using (var connection = GetConnection)
+                {
+                    var rows = connection.Execute(query, param);
+                    if (rows > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return false;
+            }
+        }
+
         public bool CheckEntryOwner(int EntryID, int UserID)
         {
             try
@@ -93,7 +124,7 @@ namespace definer.Core.Repo.Thread
                 param.Add("@ID", request.filterModel.ThreadID);
                 param.Add("@UserID", UserID);
 
-                string WhereClause = @" WHERE t.ThreadID = @ID AND (t.Body like '%' + @Keyword + '%') 
+                string WhereClause = @" WHERE t.ThreadID = @ID AND t.IsActive = 1 
                 AND (NOT t.UserID = ISNULL(b.UserID, 0)
                 AND NOT t.UserID = ISNULL(u.BlockerID, 0))";
 
@@ -151,7 +182,7 @@ namespace definer.Core.Repo.Thread
                 //param.Add("@PageSize", request.filter.pageSize);
                 param.Add("@ID", request.filterModel.ThreadID);
 
-                string WhereClause = @" WHERE t.ThreadID = @ID AND  (t.Body like '%' + @Keyword + '%')";
+                string WhereClause = @" WHERE t.ThreadID = @ID AND t.IsActive = 1";
 
                 string query_count = $@"  Select Count(t.ID) from Entry t {WhereClause}";
 
@@ -194,7 +225,7 @@ namespace definer.Core.Repo.Thread
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@ID", ID);
 
-                string WhereClause = @" WHERE t.ID = @ID";
+                string WhereClause = @" WHERE t.ID = @ID AND IsActive = 1";
 
                 string query = $@"
                 SELECT t.*
@@ -228,7 +259,7 @@ namespace definer.Core.Repo.Thread
                 param.Add("@ID", ID);
                 param.Add("@UserID", UserID);
 
-                string WhereClause = @" WHERE t.ID = @ID";
+                string WhereClause = @" WHERE t.ID = @ID AND IsActive = 1";
 
                 string query = $@"
                 SELECT t.*
@@ -278,7 +309,7 @@ namespace definer.Core.Repo.Thread
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@UserID", UserID);
 
-                string WhereClause = @" WHERE (select count(ID) from EntryAttribute where EntryID=t.ID AND Vote=1) >= 1 ";
+                string WhereClause = @" WHERE IsActive = 1 AND (select count(ID) from EntryAttribute where EntryID=t.ID AND Vote=1) >= 1 ";
                 string query = $@"
                     SELECT TOP (15) t.*
                     ,(select Title from Thread where ID=t.ThreadID) Title

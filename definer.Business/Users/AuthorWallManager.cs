@@ -18,6 +18,16 @@ namespace definer.Business.Users
             return _repo.Add(entity);
         }
 
+        public bool Archive(int ID)
+        {
+            return _repo.Archive(ID);
+        }
+
+        public bool CheckEntryOwner(int EntryID, int UserID)
+        {
+            return _repo.CheckEntryOwner(EntryID, UserID);
+        }
+
         public ProcessResult Delete(int ID)
         {
             return _repo.Delete(ID);

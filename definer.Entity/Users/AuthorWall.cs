@@ -17,6 +17,7 @@ namespace definer.Entity.Users
         public string Body { get; set; }
         public DateTime Date { get; set; }
         public DateTime? EditDate { get; set; }
+        public bool IsActive { get; set; }
 
         [Write(false)]
         public string Author { get; set; }

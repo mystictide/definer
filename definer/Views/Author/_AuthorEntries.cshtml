@@ -32,7 +32,7 @@
                                         if (item.Attributes.Vote.HasValue)
                                         {
                                             <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted @(item.Attributes.Vote.Value ? "active" : "")"><i class="fas fa-chevron-up"></i></a>
-                                            if (@item.Upvotes > 0)
+                                            if (item.Upvotes > 0)
                                             {
                                                 <small class="upCount">@item.Upvotes</small>
                                             }
@@ -41,7 +41,7 @@
                                                 <small class="upCount"></small>
                                             }
                                             <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted @(item.Attributes.Vote.Value ? "" : "active")"><i class="fas fa-chevron-down"></i></a>
-                                            if (@item.Downvotes > 0)
+                                            if (item.Downvotes > 0)
                                             {
                                                 <small class="downCount">@item.Downvotes</small>
                                             }
@@ -53,7 +53,7 @@
                                         else
                                         {
                                             <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
-                                            if (@item.Upvotes > 0)
+                                            if (item.Upvotes > 0)
                                             {
                                                 <small class="upCount">@item.Upvotes</small>
                                             }
@@ -62,7 +62,7 @@
                                                 <small class="upCount"></small>
                                             }
                                             <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
-                                            if (@item.Downvotes > 0)
+                                            if (item.Downvotes > 0)
                                             {
                                                 <small class="downCount">@item.Downvotes</small>
                                             }
@@ -74,7 +74,7 @@
                                         if (item.Attributes.Favourite.HasValue)
                                         {
                                             <a onclick="entryAttribute.fav(@item.ID)" class="fav @(item.Attributes.Favourite.Value ? "active" : "")"><i class="fas fa-heart"></i></a>
-                                            if (@item.Favourites > 0)
+                                            if (item.Favourites > 0)
                                             {
                                                 <small class="favCount">@item.Favourites</small>
                                             }
@@ -86,7 +86,7 @@
                                         else
                                         {
                                             <a onclick="entryAttribute.fav(@item.ID)" class="fav"><i class="fas fa-heart"></i></a>
-                                            if (@item.Favourites > 0)
+                                            if (item.Favourites > 0)
                                             {
                                                 <small class="favCount">@item.Favourites</small>
                                             }
@@ -99,7 +99,7 @@
                                     else
                                     {
                                         <a onclick="entryAttribute.voteUP(@item.ID)" class="upvoted"><i class="fas fa-chevron-up"></i></a>
-                                        if (@item.Upvotes > 0)
+                                        if (item.Upvotes > 0)
                                         {
                                             <small class="upCount">@item.Upvotes</small>
                                         }
@@ -108,7 +108,7 @@
                                             <small class="upCount"></small>
                                         }
                                         <a onclick="entryAttribute.voteDOWN(@item.ID)" class="downvoted"><i class="fas fa-chevron-down"></i></a>
-                                        if (@item.Downvotes > 0)
+                                        if (item.Downvotes > 0)
                                         {
                                             <small class="downCount">@item.Downvotes</small>
                                         }
@@ -117,7 +117,7 @@
                                             <small class="downCount"></small>
                                         }
                                         <a onclick="entryAttribute.fav(@item.ID)" class="fav"><i class="fas fa-heart"></i></a>
-                                        if (@item.Favourites > 0)
+                                        if (item.Favourites > 0)
                                         {
                                             <small class="favCount">@item.Favourites</small>
                                         }
@@ -134,7 +134,7 @@
                                         if (item.Attributes.Vote.HasValue)
                                         {
                                             <a class="upvoted"><i class="fas fa-chevron-up"></i></a>
-                                            if (@item.Upvotes > 0)
+                                            if (item.Upvotes > 0)
                                             {
                                                 <small class="upCount">@item.Upvotes</small>
                                             }
@@ -143,7 +143,7 @@
                                                 <small class="upCount"></small>
                                             }
                                             <a class="downvoted"><i class="fas fa-chevron-down"></i></a>
-                                            if (@item.Downvotes > 0)
+                                            if (item.Downvotes > 0)
                                             {
                                                 <small class="downCount">@item.Downvotes</small>
                                             }
@@ -155,7 +155,7 @@
                                         if (item.Attributes.Favourite.HasValue)
                                         {
                                             <a class="fav"><i class="fas fa-heart"></i></a>
-                                            if (@item.Favourites > 0)
+                                            if (item.Favourites > 0)
                                             {
                                                 <small class="favCount">@item.Favourites</small>
                                             }
@@ -178,6 +178,7 @@
                                     @if (item.UserID == Model.CurrentUser.ID)
                                     {
                                         <a href="/edit/entry/@item.ID"><small>edit</small></a>
+                                        <a href="javascript:void(0)" onclick="entries.archiveAuthor(@item.ID)"><small>archive</small></a>
                                     }
                                     else
                                     {

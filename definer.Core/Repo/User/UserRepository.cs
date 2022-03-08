@@ -151,7 +151,7 @@ namespace definer.Core.Repo.User
                 param.Add("@Username", Username);
 
                 string WhereClause = @" WHERE (t.Username like '%' + @Username + '%')";
-                string query_count = $@"  Select Count(t.ID) from Entry t WHERE t.UserID = @UserID";
+                string query_count = $@"  Select Count(t.ID) from Entry t WHERE t.UserID = @UserID AND t.IsActive = 1";
 
                 string userQuery = $@"
                 SELECT t.*
@@ -168,7 +168,7 @@ namespace definer.Core.Repo.User
                 ,j.*
                 FROM Entry t
                 LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID
-                WHERE t.UserID = @UserID
+                WHERE t.UserID = @UserID AND t.IsActive = 1
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS
                 FETCH NEXT @PageSize ROWS ONLY";
@@ -256,7 +256,7 @@ namespace definer.Core.Repo.User
                 string query_count = $@" 
                 Select Count(t.ID) from Entry t 
                 LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID
-                WHERE j.UserID = @UserID AND j.Favourite = 1";
+                WHERE j.UserID = @UserID AND j.Favourite = 1 AND IsActive = 1";
 
                 string userQuery = $@"
                 SELECT t.*
@@ -273,7 +273,7 @@ namespace definer.Core.Repo.User
                 ,j.*
                 FROM Entry t
                 LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID
-                WHERE j.UserID = @UserID AND j.Favourite = 1
+                WHERE j.UserID = @UserID AND j.Favourite = 1 AND IsActive = 1
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS
                 FETCH NEXT @PageSize ROWS ONLY";

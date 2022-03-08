@@ -228,6 +228,7 @@
                                 @if (@Model.UserID == User.ID)
                                 {
                                     <a href="/edit/entry/@Model.ID"><small>edit</small></a>
+                                    <a href="javascript:void(0)" onclick="entries.archiveView(@Model.ID)"><small>archive</small></a>
                                 }
                             }
                             <a href="/entry/@Model.ID">

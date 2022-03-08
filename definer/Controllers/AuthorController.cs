@@ -115,8 +115,15 @@ namespace definer.Controllers
         [Route("edit/wall/{ID}")]
         public ActionResult EditWallEntry(int ID)
         {
-            var result = new AuthorWallManager().Get(ID);
-            return View(result);
+            if (new AuthorWallManager().CheckEntryOwner(ID, user.ID))
+            {
+                var result = new AuthorWallManager().Get(ID);
+                return View(result);
+            }
+            else
+            {
+                return Redirect("/");
+            }
         }
 
         [Route("edit/wall"), HttpPost]
@@ -126,6 +133,20 @@ namespace definer.Controllers
             model.SenderID = user.ID;
             var result = new AuthorWallManager().Update(model);
             return Redirect("/u/wall/" + model.ID);
+        }
+
+        [Route("archive/wall"), HttpGet]
+        public JsonResult ArchiveEntry(int ID)
+        {
+            if (new AuthorWallManager().CheckEntryOwner(ID, user.ID))
+            {
+                var result = new AuthorWallManager().Archive(ID);
+                return Json(result);
+            }
+            else
+            {
+                return Json(null);
+            }
         }
 
         [Route("authorWall"), HttpGet]
@@ -167,12 +188,14 @@ namespace definer.Controllers
                 if (model.ID > 0)
                 {
                     model.EditDate = DateTime.Now;
+                    model.IsActive = true;
                     result = new AuthorWallManager().Update(model);
                 }
                 else
                 {
                     model.SenderID = user.ID;
                     model.Date = DateTime.Now;
+                    model.IsActive = true;
                     result = new AuthorWallManager().Add(model);
                 }
             }

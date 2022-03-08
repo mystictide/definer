@@ -32,7 +32,7 @@
             </li>
             @*<li class="page-item active"><a class="page-link" href="javascript:void(0)" onclick="authorpage.filter(@Model.CurrentPage)" style="margin-right: 2px;"> @Model.CurrentPage</a></li>*@
             <li class="page-item divider"> / </li>
-            <li class="page-item last"><a class="page-link" href="javascript:void(0)" onclick="authorpage.filterWall(@Model.EndPage)"> @Model.EndPage</a></li>
+            <li class="page-item last"><a class="page-link" href="javascript:void(0)" onclick="authorpage.filterWall(@Model.TotalPages)"> @Model.TotalPages</a></li>
 
             @if (page != Model.EndPage)
             {

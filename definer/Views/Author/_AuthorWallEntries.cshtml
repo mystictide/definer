@@ -3,11 +3,12 @@
 @if (Model.WallEntries.data.Count() > 0)
 {
     @Html.Partial("/Views/Helper/AuthorWall_Pager.cshtml", Model.WallEntries.filter.pager)
-    foreach (var item in Model.WallEntries.data)
-    {
-        string def = "def" + item.ID;
-        <ul>
-            <li class="wall-li">
+    <ul>
+        @foreach (var item in Model.WallEntries.data)
+        {
+            string def = "def" + item.ID;
+
+            <li class="wall-li" id="@def">
                 <div class="body">@Html.Raw(@CustomTagHelpers.FormatEntry(item.Body))</div>
                 @if (item.Body.Length > 599)
                 {
@@ -32,14 +33,15 @@
                                 @if (item.SenderID == Model.CurrentUser.ID)
                                 {
                                     <a href="/u/edit/wall/@item.ID"><small>edit</small></a>
+                                    <a href="javascript:void(0)" onclick="entries.archiveWall(@item.ID)"><small>archive</small></a>
                                 }
                             }
                         </div>
                     </div>
                 </footer>
             </li>
-        </ul>
-    }
+        }
+    </ul>
     @Html.Partial("/Views/Helper/AuthorWall_Pager.cshtml", Model.WallEntries.filter.pager)
 }
 else

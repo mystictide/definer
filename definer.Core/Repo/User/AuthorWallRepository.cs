@@ -28,6 +28,69 @@ namespace definer.Core.Repo.User
             return result;
         }
 
+        public bool Archive(int ID)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@ID", ID);
+                string query = $@"
+                UPDATE AuthorWall
+                SET IsActive = 0
+                WHERE ID = @ID";
+
+                using (var connection = GetConnection)
+                {
+                    var rows = connection.Execute(query, param);
+                    if (rows > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return false;
+            }
+        }
+
+        public bool CheckEntryOwner(int EntryID, int UserID)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@UserID", UserID);
+                param.Add("@EntryID", EntryID);
+                string query = $@"
+                SELECT
+	                CASE WHEN EXISTS 
+	                    (
+		                        SELECT
+		                        t.*
+		                        FROM AuthorWall t
+		                        WHERE ID = @EntryID AND  t.SenderID = @UserID
+                          )
+	                THEN 'TRUE'
+	                ELSE 'FALSE'
+                END";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.QueryFirstOrDefault<bool>(query, param);
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return false;
+            }
+        }
+
         public ProcessResult Delete(int ID)
         {
             using (var con = GetConnection)
@@ -110,7 +173,7 @@ namespace definer.Core.Repo.User
                 ,(select Username from Users where ID=t.SenderID) Author
                 FROM AuthorWall t
                 LEFT JOIN BlockJunction as b ON @CurrentUserID = b.BlockerID
-                WHERE NOT t.SenderID = b.UserID AND t.UserID = @UserID
+                WHERE t.IsActive = 1 AND NOT t.SenderID = b.UserID AND t.UserID = @UserID
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS
                 FETCH NEXT @PageSize ROWS ONLY";

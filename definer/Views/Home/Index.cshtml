@@ -192,6 +192,7 @@
                                             @if (item.UserID == User.ID)
                                             {
                                                 <a href="/edit/entry/@item.ID"><small>edit</small></a>
+                                                <a href="javascript:void(0)" onclick="entries.archive(@item.ID)"><small>archive</small></a>
                                             }
                                             else
                                             {
