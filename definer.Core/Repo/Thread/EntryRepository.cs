@@ -28,15 +28,16 @@ namespace definer.Core.Repo.Thread
             return result;
         }
 
-        public bool Archive(int ID)
+        public bool Archive(int ID, int State)
         {
             try
             {
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@ID", ID);
+                param.Add("@State", State);
                 string query = $@"
                 UPDATE Entry
-                SET IsActive = 0
+                SET IsActive = @State
                 WHERE ID = @ID";
 
                 using (var connection = GetConnection)

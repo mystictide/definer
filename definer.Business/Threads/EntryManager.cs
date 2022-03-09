@@ -18,9 +18,9 @@ namespace definer.Business.Threads
             return _repo.Add(entity);
         }
 
-        public bool Archive(int ID)
+        public bool Archive(int ID, int State)
         {
-            return _repo.Archive(ID);
+            return _repo.Archive(ID, State);
         }
 
         public bool CheckEntryOwner(int EntryID, int UserID)

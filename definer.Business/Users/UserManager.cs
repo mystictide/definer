@@ -89,5 +89,10 @@ namespace definer.Business.Users
         {
             return _repo.DeactivateAccount(ID);
         }
+
+        public Entity.Users.Users GetEntryArchivebyUsername(FilteredList<Entry> request, string Username)
+        {
+            return _repo.GetEntryArchivebyUsername(request, Username);
+        }
     }
 }

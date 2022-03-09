@@ -82,11 +82,11 @@ namespace definer.Controllers
         }
 
         [Route("archive/entry"), HttpGet]
-        public JsonResult ArchiveEntry(int ID)
+        public JsonResult ArchiveEntry(int ID, int State)
         {
             if (new EntryManager().CheckEntryOwner(ID, user.ID))
             {
-                var result = new EntryManager().Archive(ID);
+                var result = new EntryManager().Archive(ID, State);
                 return Json(result);
             }
             else

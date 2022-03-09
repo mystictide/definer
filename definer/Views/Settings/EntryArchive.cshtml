@@ -1,7 +1,7 @@
 ﻿@model definer.Entity.Users.Users
 
 @{
-    ViewData["Title"] = "preferences - definer";
+    ViewData["Title"] = "entry archive - definer";
 }
 
 <div class="view">
@@ -187,8 +187,8 @@
                                                     <a href="/u/@CustomTagHelpers.FriendlyURLTitle(item.Author)">@item.Author</a>
                                                 </div>
                                                 <div class="link">
-                                                    <a href="/edit/entry/@item.ID"><small>edit</small></a>
-                                                    <a href="javascript:void(0)" onclick="entries.unarchive(@item.ID)"><small>archive</small></a>
+                                                    @*<a href="/edit/entry/@item.ID"><small>edit</small></a>*@
+                                                    <a href="javascript:void(0)" onclick="entries.reinstate(@item.ID)"><small>reinstate</small></a>
                                                     <a href="/entry/@item.ID">
                                                         <small>
                                                             @item.Date.ToString("dd.MM.yyyy HH:mm") @if (item.EditDate != null)

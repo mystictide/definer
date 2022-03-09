@@ -77,7 +77,7 @@ namespace definer.Controllers
                 filter = filter,
                 filterModel = filterModel
             };
-            result = new UserManager().GetbyUsername(request, user.Username);
+            result = new UserManager().GetEntryArchivebyUsername(request, user.Username);
 
             if (user != null)
             {

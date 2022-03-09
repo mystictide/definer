@@ -4,10 +4,15 @@
     var User = (definer.Entity.Users.Users)ViewBag.User;
     var Entries = (definer.Entity.Helpers.FilteredList<definer.Entity.Threads.Entry>)ViewBag.Entries;
     var Thread = (definer.Entity.Threads.Threads)ViewBag.Threads;
+    var EmptyThread = (definer.Entity.Threads.Threads)ViewBag.EmptyThread;
     var RequestedEntries = (IEnumerable<definer.Entity.Threads.Entry>)ViewBag.RequestedEntries;
+    
     if (Entries != null)
     {
-        ViewData["Title"] = Entries.data.FirstOrDefault().Title + " - definer";
+        if (Entries.data.Count() > 0)
+        {
+            ViewData["Title"] = Entries.data.FirstOrDefault().Title + " - definer";
+        }
     }
     else
     {
@@ -20,7 +25,7 @@
     if (Entries.data.Count() > 0)
     {
         <div class="view">
-            <h1><a href="/@CustomTagHelpers.FriendlyURLTitle(@Entries.data.FirstOrDefault().Title)-@Entries.data.FirstOrDefault().ThreadID">@Entries.data.FirstOrDefault().Title</a></h1>
+            <h1><a href="/@CustomTagHelpers.FriendlyURLTitle(Entries.data.FirstOrDefault().Title)-@Entries.data.FirstOrDefault().ThreadID">@Entries.data.FirstOrDefault().Title</a></h1>
             @Html.Partial("/Views/Helper/Table_Pager.cshtml", Entries.filter.pager)
             <div class="entries">
                 <ul>
@@ -256,31 +261,82 @@
         </div>
         @Html.Partial("/Views/Messaging/_SendMessageWithContent.cshtml", new definer.Models.DMViewModel())
     }
+    else
+    {
+        <div class="view">
+            <h1><a href="/@CustomTagHelpers.FriendlyURLTitle(EmptyThread.Title)-@EmptyThread.ID">@EmptyThread.Title</a></h1>
+            <h4>nothing yet to see here</h4>
+            @if (User != null)
+            {
+                <div class="entry-editor">
+                    <form action="/entry" method="post" autocomplete="off">
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("ThreadID", EmptyThread.ID)
+                        <fieldset class="text-editor">
+                            <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                            <div class="functions">
+                                <button type="button" id="buser">user</button>
+                                <button type="button" id="bentry">entry</button>
+                                <button type="button" id="bthread">thread</button>
+                                <button type="button" id="bspoiler">spoiler</button>
+                                <button type="button" id="blink">link</button>
+                            </div>
+                            @Html.TextAreaFor(m => m.Body, new { @placeholder = "say something about \"" + EmptyThread.Title + "\"" })
+                            <div class="process">
+                                <button type="submit">submit</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <script>
+                    const buser = document.getElementById("buser");
+                    const bentry = document.getElementById("bentry");
+                    const bthread = document.getElementById("bthread");
+                    const bspoiler = document.getElementById("bspoiler");
+                    const blink = document.getElementById("blink");
+                    buser.addEventListener("click", textEditor.checkSelection);
+                    bentry.addEventListener("click", textEditor.checkSelection);
+                    bthread.addEventListener("click", textEditor.checkSelection);
+                    bspoiler.addEventListener("click", textEditor.checkSelection);
+                    blink.addEventListener("click", textEditor.checkSelection);
+
+                    $('.pages').on('change', function () {
+                        var value = $(this).val();
+                        Filter.Page(value);
+                    });
+                </script>
+            }
+        </div>
+    }
 }
 else if (Thread != null)
 {
     <div class="view">
         <h1><a href="/@CustomTagHelpers.FriendlyURLTitle(Thread.Title)">@Thread.Title</a></h1>
         <h4>no thread found by this title</h4>
-        <div class="entry-editor">
-            <form action="/entry" method="post" autocomplete="off">
-                @Html.AntiForgeryToken()
-                @Html.Hidden("ThreadID", Thread.ID)
-                @Html.Hidden("Title", Thread.Title)
-                <fieldset class="text-editor">
-                    <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
-                    <div class="functions">
-                        <button type="button" id="bthread">thread</button>
-                        <button type="button" id="bspoiler">spoiler</button>
-                        <button type="button" id="blink">link</button>
-                    </div>
-                    @Html.TextAreaFor(m => m.Body, new { @placeholder = "say something about \"" + Thread.Title + "\"" })
-                    <div class="process">
-                        <button type="submit">submit</button>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
+        @if (User != null)
+        {
+            <div class="entry-editor">
+                <form action="/entry" method="post" autocomplete="off">
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("ThreadID", Thread.ID)
+                    @Html.Hidden("Title", Thread.Title)
+                    <fieldset class="text-editor">
+                        <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                        <div class="functions">
+                            <button type="button" id="bthread">thread</button>
+                            <button type="button" id="bspoiler">spoiler</button>
+                            <button type="button" id="blink">link</button>
+                        </div>
+                        @Html.TextAreaFor(m => m.Body, new { @placeholder = "say something about \"" + Thread.Title + "\"" })
+                        <div class="process">
+                            <button type="submit">submit</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+        }
     </div>
     <script>
         const bthread = document.getElementById("bthread");

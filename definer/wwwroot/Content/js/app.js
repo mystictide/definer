@@ -179,7 +179,7 @@ var sidebar = {
 
 var entries = {
     archive: function (ID) {
-        var model = { ID: ID };
+        var model = { ID: ID, State: 0};
         if (confirm('go ahead with archiving this entry?')) {
             $.ajax({
                 url: "/archive/entry",
@@ -193,7 +193,7 @@ var entries = {
         }
     },
     archiveAuthor: function (ID) {
-        var model = { ID: ID };
+        var model = { ID: ID, State: 0 };
         if (confirm('go ahead with archiving this entry?')) {
             $.ajax({
                 url: "/archive/entry",
@@ -207,7 +207,7 @@ var entries = {
         }
     },
     archiveView: function (ID) {
-        var model = { ID: ID };
+        var model = { ID: ID, State: 0 };
         if (confirm('go ahead with archiving this entry?')) {
             $.ajax({
                 url: "/archive/entry",
@@ -229,6 +229,23 @@ var entries = {
                 success: function (data) {
                     if (data) {
                         $("#def" + ID).remove();
+                    }
+                }
+            });
+        }
+    },
+    reinstate: function (ID) {
+        var model = { ID: ID, State: 1 };
+        if (confirm('reinstate this entry?')) {
+            $.ajax({
+                url: "/archive/entry",
+                data: model,
+                success: function (data) {
+                    if (data) {
+                        $("#def" + ID).closest(".rss-threads").remove();
+                        if ($(".rss-threads").length < 1) {
+                            $(".pagination").eq(1).remove();
+                        }
                     }
                 }
             });
