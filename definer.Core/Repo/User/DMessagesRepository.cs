@@ -91,9 +91,11 @@ namespace definer.Core.Repo.User
                 param.Add("@PageSize", request.filter.pageSize);
                 param.Add("@UserID", UserID);
 
-                string WhereClause = @" WHERE NOT t.SenderID = b.UserID AND t.ReceiverID = @UserID OR t.SenderID = @UserID";
+                string WhereClause = @" WHERE t.ReceiverID = @UserID OR t.SenderID = @UserID
+                AND NOT t.SenderID in (select UserID from BlockJunction where BlockerID = 1004)
+                AND NOT t.ReceiverID in (select UserID from BlockJunction where BlockerID = 1004)";
 
-                string query_count = $@" Select Count(t.ID) from DMessages t LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID {WhereClause}";
+                string query_count = $@" Select Count(t.ID) from DMessages t {WhereClause}";
 
                 string query = $@"
                 SELECT
@@ -105,9 +107,8 @@ namespace definer.Core.Repo.User
                 ,(select Username from Users where ID=j.UserID) LastReplier
                 FROM DMessages t
                 CROSS APPLY (SELECT TOP 1 * FROM DMessagesJunction WHERE DMID = t.ID ORDER BY Date DESC) j
-                LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID
                 {WhereClause} 
-                ORDER BY t.ID ASC 
+                ORDER BY j.Date DESC
                 OFFSET @StartIndex ROWS
                 FETCH NEXT @PageSize ROWS ONLY";
 
@@ -172,8 +173,9 @@ namespace definer.Core.Repo.User
 		                        ,j.*
 		                        FROM DMessages t
 		                        CROSS APPLY (SELECT * FROM DMessagesJunction WHERE DMID = t.ID AND UserID != @UserID AND IsRead = 0) j
-                                LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID
-		                        WHERE NOT t.SenderID = b.UserID AND t.ReceiverID = @UserID OR t.SenderID = @UserID
+		                        WHERE t.ReceiverID = @UserID OR t.SenderID = @UserID
+                                AND NOT t.SenderID in (select UserID from BlockJunction where BlockerID = 1004)
+                                AND NOT t.ReceiverID in (select UserID from BlockJunction where BlockerID = 1004)
                           )
 	                THEN 'TRUE'
 	                ELSE 'FALSE'

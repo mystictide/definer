@@ -47,7 +47,7 @@ namespace definer.Controllers
         {
             var result = new Users();
             filter.Keyword = filter.Keyword ?? "";
-            filter.pageSize = 7;
+            filter.pageSize = 15;
             filter.isDetailSearch = false;
             FilteredList<Entry> request = new FilteredList<Entry>()
             {
@@ -56,11 +56,11 @@ namespace definer.Controllers
             };
             if (username == null || username.Length < 1)
             {
-                result = new UserManager().GetbyUsername(request, user.Username);
+                result = new UserManager().GetbyUsername(request, user.Username, user.ID);
             }
             else
             {
-                result = new UserManager().GetbyUsername(request, username);
+                result = new UserManager().GetbyUsername(request, username, user.ID);
             }
             if (user != null)
             {
@@ -85,11 +85,11 @@ namespace definer.Controllers
             };
             if (username == null || username.Length < 1)
             {
-                result = new UserManager().GetFavouritesbyUsername(request, user.Username);
+                result = new UserManager().GetFavouritesbyUsername(request, user.Username, user.ID);
             }
             else
             {
-                result = new UserManager().GetFavouritesbyUsername(request, username);
+                result = new UserManager().GetFavouritesbyUsername(request, username, user.ID);
             }
             if (user != null)
             {

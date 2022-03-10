@@ -161,7 +161,9 @@ namespace definer.Core.Repo.User
                 param.Add("@CurrentUserID", CurrentUserID);
 
                 string WhereClause = @" WHERE (t.Username like '%' + @Username + '%')";
-                string query_count = $@" Select Count(t.ID) from AuthorWall t LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID WHERE NOT t.SenderID = b.UserID AND t.UserID = @UserID";
+                string query_count = $@" Select Count(t.ID) from AuthorWall t 
+                WHERE t.UserID = @UserID
+                AND NOT t.SenderID in (select UserID from BlockJunction where BlockerID = @CurrentUserID)";
 
                 string userQuery = $@"
                 SELECT t.*
@@ -172,9 +174,9 @@ namespace definer.Core.Repo.User
                 SELECT t.*
                 ,(select Username from Users where ID=t.SenderID) Author
                 FROM AuthorWall t
-                LEFT JOIN BlockJunction as b ON @CurrentUserID = b.BlockerID
-                WHERE t.IsActive = 1 AND NOT t.SenderID = b.UserID AND t.UserID = @UserID
-                ORDER BY t.ID ASC 
+                WHERE t.IsActive = 1 AND t.UserID = @UserID
+                AND NOT t.SenderID in (select UserID from BlockJunction where BlockerID = @CurrentUserID)
+                ORDER BY t.Date DESC 
                 OFFSET @StartIndex ROWS
                 FETCH NEXT @PageSize ROWS ONLY";
 

@@ -68,7 +68,7 @@ namespace definer.Core.Repo.User
                 ,(select Username from Users where ID=t.UserID) Author
                 FROM DMessagesJunction t
                 {WhereClause} 
-                ORDER BY t.ID ASC 
+                ORDER BY t.Date DESC 
                 OFFSET @StartIndex ROWS
                 FETCH NEXT @PageSize ROWS ONLY";
 
@@ -136,7 +136,7 @@ namespace definer.Core.Repo.User
                 ,(select Username from Users where ID=t.UserID) Author
                 FROM DMessagesJunction t
                 {WhereClause} 
-                ORDER BY t.ID ASC 
+                ORDER BY t.Date ASC 
                 OFFSET @StartIndex ROWS
                 FETCH NEXT @PageSize ROWS ONLY";
 

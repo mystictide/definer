@@ -141,7 +141,7 @@ namespace definer.Core.Repo.User
             }
         }
 
-        public Users GetbyUsername(FilteredList<Entry> request, string Username)
+        public Users GetbyUsername(FilteredList<Entry> request, string Username, int CurrentUserID)
         {
             try
             {
@@ -149,6 +149,7 @@ namespace definer.Core.Repo.User
                 FilteredList<Entry> entries = new FilteredList<Entry>();
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@Username", Username);
+                param.Add("@CurrentUserID", CurrentUserID);
 
                 string WhereClause = @" WHERE (t.Username like '%' + @Username + '%')";
                 string query_count = $@"  Select Count(t.ID) from Entry t WHERE t.UserID = @UserID AND t.IsActive = 1";
@@ -167,7 +168,7 @@ namespace definer.Core.Repo.User
                 ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Favourite=1) Favourites
                 ,j.*
                 FROM Entry t
-                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID
+                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID AND j.UserID = @CurrentUserID
                 WHERE t.UserID = @UserID AND t.IsActive = 1
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS
@@ -209,7 +210,7 @@ namespace definer.Core.Repo.User
 
                 string userQuery = $@"
                 SELECT t.*
-                ,(select count(ID) from Entry where UserID=t.ID ) EntryCount
+                ,(select count(ID) from Entry where UserID=t.ID AND t.IsActive = 1) EntryCount
                 ,(select count(ID) from FollowJunction where UserID=t.ID) FollowerCount
                 ,(select count(ID) from FollowJunction where FollowerID=t.ID) FollowingCount
                 ,j.*
@@ -243,7 +244,7 @@ namespace definer.Core.Repo.User
             }
         }
 
-        public Users GetFavouritesbyUsername(FilteredList<Entry> request, string Username)
+        public Users GetFavouritesbyUsername(FilteredList<Entry> request, string Username, int CurrentUserID)
         {
             try
             {
@@ -251,6 +252,7 @@ namespace definer.Core.Repo.User
                 FilteredList<Entry> entries = new FilteredList<Entry>();
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@Username", Username);
+                param.Add("@CurrentUserID", CurrentUserID);
 
                 string WhereClause = @" WHERE (t.Username like '%' + @Username + '%')";
                 string query_count = $@" 
@@ -272,7 +274,7 @@ namespace definer.Core.Repo.User
                 ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Favourite=1) Favourites
                 ,j.*
                 FROM Entry t
-                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID
+                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID AND j.UserID = @CurrentUserID
                 WHERE j.UserID = @UserID AND j.Favourite = 1 AND IsActive = 1
                 ORDER BY t.ID ASC 
                 OFFSET @StartIndex ROWS

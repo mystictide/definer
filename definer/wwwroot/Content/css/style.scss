@@ -1057,6 +1057,7 @@ header {
                                     p {
                                         white-space: pre-line;
                                         margin-bottom: 1rem;
+                                        margin-top: 1rem;
                                         font-size: .85rem;
                                         color: $base-font-colour;
                                     }
@@ -1749,6 +1750,29 @@ header {
     &:focus {
         background: none;
         color: inherit;
+    }
+}
+
+.d-error {
+    color: $base-font-colour;
+    text-align: center;
+
+    h4 {
+        display: block;
+        width: 100%;
+    }
+
+    i {
+        justify-self: center;
+        align-self: center;
+        font-size: 6rem;
+        margin-bottom: 0.9rem;
+    }
+
+    span {
+        justify-self: center;
+        align-self: center;
+        font-size: 0.75rem;
     }
 }
 

@@ -2,6 +2,14 @@
     function () {
         sidebar.fill();
         checkdms();
+        $('#sbutton').attr('disabled', true);
+        $('#search').on('input change', function () {
+            console.log("oo");
+            if ($(this).val().length != 0)
+                $('#sbutton').attr('disabled', false);
+            else
+                $('#sbutton').attr('disabled', true);
+        });
     },
 );
 
@@ -18,13 +26,6 @@ window.onclick = function (event) {
     }
 }
 
-$('#sbutton').attr('disabled', true);
-$('#search').on('input change', function () {
-    if ($(this).val().length != 0)
-        $('#sbutton').attr('disabled', false);
-    else
-        $('#sbutton').attr('disabled', true);
-});
 
 $(document).bind('change', '.spages', function () {
     var value = $('.spages').val();

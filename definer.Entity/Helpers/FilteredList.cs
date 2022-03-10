@@ -19,6 +19,7 @@
             pageSize = 10;
             page = 1;
             isDetailSearch = false;
+            sortBy = new object();
         }
 
         public string Keyword { get; set; }
@@ -30,6 +31,8 @@
         public Page pager { get; set; }
 
         public bool isDetailSearch { get; set; }
+
+        public object sortBy { get; set; }
 
     }
     public class Page

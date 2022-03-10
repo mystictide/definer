@@ -106,5 +106,11 @@ namespace definer.Controllers
             var rendered = await _viewRenderService.RenderToStringAsync("Home/_sidebarContent", result);
             return Json(rendered);
         }
+
+        [Route("oops")]
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }

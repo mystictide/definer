@@ -956,6 +956,7 @@ header {
 .page-container .main .view .messages .mlist .dm-list .dm .dm-container a p {
   white-space: pre-line;
   margin-bottom: 1rem;
+  margin-top: 1rem;
   font-size: 0.85rem;
   color: #efeff1;
 }
@@ -1544,6 +1545,26 @@ header {
 .spoiler:focus {
   background: none;
   color: inherit;
+}
+
+.d-error {
+  color: #efeff1;
+  text-align: center;
+}
+.d-error h4 {
+  display: block;
+  width: 100%;
+}
+.d-error i {
+  justify-self: center;
+  align-self: center;
+  font-size: 6rem;
+  margin-bottom: 0.9rem;
+}
+.d-error span {
+  justify-self: center;
+  align-self: center;
+  font-size: 0.75rem;
 }
 
 .page-footer {

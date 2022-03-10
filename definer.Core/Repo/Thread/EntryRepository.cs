@@ -126,14 +126,11 @@ namespace definer.Core.Repo.Thread
                 param.Add("@UserID", UserID);
 
                 string WhereClause = @" WHERE t.ThreadID = @ID AND t.IsActive = 1 
-                AND (NOT t.UserID = ISNULL(b.UserID, 0)
-                AND NOT t.UserID = ISNULL(u.BlockerID, 0))";
+                AND NOT t.UserID in (select UserID from BlockJunction where BlockerID = @UserID)";
 
                 string query_count = $@" 
                 Select Count(t.ID)
                 from Entry t 
-                LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID
-                LEFT JOIN BlockJunction as u ON @UserID = u.UserID
                 {WhereClause}";
 
                 string query = $@"
@@ -145,13 +142,10 @@ namespace definer.Core.Repo.Thread
                 ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Vote=0) Downvotes
                 ,(select count(ID) from EntryAttribute where EntryID=t.ID AND Favourite=1) Favourites
                 ,j.*
-                ,b.UserID
                 FROM Entry t
-                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID
-                LEFT JOIN BlockJunction as b ON @UserID = b.BlockerID
-                LEFT JOIN BlockJunction as u ON @UserID = u.UserID
+                LEFT JOIN EntryAttribute as j ON t.ID = j.EntryID AND j.UserID = @UserID
                 {WhereClause} 
-                ORDER BY t.ID ASC 
+                ORDER BY t.Date DESC 
                 OFFSET @StartIndex ROWS
                 FETCH NEXT @PageSize ROWS ONLY";
 

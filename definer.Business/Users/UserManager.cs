@@ -45,9 +45,9 @@ namespace definer.Business.Users
             return _repo.Update(entity);
         }
 
-        public Entity.Users.Users GetbyUsername(FilteredList<Entry> request, string Username)
+        public Entity.Users.Users GetbyUsername(FilteredList<Entry> request, string Username, int CurrentUserID)
         {
-            return _repo.GetbyUsername(request, Username);
+            return _repo.GetbyUsername(request, Username, CurrentUserID);
         }
 
         public Entity.Users.Users Get(string Username, int CurrentUserID)
@@ -55,9 +55,9 @@ namespace definer.Business.Users
             return _repo.Get(Username, CurrentUserID);
         }
 
-        public Entity.Users.Users GetFavouritesbyUsername(FilteredList<Entry> request, string Username)
+        public Entity.Users.Users GetFavouritesbyUsername(FilteredList<Entry> request, string Username, int CurrentUserID)
         {
-            return _repo.GetFavouritesbyUsername(request, Username);
+            return _repo.GetFavouritesbyUsername(request, Username, CurrentUserID);
         }
 
         public string ManageBio(int ID, string? text)

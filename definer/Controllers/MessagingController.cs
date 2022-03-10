@@ -25,7 +25,7 @@ namespace definer.Controllers
             FilteredList<DMessages> request = new FilteredList<DMessages>()
             {
                 filter = filter,
-                filterModel = filterModel
+                filterModel = filterModel,
             };
             var result = new DMessagesManager().FilteredList(request, user.ID);
             return View(result);
@@ -50,7 +50,7 @@ namespace definer.Controllers
                 var result = new DMessagesJunctionManager().GetDMs(request, ID, user.ID);
                 if (result == null)
                 {
-                    return Redirect("/m/");
+                    return Redirect("/oops");
                 }
                 return View(result);
             }
