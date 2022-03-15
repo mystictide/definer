@@ -10,8 +10,8 @@
     <div class="messages">
         <div class="messages-tabs">
             <ul>
-                <li class="active"><a href="/m/">incoming</a></li>
-                <li><a href="/m/archive">archived</a></li>
+                <li><a href="/m/">incoming</a></li>
+                <li class="active"><a href="/m/archived">archived</a></li>
             </ul>
         </div>
         <div class="mlist">
@@ -38,7 +38,7 @@
                                     <div class="info">
                                         <div class="link">
                                             <div class="functions">
-                                                <a href="/m/delete/@item.ID"><small>delete</small></a>
+                                                <a href="/m/reinstate/@item.ID"><small>reinstate</small></a>
                                             </div>
                                             <small>@item.LastMessage.Date.ToString("dd.MM.yyyy HH:mm")</small>
                                         </div>
@@ -54,7 +54,7 @@
             else
             {
                 <div class="dm">
-                    <h5>you have no direct messages yet</h5>
+                    <h5>you have not archived any messages yet</h5>
                 </div>
             }
         </div>

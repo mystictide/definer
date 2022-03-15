@@ -496,5 +496,31 @@ namespace definer.Core.Repo.User
                 return null;
             }
         }
+
+        public List<Users> GetSearchResults(string Username)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@Username", Username);
+
+                string WhereClause = @" WHERE (t.Username like '%' + @Username + '%')";
+
+                string query = $@"
+                SELECT TOP (10) ID, Username
+                FROM Users t 
+                {WhereClause}";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.Query<Users>(query, param).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
     }
 }

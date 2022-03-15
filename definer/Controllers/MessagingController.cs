@@ -31,6 +31,24 @@ namespace definer.Controllers
             return View(result);
         }
 
+        [Route("m/archive"), HttpGet]
+        public ActionResult ViewArchivedMessages(Filter filter, DMessages filterModel)
+        {
+            if (user != null)
+            {
+                ViewBag.User = user;
+            }
+            filter.pageSize = 10;
+            filter.isDetailSearch = false;
+            FilteredList<DMessages> request = new FilteredList<DMessages>()
+            {
+                filter = filter,
+                filterModel = filterModel,
+            };
+            var result = new DMessagesManager().ArchiveFilteredList(request, user.ID);
+            return View(result);
+        }
+
         [Route("m/{ID}")]
         public ActionResult ViewMessage(int ID, Filter filter, DMessagesJunction filterModel)
         {
@@ -79,6 +97,8 @@ namespace definer.Controllers
             var model = new DMessages();
             model.ReceiverID = dm.UserID;
             model.SenderID = user.ID;
+            model.IsReceiverActive = true;
+            model.IsSenderActive = true;
             var result = new DMessagesManager().Add(model);
             var message = new DMessagesJunction();
             message.DMID = result.ReturnID;
@@ -88,6 +108,26 @@ namespace definer.Controllers
             message.IsRead = false;
             new DMessagesJunctionManager().Add(message);
             return Redirect("/m/" + result.ReturnID);
+        }
+
+        [Route("m/delete/{ID}")]
+        public ActionResult DeleteDM(int ID)
+        {
+            if (new DMessagesManager().CheckDMOwner(ID, user.ID))
+            {
+                new DMessagesManager().Archive(ID, user.ID, 0);
+            }
+            return Redirect("/m/");
+        }
+
+        [Route("m/reinstate/{ID}")]
+        public ActionResult ReinstateDM(int ID)
+        {
+            if (new DMessagesManager().CheckDMOwner(ID, user.ID))
+            {
+                new DMessagesManager().Archive(ID, user.ID, 1);
+            }
+            return Redirect("/m/");
         }
 
         [Route("unreaddms"), HttpGet]

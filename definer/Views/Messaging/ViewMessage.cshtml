@@ -11,9 +11,19 @@
         <h1>></h1>
         <h1><a href="/u/@CustomTagHelpers.FriendlyURLTitle((Model.ReceiverID == User.ID ? Model.Sender : Model.Receiver))">@(Model.ReceiverID == User.ID ? Model.Sender : Model.Receiver)</a></h1>
     </div>
-    <div class="functions">
-        <a href="/m/delete/@Model.ID"><small>delete</small></a>
-        <a href="/m/archive/@Model.ID"><small>archive</small></a>
+    <div class="info">
+        <div class="link">
+            <div class="functions">
+                @if (Model.ReceiverID == User.ID && Model.IsReceiverActive || Model.SenderID == User.ID && Model.IsSenderActive)
+                {
+                    <a href="/m/delete/@Model.ID"><small>delete</small></a>
+                }
+                else
+                {
+                    <a href="/m/reinstate/@Model.ID"><small>reinstate</small></a>
+                }
+            </div>
+        </div>
     </div>
     <div class="messages">
         <div class="mlist">

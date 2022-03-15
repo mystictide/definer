@@ -28,7 +28,9 @@
                             <input type="text" id="search" name="search" placeholder="search..">
                             <button type="submit" id="sbutton" disabled="disabled"><img src="~/Content/img/search.svg"></button>
                         </form>
+                        <div id="sresults" class="sresults"></div>
                     </div>
+                    
                 </div>
                 <div class="navbar-user">
                     @if (User.FindFirst("user")?.Value != null)

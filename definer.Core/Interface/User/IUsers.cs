@@ -17,6 +17,7 @@ namespace definer.Core.Interface.User
         Users GetbyUsername(FilteredList<Entry> request, string Username, int CurrentUserID);
         Users GetEntryArchivebyUsername(FilteredList<Entry> request, string Username);
         Users GetFavouritesbyUsername(FilteredList<Entry> request, string Username, int CurrentUserID);
+        List<Users> GetSearchResults(string Username);
         string ManageBio(int ID, string? text);
         string GetBio(int ID);
         ProcessResult UpdateUsername(int ID, string Username);

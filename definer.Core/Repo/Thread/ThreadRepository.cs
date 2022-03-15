@@ -148,6 +148,32 @@ namespace definer.Core.Repo.Thread
             }
         }
 
+        public List<Threads> GetSearchResults(string Title)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@Title", Title);
+
+                string WhereClause = @" WHERE (t.Title like '%' + @Title + '%')";
+
+                string query = $@"
+                SELECT TOP (10) *
+                FROM Thread t 
+                {WhereClause}";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.Query<Threads>(query, param).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
+        }
+
         public ProcessResult Update(Threads entity)
         {
             ProcessResult result = new ProcessResult();

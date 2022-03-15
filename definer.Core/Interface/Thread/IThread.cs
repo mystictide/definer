@@ -5,5 +5,6 @@ namespace definer.Core.Interface.Thread
     public interface IThread : IBaseInterface<Threads>
     {
         Threads GetbyTitle(string Title);
+        List<Threads> GetSearchResults(string Title);
     }
 }

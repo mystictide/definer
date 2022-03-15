@@ -4,9 +4,12 @@
         checkdms();
         $('#sbutton').attr('disabled', true);
         $('#search').on('input change', function () {
-            console.log("oo");
-            if ($(this).val().length != 0)
+            if ($(this).val().length != 0) {
                 $('#sbutton').attr('disabled', false);
+                if ($(this).val().length >= 3) {
+                    searchresults();
+                }
+            }
             else
                 $('#sbutton').attr('disabled', true);
         });
@@ -24,8 +27,10 @@ window.onclick = function (event) {
             }
         }
     }
+    if (!event.target.matches('#search')) {
+        $('#sresults').removeClass("active");
+    }
 }
-
 
 $(document).bind('change', '.spages', function () {
     var value = $('.spages').val();
@@ -42,6 +47,20 @@ function checkdms() {
         success: function (data) {
             if (data) {
                 $('#dmEnvelope').toggleClass("active");
+            }
+        }
+    });
+}
+
+function searchresults() {
+    var search = { text: $('#search').val() };
+    $.ajax({
+        url: "/s/result",
+        data: search,
+        success: function (data) {
+            if (data != null) {
+                $('#sresults').empty().prepend(data);
+                $('#sresults').addClass("active");
             }
         }
     });

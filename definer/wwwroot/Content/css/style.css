@@ -69,17 +69,13 @@ header {
   height: 85%;
 }
 .navbar .nav-header .navbar-search {
-  flex-grow: 2;
-  flex-shrink: 1;
   width: 70%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
 }
 .navbar .nav-header .navbar-search .search-container {
   height: 100%;
-  flex-basis: 40rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -87,7 +83,7 @@ header {
   display: flex;
   flex-direction: row;
   height: 100%;
-  width: 100%;
+  width: 80%;
   justify-content: flex-start;
   align-items: center;
 }
@@ -126,6 +122,35 @@ header {
 .navbar .nav-header .navbar-search .search-container form button img {
   width: 60%;
   height: 100%;
+}
+.navbar .nav-header .navbar-search .sresults {
+  display: none;
+}
+.navbar .nav-header .navbar-search .sresults.active {
+  width: 28rem;
+  display: block;
+  position: absolute;
+  z-index: 9999;
+  top: 55px;
+  left: 38rem;
+}
+.navbar .nav-header .navbar-search .sresults.active ul {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-color: #18181b;
+  border: 2px solid #0e0e10;
+  border-radius: 5px;
+}
+.navbar .nav-header .navbar-search .sresults.active ul li a {
+  padding: 5px 10px;
+  height: 100%;
+  width: 100%;
+  font-size: 0.9rem;
+  display: block;
+}
+.navbar .nav-header .navbar-search .sresults.active ul li a:hover {
+  background-color: #0e0e10;
 }
 .navbar .nav-header .navbar-user {
   flex-grow: 1;
@@ -960,23 +985,6 @@ header {
   font-size: 0.85rem;
   color: #efeff1;
 }
-.page-container .main .view .messages .mlist .dm-list .dm .dm-container .info .link {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.page-container .main .view .messages .mlist .dm-list .dm .dm-container .info .link .functions {
-  display: flex;
-  flex-direction: row;
-  column-gap: 7px;
-}
-.page-container .main .view .messages .mlist .dm-list .dm .dm-container .info .link .functions a:hover {
-  text-decoration: underline;
-}
-.page-container .main .view .messages .mlist .dm-list .dm .dm-container .info .link small {
-  font-size: 0.75rem;
-}
 .page-container .main .view .messages .mlist .dm-list .replies {
   display: flex;
   flex-direction: column;
@@ -1003,6 +1011,23 @@ header {
 }
 .page-container .main .view .messages .mlist .dm-list .replies li.self {
   align-self: flex-end;
+}
+.page-container .main .view .info .link {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.page-container .main .view .info .link .functions {
+  display: flex;
+  flex-direction: row;
+  column-gap: 7px;
+}
+.page-container .main .view .info .link .functions a:hover {
+  text-decoration: underline;
+}
+.page-container .main .view .info .link small {
+  font-size: 0.75rem;
 }
 .page-container .main .author-wall {
   height: 100%;

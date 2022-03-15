@@ -76,17 +76,13 @@ header {
         }
 
         .navbar-search {
-            flex-grow: 2;
-            flex-shrink: 1;
             width: 70%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
 
             .search-container {
                 height: 100%;
-                flex-basis: 40rem;
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
 
@@ -94,7 +90,7 @@ header {
                     display: flex;
                     flex-direction: row;
                     height: 100%;
-                    width: 100%;
+                    width: 80%;
                     justify-content: flex-start;
                     align-items: center;
 
@@ -136,6 +132,42 @@ header {
                         img {
                             width: 60%;
                             height: 100%;
+                        }
+                    }
+                }
+            }
+
+            .sresults {
+                display: none;
+            }
+
+            .sresults.active {
+                width: 28rem;
+                display: block;
+                position: absolute;
+                z-index: 9999;
+                top: 55px;
+                left: 38rem;
+
+                ul {
+                    display: block;
+                    height: 100%;
+                    width: 100%;
+                    background-color: $base-bg-colour;
+                    border: 2px solid $body-colour;
+                    border-radius: 5px;
+
+                    li {
+                        a {
+                            padding: 5px 10px;
+                            height: 100%;
+                            width: 100%;
+                            font-size: 0.9rem;
+                            display: block;
+
+                            &:hover {
+                                background-color: $body-colour;
+                            }
                         }
                     }
                 }
@@ -1062,32 +1094,6 @@ header {
                                         color: $base-font-colour;
                                     }
                                 }
-
-                                .info {
-
-                                    .link {
-                                        display: flex;
-                                        flex-direction: row;
-                                        justify-content: space-between;
-                                        align-items: baseline;
-
-                                        .functions {
-                                            display: flex;
-                                            flex-direction: row;
-                                            column-gap: 7px;
-
-                                            a {
-                                                &:hover {
-                                                    text-decoration: underline;
-                                                }
-                                            }
-                                        }
-
-                                        small {
-                                            font-size: .75rem;
-                                        }
-                                    }
-                                }
                             }
                         }
 
@@ -1127,6 +1133,32 @@ header {
                                 align-self: flex-end;
                             }
                         }
+                    }
+                }
+            }
+
+            .info {
+
+                .link {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: baseline;
+
+                    .functions {
+                        display: flex;
+                        flex-direction: row;
+                        column-gap: 7px;
+
+                        a {
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+
+                    small {
+                        font-size: .75rem;
                     }
                 }
             }

@@ -94,5 +94,10 @@ namespace definer.Business.Users
         {
             return _repo.GetEntryArchivebyUsername(request, Username);
         }
+
+        public List<Entity.Users.Users> GetSearchResults(string Username)
+        {
+            return _repo.GetSearchResults(Username);
+        }
     }
 }

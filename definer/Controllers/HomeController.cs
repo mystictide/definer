@@ -91,6 +91,23 @@ namespace definer.Controllers
             return Redirect("/" + CustomTagHelpers.FriendlyURLTitle(model.Title) + "-" + model.ID);
         }
 
+        [Route("s/result"), HttpGet]
+        public async Task<JsonResult> SearchResults(string text)
+        {
+            if (text.StartsWith("@"))
+            {
+                var result = new UserManager().GetSearchResults(text.Replace("@", ""));
+                var rendered = await _viewRenderService.RenderToStringAsync("Searching/_userResults", result);
+                return Json(rendered);
+            }
+            else
+            {
+                var result = new ThreadManager().GetSearchResults(text);
+                var rendered = await _viewRenderService.RenderToStringAsync("Searching/_threadResults", result);
+                return Json(rendered);
+            }
+        }
+
         [Route("sideBar"), HttpGet]
         public async Task<JsonResult> sideBar(Filter filter, Threads filterModel)
         {

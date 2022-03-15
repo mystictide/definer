@@ -18,6 +18,16 @@ namespace definer.Business.Users
             return _repo.Add(entity);
         }
 
+        public bool Archive(int ID, int UserID, int State)
+        {
+            return _repo.Archive(ID, UserID, State);
+        }
+
+        public FilteredList<DMessages> ArchiveFilteredList(FilteredList<DMessages> request, int UserID)
+        {
+            return _repo.ArchiveFilteredList(request, UserID);
+        }
+
         public bool CheckDMOwner(int DMID, int UserID)
         {
             return _repo.CheckDMOwner(DMID, UserID);

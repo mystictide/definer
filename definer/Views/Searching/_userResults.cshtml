@@ -1,0 +1,10 @@
+﻿@model List<definer.Entity.Users.Users>
+
+<ul>
+    <li>
+        @foreach (var item in Model)
+        {
+        <a href="/u/@item.Username">@@@item.Username</a>
+        }
+    </li>
+</ul>

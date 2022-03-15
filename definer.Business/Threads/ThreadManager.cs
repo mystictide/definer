@@ -42,6 +42,11 @@ namespace definer.Business.Threads
             return _repo.GetbyTitle(Title);
         }
 
+        public List<Entity.Threads.Threads> GetSearchResults(string Title)
+        {
+            return _repo.GetSearchResults(Title);
+        }
+
         public ProcessResult Update(Entity.Threads.Threads entity)
         {
             return _repo.Update(entity);

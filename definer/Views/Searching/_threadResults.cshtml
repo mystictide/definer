@@ -1,0 +1,11 @@
+﻿@model List<definer.Entity.Threads.Threads>
+
+<ul>
+    <li>
+        @foreach (var item in Model)
+        {
+            string url = "/" + CustomTagHelpers.FriendlyURLTitle(item.Title) + "-" + item.ID;
+            <a href="@url">@item.Title</a>
+        }
+    </li>
+</ul>
