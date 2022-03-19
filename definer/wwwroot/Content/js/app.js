@@ -170,6 +170,18 @@ var interactions = {
             }
         });
     },
+    setblockstatev2: function (AuthorID) {
+        var data = { UserID: AuthorID };
+        $.ajax({
+            url: "/i/setBlockState",
+            data: data,
+            success: function (data) {
+                if (data == undefined || data == null) {
+                    $("#def" + AuthorID).remove();
+                }
+            }
+        });
+    },
 }
 
 var sidebar = {
@@ -199,7 +211,7 @@ var sidebar = {
 
 var entries = {
     archive: function (ID) {
-        var model = { ID: ID, State: 0};
+        var model = { ID: ID, State: 0 };
         if (confirm('go ahead with archiving this entry?')) {
             $.ajax({
                 url: "/archive/entry",

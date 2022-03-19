@@ -2,11 +2,6 @@
 using definer.Core.Interface.User;
 using definer.Entity.Helpers;
 using definer.Entity.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace definer.Core.Repo.User
 {
@@ -25,6 +20,35 @@ namespace definer.Core.Repo.User
         public FilteredList<BlockJunction> FilteredList(FilteredList<BlockJunction> request)
         {
             throw new NotImplementedException();
+        }
+
+        public List<BlockJunction> GetBlockedList(int UserID)
+        {
+            try
+            {
+                List<BlockJunction> result = new List<BlockJunction>();
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@UserID", UserID);
+
+                string WhereClause = @" WHERE t.BlockerID = @UserID";
+
+                string query = $@"
+                SELECT t.*
+                ,(select Username from Users where ID=t.UserID) Author
+                FROM BlockJunction t
+                {WhereClause} 
+                ORDER BY t.ID DESC";
+
+                using (var connection = GetConnection)
+                {
+                    return connection.Query<BlockJunction>(query, param).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                //LogsRepository.CreateLog(ex);
+                return null;
+            }
         }
 
         public BlockJunction Get(int ID)

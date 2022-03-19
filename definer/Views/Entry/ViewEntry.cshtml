@@ -230,6 +230,11 @@
                                     <a href="/edit/entry/@Model.ID"><small>edit</small></a>
                                     <a href="javascript:void(0)" onclick="entries.archiveView(@Model.ID)"><small>archive</small></a>
                                 }
+                                else
+                                {
+                                    <a href="javascript:void(0);" onclick="replyEditor.replyWith(@Model.ID, @Model.UserID)"><small>message</small></a>
+                                    <a href="/report/@Model.ID"><small>report</small></a>
+                                }
                             }
                             <a href="/entry/@Model.ID">
                                 <small>

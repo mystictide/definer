@@ -6,7 +6,6 @@ using definer.Entity.Users;
 using definer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using static definer.Models.RenderView;
 
 namespace definer.Controllers
@@ -122,6 +121,36 @@ namespace definer.Controllers
             FilteredList<Threads> result = new ThreadManager().FilteredList(request);
             var rendered = await _viewRenderService.RenderToStringAsync("Home/_sidebarContent", result);
             return Json(rendered);
+        }
+
+        [Authorize]
+        [Route("report/{EntryID}")]
+        public ActionResult Report(int EntryID)
+        {
+            var entry = new EntryManager().Get(EntryID);
+            var model = new Reports();
+            model.UserID = user.ID;
+            model.EntryID = EntryID;
+            model.Subject = "entry #" + entry.ID + " on thread " + "'" + entry.Title + "'";
+            return View(model);
+        }
+
+        [Authorize]
+        [Route("report"), HttpPost]
+        public ActionResult Report(Reports model)
+        {
+            model.UserID = user.ID;
+            model.Date = DateTime.Now;
+            model.IsActive = true;
+            var result = new ReportsManager().Add(model);
+            if (result.State == ProcessState.Success)
+            {
+                return Redirect("report/" + model.EntryID+"/?val=true");
+            }
+            else
+            {
+                return Redirect("report/" + model.EntryID + "/?val=false");
+            }
         }
 
         [Route("oops")]

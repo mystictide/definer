@@ -1,0 +1,62 @@
+﻿@model List<definer.Entity.Users.BlockJunction>
+
+@{
+    ViewData["Title"] = "blocked authors - definer";
+}
+
+<div class="view">
+    <h1><a href="/settings/social">settings</a></h1>
+    <div class="settings">
+        <div class="settings-tabs">
+            <ul>
+                <li><a href="/settings/prefs">preferences</a></li>
+                <li><a href="/settings/social">social</a></li>
+                <li><a href="/settings/account">account</a></li>
+                <li class="active"><a href="/settings/blocked">blocked</a></li>
+                <li><a href="/settings/archive">archive</a></li>
+            </ul>
+        </div>
+        <div class="preferences">
+            <div class="user-entries">
+                <div class="user-rss">
+                    @if (Model.Count() > 0)
+                    {<div class="rss-threads">
+                            <ul class="blocked-ul">
+                                @foreach (var item in Model)
+                                {
+                                    string def = "def" + item.UserID;
+                                    <li id="@def" class="blocked">
+                                        <div class="blocked-user">
+                                            <a href="/u/@CustomTagHelpers.FriendlyURLTitle(item.Author)">@@@item.Author</a>
+                                        </div>
+                                        <div class="blocked-user-func">
+                                            <a class="ignore" href="javascript:void(0)" id="ignoreAuthor">unblock</a>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="rss-threads">
+                            <h5>no blocked authors yet</h5>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Js {
+    <script>
+        $(document).ready(
+            $('.ignore').on('click', function () {
+                var tt = $(this).closest('li').attr('id');
+                interactions.setblockstatev2(tt.replace('def', ''));
+            }),
+        );
+    </script>
+}

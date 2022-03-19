@@ -9,11 +9,11 @@
     <h1><a href="/@CustomTagHelpers.FriendlyURLTitle(@Model.Title)-@Model.ThreadID">@Model.Title</a></h1>
     <div class="entry-editor">
         <form action="/edit/entry" method="post" autocomplete="off">
-            @Html.Hidden("ID", @Model.ID)
-            @Html.Hidden("ThreadID", @Model.ThreadID)
-            @Html.Hidden("Date", @Model.Date)
-            @Html.Hidden("EditDate", @Model.EditDate)
-            @Html.Hidden("Title", @Model.Title)
+            @Html.Hidden("ID", Model.ID)
+            @Html.Hidden("ThreadID", Model.ThreadID)
+            @Html.Hidden("Date", Model.Date)
+            @Html.Hidden("EditDate", Model.EditDate)
+            @Html.Hidden("Title", Model.Title)
             <fieldset class="text-editor">
                 <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
                 <div class="functions">

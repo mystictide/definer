@@ -1,0 +1,34 @@
+﻿@model definer.Entity.Threads.Reports
+
+@{
+    ViewData["Title"] = "report entry - definer";
+    bool success = Convert.ToBoolean(Context.Request.Query["val"]);
+}
+
+<div class="view">
+    @if (success)
+    {
+        <span class="success">got it, thanks</span>
+    }
+    else
+    {
+        <span class="error">uhh, let's try that again</span>
+    }
+    <h1>report entry #@Model.EntryID</h1>
+    <div class="report-container">
+        <form action="/report" method="post" autocomplete="off">
+            @Html.Hidden("EntryID", Model.EntryID)
+            <fieldset class="subject">
+                <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                @Html.EditorFor(m => m.Subject)
+            </fieldset>
+            <fieldset class="text-editor">
+                <span class="field-validation-error" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                @Html.TextAreaFor(m => m.Body, new { @placeholder = "optional" })
+                <div class="process">
+                    <button type="submit">submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

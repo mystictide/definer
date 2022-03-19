@@ -13,7 +13,10 @@ namespace definer.Entity.Users
         public string Mail { get; set; }
         public string Password { get; set; }
         public string? Bio { get; set; }
+        public int AuthType { get; set; }
         public bool IsActive { get; set; }
+
+        #region do not write
 
         [Write(false)]
         public FilteredList<Entry> Entries { get; set; }
@@ -41,5 +44,7 @@ namespace definer.Entity.Users
 
         [Write(false)]
         public PreferenceJunction UserSettings { get; set; }
+
+        #endregion
     }
 }

@@ -33,6 +33,11 @@ namespace definer.Business.Users
             return _repo.FilteredList(request);
         }
 
+        public List<BlockJunction> GetBlockedList(int UserID)
+        {
+            return _repo.GetBlockedList(UserID);
+        }
+
         public BlockJunction Get(int ID)
         {
             return _repo.Get(ID);

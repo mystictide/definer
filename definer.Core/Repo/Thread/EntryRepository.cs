@@ -191,7 +191,7 @@ namespace definer.Core.Repo.Thread
                 ,(select count(ID) from EntryAttribute where EntryID=@ID AND Favourite=1) Favourites
                 FROM Entry t
                 {WhereClause} 
-                ORDER BY t.ID ASC 
+                ORDER BY t.Date DESC 
                 OFFSET @StartIndex ROWS
                 FETCH NEXT @PageSize ROWS ONLY";
 

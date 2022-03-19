@@ -1,7 +1,6 @@
 ﻿using definer.Entity.Users;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Security.Claims;
 
 namespace definer.Models
 {

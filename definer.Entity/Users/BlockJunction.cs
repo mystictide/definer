@@ -1,9 +1,4 @@
 ﻿using Dapper.Contrib.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace definer.Entity.Users
 {
@@ -14,5 +9,8 @@ namespace definer.Entity.Users
         public int ID { get; set; }
         public int UserID { get; set; }
         public int BlockerID { get; set; }
+
+        [Write(false)]
+        public string Author { get; set; }
     }
 }

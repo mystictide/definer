@@ -1,4 +1,5 @@
 ﻿using definer.Business.Users;
+using definer.Entity.Helpers;
 using definer.Entity.Users;
 using definer.Models;
 using Microsoft.AspNet.Identity;
@@ -37,6 +38,7 @@ namespace definer.Controllers
                 user.Username = model.Username;
                 user.Mail = model.Mail;
                 user.Password = _passwordHasher.HashPassword(model.Password);
+                user.AuthType = (int)Auth.newbie;
                 user.IsActive = true;
                 var result = new UserManager().Add(user);
 
@@ -48,7 +50,7 @@ namespace definer.Controllers
                 var social = new SocialJunction();
                 social.UserID = result.ReturnID;
                 new SocialJunctionManager().Add(social);
-                if (result.State == Entity.Helpers.ProcessState.Success)
+                if (result.State == ProcessState.Success)
                 {
                     return RedirectToAction("login", new { val = "true" });
                 }
@@ -56,7 +58,6 @@ namespace definer.Controllers
                 {
                     return RedirectToAction("login", new { val = "false" });
                 }
-
             }
             return View("register");
         }

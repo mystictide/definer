@@ -180,6 +180,11 @@
                                         <a href="/edit/entry/@item.ID"><small>edit</small></a>
                                         <a href="javascript:void(0)" onclick="entries.archive(@item.ID)"><small>archive</small></a>
                                     }
+                                    else
+                                    {
+                                        <a href="javascript:void(0);" onclick="replyEditor.replyWith(@item.ID, @item.UserID)"><small>message</small></a>
+                                        <a href="/report/@item.ID"><small>report</small></a>
+                                    }
                                 }
                                 <a href="/entry/@item.ID">
                                     <small>

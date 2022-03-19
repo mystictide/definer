@@ -9,7 +9,7 @@
 @Html.Hidden("authorID", Model.ID)
 @Html.Hidden("tab", "entries")
 <div class="view">
-    <h1><a href="/u/@CustomTagHelpers.FriendlyURLTitle(Model.Username)">@Model.Username</a></h1>
+    <h1><a href="/u/@CustomTagHelpers.FriendlyURLTitle(Model.Username)">@Model.Username</a><small>@CustomTagHelpers.UserAuthType(Model.AuthType)</small></h1>
     <div class="user-info">
         <div class="stats">
             <ul>

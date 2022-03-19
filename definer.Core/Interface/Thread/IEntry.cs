@@ -1,6 +1,5 @@
 ﻿using definer.Entity.Helpers;
 using definer.Entity.Threads;
-using definer.Entity.Users;
 
 namespace definer.Core.Interface.Thread
 {

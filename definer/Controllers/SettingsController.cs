@@ -65,6 +65,13 @@ namespace definer.Controllers
             return View(model);
         }
 
+        [Route("blocked")]
+        public ActionResult BlockedUsers()
+        {
+            var result = new BlockJunctionManager().GetBlockedList(user.ID);
+            return View(result);
+        }
+
         [Route("archive")]
         public ActionResult EntryArchive(Filter filter, Entry filterModel)
         {

@@ -53,6 +53,11 @@ namespace definer.Models
             }
         }
 
+        public static string UserAuthType(int type)
+        {
+            return ((Auth)type).ToString();
+        }
+
         public static string FormatEntry(string incomingText)
         {
             if (incomingText != null)
